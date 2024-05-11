@@ -2,6 +2,8 @@ package com.angelokezimana.posta.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "comments")
@@ -14,6 +16,7 @@ public class Comment {
     private String text;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "post_id", nullable = false)
     @JsonIgnore
     private Post post;
