@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/posts")
@@ -23,8 +25,8 @@ public class PostController {
 
     private static final Logger log = LogManager.getLogger(PostController.class);
 
-    @GetMapping("")
-    private ResponseEntity<Page<Post>> findAll(
+    @GetMapping
+    private ResponseEntity<List<Post>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort
@@ -36,10 +38,10 @@ public class PostController {
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
         Page<Post> posts = postService.getAllPosts(pageable);
 
-        return ResponseEntity.ok(posts);
+        return ResponseEntity.ok(posts.getContent());
     }
 
-    @PostMapping("")
+    @PostMapping
     private ResponseEntity<Post> create(@RequestBody Post newPost) {
         log.info("Received POST request with post: {}", newPost);
         log.info("Received POST request with photoPosts: {}", newPost.getPhotoPosts());
