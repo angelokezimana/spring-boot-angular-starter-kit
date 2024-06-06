@@ -1,16 +1,16 @@
-package com.angelokezimana.posta.service;
+package com.angelokezimana.posta.service.blog;
 
-import com.angelokezimana.posta.model.PhotoPost;
-import com.angelokezimana.posta.model.Post;
-import com.angelokezimana.posta.repository.PhotoPostRepository;
-import com.angelokezimana.posta.repository.PostRepository;
+import com.angelokezimana.posta.domain.blog.PhotoPost;
+import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.repository.blog.PhotoPostRepository;
+import com.angelokezimana.posta.repository.blog.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PhotoPostService {
+public class PhotoPostServiceImpl implements IPhotoPostService {
 
     @Autowired
     private PostRepository postRepository;

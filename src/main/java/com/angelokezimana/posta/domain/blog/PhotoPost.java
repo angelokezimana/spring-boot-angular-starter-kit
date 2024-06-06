@@ -1,4 +1,4 @@
-package com.angelokezimana.posta.model;
+package com.angelokezimana.posta.domain.blog;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

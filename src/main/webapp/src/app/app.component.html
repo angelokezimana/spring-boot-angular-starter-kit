@@ -1,8 +1,16 @@
 <div>
-  Welcome {{title}}
-  <p>
-    <mat-slide-toggle>Toggle me!</mat-slide-toggle>
-  </p>
+  Welcome {{ title }}
+  <mat-card>
+    <mat-card-content>
+      <p>
+        <mat-slide-toggle>Toggle me!</mat-slide-toggle>
+      </p>
+      <mat-form-field appearance="outline" class="m-2">
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder" />
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <router-outlet />

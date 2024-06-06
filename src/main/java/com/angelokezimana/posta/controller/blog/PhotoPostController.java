@@ -1,9 +1,9 @@
-package com.angelokezimana.posta.controller;
+package com.angelokezimana.posta.controller.blog;
 
-import com.angelokezimana.posta.model.PhotoPost;
-import com.angelokezimana.posta.model.Post;
-import com.angelokezimana.posta.service.PhotoPostService;
-import com.angelokezimana.posta.service.PostService;
+import com.angelokezimana.posta.domain.blog.PhotoPost;
+import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.service.blog.IPhotoPostService;
+import com.angelokezimana.posta.service.blog.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import java.util.List;
 public class PhotoPostController {
 
     @Autowired
-    private PhotoPostService photoPostService;
+    private IPhotoPostService photoPostService;
 
     @Autowired
-    private PostService postService;
+    private PostServiceImpl postService;
 
     @PostMapping("/{postId}")
     private ResponseEntity<Post> create(@PathVariable Long postId,

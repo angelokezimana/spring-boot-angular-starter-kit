@@ -1,9 +1,9 @@
-package com.angelokezimana.posta.service;
+package com.angelokezimana.posta.service.blog;
 
-import com.angelokezimana.posta.model.PhotoPost;
-import com.angelokezimana.posta.model.Post;
-import com.angelokezimana.posta.repository.PhotoPostRepository;
-import com.angelokezimana.posta.repository.PostRepository;
+import com.angelokezimana.posta.domain.blog.PhotoPost;
+import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.repository.blog.PhotoPostRepository;
+import com.angelokezimana.posta.repository.blog.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class PostService {
+public class PostServiceImpl implements IPostService {
 
     @Autowired
     private PostRepository postRepository;
