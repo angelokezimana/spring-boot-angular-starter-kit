@@ -7,8 +7,10 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "users")
@@ -32,24 +34,29 @@ public class User {
 
     private boolean enabled;
 
+    private int failedLoginAttempts;
+    private boolean loginDisabled;
+
     @Column(name = "token_expired")
     private boolean tokenExpired;
+    private String token;
 
     @ManyToMany
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "role_user",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "author")
     private List<Post> posts;
 
     @OneToMany(mappedBy = "author")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private Set<SecureToken> tokens;
 
     public Long getId() {
         return id;
@@ -129,5 +136,17 @@ public class User {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<SecureToken> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(Set<SecureToken> tokens) {
+        this.tokens = tokens;
+    }
+
+    public void addToken(final SecureToken token){
+        tokens.add(token);
     }
 }
