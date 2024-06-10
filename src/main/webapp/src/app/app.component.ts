@@ -1,17 +1,40 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
+
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, MatSlideToggleModule, MatFormFieldModule, MatInputModule, MatCardModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [RouterOutlet, MatSidenavModule, HeaderComponent, SidebarComponent],
 })
 export class AppComponent {
-  title = 'Posta';
+  isMobile = false;
+  isCollapsed = true;
+
+  constructor(private observer: BreakpointObserver) {}
+
+  ngOnInit() {
+    this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
+      this.isMobile = screenSize.matches;
+    });
+  }
+
+  onToggleMenu() {
+    this.toggleMenu();
+  }
+
+  toggleMenu() {
+    if (this.isMobile) {
+      this.isCollapsed = false;
+    } else {
+      this.isCollapsed = !this.isCollapsed;
+    }
+  }
 }

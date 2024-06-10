@@ -1,16 +1,14 @@
-<div>
-  Welcome {{ title }}
-  <mat-card>
-    <mat-card-content>
-      <p>
-        <mat-slide-toggle>Toggle me!</mat-slide-toggle>
-      </p>
-      <mat-form-field appearance="outline" class="m-2">
-        <mat-label>Outline form field</mat-label>
-        <input matInput placeholder="Placeholder" />
-      </mat-form-field>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<router-outlet />
+<app-header (toggleMenu)="toggleMenu()"></app-header>
+<mat-sidenav-container autosize="true">
+  <app-sidebar
+    [isCollapsed]="isCollapsed"
+    [isMobile]="isMobile"
+    (sidenavToggle)="toggleMenu()"
+  ></app-sidebar>
+  <mat-sidenav-content>
+    <div>
+      <h2>Content</h2>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
