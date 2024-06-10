@@ -3,10 +3,11 @@ package com.angelokezimana.posta.domain.security;
 import com.angelokezimana.posta.domain.blog.Comment;
 import com.angelokezimana.posta.domain.blog.Post;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.Collection;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +58,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<SecureToken> tokens;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp created_at;
 
     public Long getId() {
         return id;
