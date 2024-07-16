@@ -61,7 +61,7 @@ public class User {
 
     @CreationTimestamp
     @Column(updatable = false)
-    private Timestamp created_at;
+    private Timestamp createdAt;
 
     public Long getId() {
         return id;
@@ -145,6 +145,30 @@ public class User {
 
     public Set<SecureToken> getTokens() {
         return tokens;
+    }
+
+    public int getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(int failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public boolean isLoginDisabled() {
+        return loginDisabled;
+    }
+
+    public void setLoginDisabled(boolean loginDisabled) {
+        this.loginDisabled = loginDisabled;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public void setTokens(Set<SecureToken> tokens) {

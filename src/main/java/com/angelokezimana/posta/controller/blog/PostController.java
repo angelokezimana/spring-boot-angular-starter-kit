@@ -2,6 +2,7 @@ package com.angelokezimana.posta.controller.blog;
 
 import com.angelokezimana.posta.domain.blog.Post;
 import com.angelokezimana.posta.service.blog.PostService;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class PostController {
     }
 
     @PostMapping
-    private ResponseEntity<Post> create(@RequestBody Post newPost) {
+    private ResponseEntity<Post> create(@Valid @RequestBody Post newPost) {
         log.info("Received POST request with post: {}", newPost);
         log.info("Received POST request with photoPosts: {}", newPost.getPhotoPosts());
         Post post = postService.createPost(newPost);
@@ -56,7 +57,7 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    private ResponseEntity<Post> update(@PathVariable Long postId, @RequestBody Post updatedPost) {
+    private ResponseEntity<Post> update(@PathVariable Long postId, @Valid @RequestBody Post updatedPost) {
         updatedPost.setId(postId);
 
         Post updatedPostResult = postService.updatePost(updatedPost);

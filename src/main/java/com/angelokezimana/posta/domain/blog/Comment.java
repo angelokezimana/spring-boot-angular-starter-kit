@@ -3,6 +3,7 @@ package com.angelokezimana.posta.domain.blog;
 import com.angelokezimana.posta.domain.security.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,6 +15,7 @@ public class Comment {
     private long id;
 
     @Column(columnDefinition = "LONGTEXT", nullable = false)
+    @NotBlank(message = "Text is mandatory")
     private String text;
 
     @ManyToOne
