@@ -2,6 +2,7 @@ package com.angelokezimana.posta.service.blog.impl;
 
 import com.angelokezimana.posta.domain.blog.PhotoPost;
 import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.exception.blog.PostNotFoundException;
 import com.angelokezimana.posta.repository.blog.PhotoPostRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.service.blog.PostService;
@@ -43,7 +44,7 @@ public class PostServiceImpl implements PostService {
 
     public Post updatePost(Post updatedPost) {
         Post existingPost = postRepository.findById(updatedPost.getId())
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> PostNotFoundException.forId(updatedPost.getId()));
 
         existingPost.setText(updatedPost.getText());
 
@@ -52,7 +53,7 @@ public class PostServiceImpl implements PostService {
 
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> PostNotFoundException.forId(postId));
 
         postRepository.delete(post);
     }

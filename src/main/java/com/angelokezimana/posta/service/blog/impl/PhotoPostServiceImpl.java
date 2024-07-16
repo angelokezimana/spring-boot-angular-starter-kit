@@ -2,6 +2,8 @@ package com.angelokezimana.posta.service.blog.impl;
 
 import com.angelokezimana.posta.domain.blog.PhotoPost;
 import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.exception.blog.PhotoPostNotFoundException;
+import com.angelokezimana.posta.exception.blog.PostNotFoundException;
 import com.angelokezimana.posta.repository.blog.PhotoPostRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.service.blog.PhotoPostService;
@@ -21,7 +23,7 @@ public class PhotoPostServiceImpl implements PhotoPostService {
 
     public void createPost(Long postId, List<PhotoPost> newPhotosPost) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> PostNotFoundException.forId(postId));
 
         for (PhotoPost photoPost : newPhotosPost) {
             photoPost.setPost(post);
@@ -31,7 +33,7 @@ public class PhotoPostServiceImpl implements PhotoPostService {
 
     public void deletePhotoPost(Long photoPostId) {
         PhotoPost photoPost = photoPostRepository.findById(photoPostId)
-                .orElseThrow(() -> new RuntimeException("Image not found"));
+                .orElseThrow(() -> PhotoPostNotFoundException.forId(photoPostId));
 
         photoPostRepository.delete(photoPost);
     }
