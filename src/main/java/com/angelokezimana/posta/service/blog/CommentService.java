@@ -1,4 +1,4 @@
 package com.angelokezimana.posta.service.blog;
 
-public interface ICommentService {
+public interface CommentService {
 }

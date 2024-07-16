@@ -4,7 +4,7 @@ import com.angelokezimana.posta.domain.blog.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface IPostService {
+public interface PostService {
     Page<Post> getAllPosts(Pageable pageable);
     Post createPost(Post post);
     Post getPost(long postId);

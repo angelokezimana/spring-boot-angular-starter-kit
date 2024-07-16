@@ -1,7 +1,7 @@
 package com.angelokezimana.posta.controller.blog;
 
 import com.angelokezimana.posta.domain.blog.Post;
-import com.angelokezimana.posta.service.blog.IPostService;
+import com.angelokezimana.posta.service.blog.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private IPostService postService;
+    private PostService postService;
 
     private static final Logger log = LogManager.getLogger(PostController.class);
 
