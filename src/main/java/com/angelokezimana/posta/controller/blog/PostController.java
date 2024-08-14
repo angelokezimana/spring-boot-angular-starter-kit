@@ -31,7 +31,7 @@ public class PostController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder, WebRequest request) {
-        binder.setAllowedFields("text","photoPosts","author");
+        binder.setAllowedFields("text", "photoPosts", "author");
     }
 
     @GetMapping
