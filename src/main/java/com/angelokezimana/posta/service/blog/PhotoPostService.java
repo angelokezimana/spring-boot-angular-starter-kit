@@ -1,6 +1,6 @@
 package com.angelokezimana.posta.service.blog;
 
-import com.angelokezimana.posta.domain.blog.PhotoPost;
+import com.angelokezimana.posta.entity.blog.PhotoPost;
 
 import java.util.List;
 

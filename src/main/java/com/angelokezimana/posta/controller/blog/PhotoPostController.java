@@ -1,7 +1,8 @@
 package com.angelokezimana.posta.controller.blog;
 
-import com.angelokezimana.posta.domain.blog.PhotoPost;
-import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.dto.blog.PostDTO;
+import com.angelokezimana.posta.entity.blog.PhotoPost;
+import com.angelokezimana.posta.entity.blog.Post;
 import com.angelokezimana.posta.service.blog.PhotoPostService;
 import com.angelokezimana.posta.service.blog.PostService;
 import jakarta.validation.Valid;
@@ -23,15 +24,15 @@ public class PhotoPostController {
     private PostService postService;
 
     @PostMapping("/{postId}")
-    private ResponseEntity<Post> create(@PathVariable Long postId,
-                                        @Valid @RequestBody List<PhotoPost> newPhotosPost) {
+    private ResponseEntity<PostDTO> create(@PathVariable Long postId,
+                                           @Valid @RequestBody List<PhotoPost> newPhotosPost) {
         photoPostService.createPost(postId, newPhotosPost);
 
         return ResponseEntity.ok(postService.getPost(postId));
     }
 
     @DeleteMapping("/{postId}/{photoPostId}")
-    private ResponseEntity<Post> delete(@PathVariable Long postId,
+    private ResponseEntity<PostDTO> delete(@PathVariable Long postId,
                                         @PathVariable Long photoPostId) {
         try {
             photoPostService.deletePhotoPost(photoPostId);

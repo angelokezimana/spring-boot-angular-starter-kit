@@ -1,4 +1,4 @@
-package com.angelokezimana.posta.domain.security;
+package com.angelokezimana.posta.entity.security;
 
 
 import org.hibernate.annotations.CreationTimestamp;

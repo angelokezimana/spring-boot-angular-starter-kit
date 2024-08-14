@@ -1,4 +1,4 @@
-package com.angelokezimana.posta.domain.security;
+package com.angelokezimana.posta.entity.security;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;

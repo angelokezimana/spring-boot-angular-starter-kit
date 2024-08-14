@@ -1,7 +1,7 @@
 package com.angelokezimana.posta.service.blog.impl;
 
-import com.angelokezimana.posta.domain.blog.PhotoPost;
-import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.entity.blog.PhotoPost;
+import com.angelokezimana.posta.entity.blog.Post;
 import com.angelokezimana.posta.exception.blog.PhotoPostNotFoundException;
 import com.angelokezimana.posta.exception.blog.PostNotFoundException;
 import com.angelokezimana.posta.repository.blog.PhotoPostRepository;

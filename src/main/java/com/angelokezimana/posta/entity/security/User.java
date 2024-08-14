@@ -1,7 +1,7 @@
-package com.angelokezimana.posta.domain.security;
+package com.angelokezimana.posta.entity.security;
 
-import com.angelokezimana.posta.domain.blog.Comment;
-import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.entity.blog.Comment;
+import com.angelokezimana.posta.entity.blog.Post;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;

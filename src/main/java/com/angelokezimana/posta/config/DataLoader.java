@@ -1,9 +1,9 @@
 package com.angelokezimana.posta.config;
 
 
-import com.angelokezimana.posta.domain.security.Permission;
-import com.angelokezimana.posta.domain.security.Role;
-import com.angelokezimana.posta.domain.security.User;
+import com.angelokezimana.posta.entity.security.Permission;
+import com.angelokezimana.posta.entity.security.Role;
+import com.angelokezimana.posta.entity.security.User;
 import com.angelokezimana.posta.repository.security.PermissionRepository;
 import com.angelokezimana.posta.repository.security.RoleRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;

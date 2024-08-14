@@ -1,4 +1,4 @@
-package com.angelokezimana.posta.domain.blog;
+package com.angelokezimana.posta.entity.blog;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -18,7 +18,6 @@ public class PhotoPost {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "post_id", nullable = false)
-    @JsonIgnore
     private Post post;
 
     public long getId() {

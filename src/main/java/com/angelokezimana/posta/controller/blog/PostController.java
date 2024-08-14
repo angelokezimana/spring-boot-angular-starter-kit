@@ -1,6 +1,7 @@
 package com.angelokezimana.posta.controller.blog;
 
-import com.angelokezimana.posta.domain.blog.Post;
+import com.angelokezimana.posta.dto.blog.PostDTO;
+import com.angelokezimana.posta.entity.blog.Post;
 import com.angelokezimana.posta.service.blog.PostService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +28,7 @@ public class PostController {
     private static final Logger log = LogManager.getLogger(PostController.class);
 
     @GetMapping
-    private ResponseEntity<List<Post>> findAll(
+    private ResponseEntity<List<PostDTO>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort
@@ -37,30 +38,30 @@ public class PostController {
         Sort parseSortParameter = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
 
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
-        Page<Post> posts = postService.getAllPosts(pageable);
+        Page<PostDTO> postDTOs = postService.getAllPosts(pageable);
 
-        return ResponseEntity.ok(posts.getContent());
+        return ResponseEntity.ok(postDTOs.getContent());
     }
 
     @PostMapping
-    private ResponseEntity<Post> create(@Valid @RequestBody Post newPost) {
+    private ResponseEntity<PostDTO> create(@Valid @RequestBody Post newPost) {
         log.info("Received POST request with post: {}", newPost);
         log.info("Received POST request with photoPosts: {}", newPost.getPhotoPosts());
-        Post post = postService.createPost(newPost);
-        return ResponseEntity.ok(post);
+        PostDTO postDTO = postService.createPost(newPost);
+        return ResponseEntity.ok(postDTO);
     }
 
     @GetMapping("/{postId}")
-    private ResponseEntity<Post> findById(@PathVariable Long postId) {
-        Post post = postService.getPost(postId);
-        return ResponseEntity.ok(post);
+    private ResponseEntity<PostDTO> findById(@PathVariable Long postId) {
+        PostDTO postDTO = postService.getPost(postId);
+        return ResponseEntity.ok(postDTO);
     }
 
     @PutMapping("/{postId}")
-    private ResponseEntity<Post> update(@PathVariable Long postId, @Valid @RequestBody Post updatedPost) {
+    private ResponseEntity<PostDTO> update(@PathVariable Long postId, @Valid @RequestBody Post updatedPost) {
         updatedPost.setId(postId);
 
-        Post updatedPostResult = postService.updatePost(updatedPost);
+        PostDTO updatedPostResult = postService.updatePost(updatedPost);
 
         return ResponseEntity.ok(updatedPostResult);
     }
