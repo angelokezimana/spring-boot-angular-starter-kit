@@ -13,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -26,6 +28,11 @@ public class PostController {
     private PostService postService;
 
     private static final Logger log = LogManager.getLogger(PostController.class);
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        binder.setAllowedFields("text","photoPosts","author");
+    }
 
     @GetMapping
     private ResponseEntity<List<PostDTO>> findAll(
