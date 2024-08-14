@@ -3,6 +3,7 @@ package com.angelokezimana.posta.mapper.blog;
 import com.angelokezimana.posta.dto.blog.CommentWithPostDTO;
 import com.angelokezimana.posta.entity.blog.Comment;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,10 @@ public class CommentWithPostMapper {
     }
 
     public static List<CommentWithPostDTO> toCommentWithPostDTOList(List<Comment> comments) {
+        if (comments == null) {
+            return Collections.emptyList();
+        }
+
         return comments.stream()
                 .map(CommentWithPostMapper::toCommentWithPostDTO)
                 .collect(Collectors.toList());
