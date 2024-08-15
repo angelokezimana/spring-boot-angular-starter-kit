@@ -15,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -52,35 +54,43 @@ public class PostController {
 
     @GetMapping("/{postId}")
     private ResponseEntity<?> findById(@PathVariable Long postId) {
+        Map<String, Object> response = new HashMap<>();
         try {
             PostDTO postDTO = postService.getPost(postId);
             return ResponseEntity.ok(postDTO);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to update post. " + e.getMessage());
+            response.put("message", "Failed to fetch post. " + e.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @PutMapping("/{postId}")
     private ResponseEntity<?> update(@PathVariable Long postId, @Valid @RequestBody PostRequestDTO updatedPost) {
+        Map<String, Object> response = new HashMap<>();
         try {
             PostDTO updatedPostResult = postService.updatePost(postId, updatedPost);
 
             return ResponseEntity.ok(updatedPostResult);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to update post. " + e.getMessage());
+            response.put("message", "Failed to update post. " + e.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @DeleteMapping("/{postId}")
-    private ResponseEntity<String> delete(@PathVariable Long postId) {
+    private ResponseEntity<Map<String, Object>> delete(@PathVariable Long postId) {
+        Map<String, Object> response = new HashMap<>();
         try {
             postService.deletePost(postId);
-            return ResponseEntity.ok("Post deleted successfully");
+            response.put("message", "Post deleted successfully");
+            response.put("status", HttpStatus.OK.value());
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to delete post. " + e.getMessage());
+            response.put("message", "Failed to delete post. " + e.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }

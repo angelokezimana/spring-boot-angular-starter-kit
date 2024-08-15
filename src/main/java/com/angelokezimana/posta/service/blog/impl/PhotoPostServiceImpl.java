@@ -39,6 +39,11 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         photoPostRepository.saveAll(photoPosts);
     }
 
+    public PhotoPost getPhotoPost(Long photoPostId) {
+        return photoPostRepository.findById(photoPostId)
+                .orElseThrow(() -> PhotoPostNotFoundException.forId(photoPostId));
+    }
+
     public void deletePhotoPost(Long photoPostId) {
         PhotoPost photoPost = photoPostRepository.findById(photoPostId)
                 .orElseThrow(() -> PhotoPostNotFoundException.forId(photoPostId));

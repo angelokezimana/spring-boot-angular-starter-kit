@@ -16,7 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/comments")
@@ -47,47 +49,57 @@ public class CommentController {
     @PostMapping("/posts/{postId}")
     private ResponseEntity<?> create(@PathVariable Long postId,
                                      @Valid @RequestBody CommentRequestDTO newPost) {
+        Map<String, Object> response = new HashMap<>();
         try {
             CommentDTO commentDTO = commentService.createComment(postId, newPost);
             return ResponseEntity.ok(commentDTO);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to create a new comment. " + e.getMessage());
+            response.put("message", "Failed to create a new comment. " + e.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @GetMapping("/{commentId}")
     private ResponseEntity<?> findById(@PathVariable Long commentId) {
+        Map<String, Object> response = new HashMap<>();
         try {
             CommentWithPostDTO commentWithPostDTO = commentService.getComment(commentId);
             return ResponseEntity.ok(commentWithPostDTO);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to fetch comment. " + e.getMessage());
+            response.put("message", "Failed to fetch comment. " + e.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @PutMapping("/{commentId}")
     private ResponseEntity<?> update(@PathVariable Long commentId,
                                      @Valid @RequestBody CommentRequestDTO updatedComment) {
+        Map<String, Object> response = new HashMap<>();
         try {
             CommentDTO updatedCommentResult = commentService.updateComment(commentId, updatedComment);
 
             return ResponseEntity.ok(updatedCommentResult);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to update comment. " + e.getMessage());
+            response.put("message", "Failed to update comment. " + e.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @DeleteMapping("/{commentId}")
-    private ResponseEntity<String> delete(@PathVariable Long commentId) {
+    private ResponseEntity<Map<String, Object>> delete(@PathVariable Long commentId) {
+        Map<String, Object> response = new HashMap<>();
         try {
             commentService.deleteComment(commentId);
-            return ResponseEntity.ok("Comment deleted successfully");
+            response.put("message", "Comment deleted successfully");
+            response.put("status", HttpStatus.OK.value());
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to delete comment. " + e.getMessage());
+            response.put("message", "Failed to delete comment. " + e.getMessage());
+            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }
