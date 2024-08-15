@@ -1,7 +1,8 @@
 package com.angelokezimana.posta.controller.blog;
 
 import com.angelokezimana.posta.dto.blog.CommentDTO;
-import com.angelokezimana.posta.entity.blog.Comment;
+import com.angelokezimana.posta.dto.blog.CommentRequestDTO;
+import com.angelokezimana.posta.dto.blog.CommentWithPostDTO;
 import com.angelokezimana.posta.service.blog.CommentService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
@@ -13,9 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -27,11 +26,6 @@ public class CommentController {
     private CommentService commentService;
 
     private static final Logger log = LogManager.getLogger(PostController.class);
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder, WebRequest request) {
-        binder.setAllowedFields("text", "author");
-    }
 
     @GetMapping("/posts/{postId}")
     private ResponseEntity<List<CommentDTO>> findCommentsByPost(
@@ -51,24 +45,39 @@ public class CommentController {
     }
 
     @PostMapping("/posts/{postId}")
-    private ResponseEntity<CommentDTO> create(@PathVariable Long postId, @Valid @RequestBody Comment newPost) {
-        CommentDTO commentDTO = commentService.createComment(postId, newPost);
-        return ResponseEntity.ok(commentDTO);
+    private ResponseEntity<?> create(@PathVariable Long postId,
+                                     @Valid @RequestBody CommentRequestDTO newPost) {
+        try {
+            CommentDTO commentDTO = commentService.createComment(postId, newPost);
+            return ResponseEntity.ok(commentDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to create a new comment. " + e.getMessage());
+        }
     }
 
     @GetMapping("/{commentId}")
-    private ResponseEntity<CommentDTO> findById(@PathVariable Long commentId) {
-        CommentDTO commentDTO = commentService.getComment(commentId);
-        return ResponseEntity.ok(commentDTO);
+    private ResponseEntity<?> findById(@PathVariable Long commentId) {
+        try {
+            CommentWithPostDTO commentWithPostDTO = commentService.getComment(commentId);
+            return ResponseEntity.ok(commentWithPostDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to fetch comment. " + e.getMessage());
+        }
     }
 
     @PutMapping("/{commentId}")
-    private ResponseEntity<CommentDTO> update(@PathVariable Long commentId, @Valid @RequestBody Comment updatedComment) {
-        updatedComment.setId(commentId);
+    private ResponseEntity<?> update(@PathVariable Long commentId,
+                                     @Valid @RequestBody CommentRequestDTO updatedComment) {
+        try {
+            CommentDTO updatedCommentResult = commentService.updateComment(commentId, updatedComment);
 
-        CommentDTO updatedCommentResult = commentService.updateComment(updatedComment);
-
-        return ResponseEntity.ok(updatedCommentResult);
+            return ResponseEntity.ok(updatedCommentResult);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update comment. " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{commentId}")
@@ -77,7 +86,7 @@ public class CommentController {
             commentService.deleteComment(commentId);
             return ResponseEntity.ok("Comment deleted successfully");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to delete comment. " + e.getMessage());
         }
     }

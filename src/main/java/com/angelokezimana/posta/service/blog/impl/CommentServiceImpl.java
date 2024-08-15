@@ -1,6 +1,8 @@
 package com.angelokezimana.posta.service.blog.impl;
 
 import com.angelokezimana.posta.dto.blog.CommentDTO;
+import com.angelokezimana.posta.dto.blog.CommentRequestDTO;
+import com.angelokezimana.posta.dto.blog.CommentWithPostDTO;
 import com.angelokezimana.posta.entity.blog.Comment;
 import com.angelokezimana.posta.entity.blog.Post;
 import com.angelokezimana.posta.entity.security.User;
@@ -8,6 +10,7 @@ import com.angelokezimana.posta.exception.blog.CommentNotFoundException;
 import com.angelokezimana.posta.exception.blog.PostNotFoundException;
 import com.angelokezimana.posta.exception.security.UserNotFoundException;
 import com.angelokezimana.posta.mapper.blog.CommentMapper;
+import com.angelokezimana.posta.mapper.blog.CommentWithPostMapper;
 import com.angelokezimana.posta.repository.blog.CommentRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
@@ -34,35 +37,39 @@ public class CommentServiceImpl implements CommentService {
         return comments.map(CommentMapper::toCommentDTO);
     }
 
-    public CommentDTO createComment(Long postId, Comment comment) {
+    public CommentDTO createComment(Long postId, CommentRequestDTO commentRequestDTO) {
 
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
+        Long userId = commentRequestDTO.author().id();
+
+        User author = userRepository.findById(userId)
+                .orElseThrow(() -> UserNotFoundException.forId(userId));
+
+        Comment comment = new Comment();
+
+        comment.setText(commentRequestDTO.text());
+        comment.setAuthor(author);
         comment.setPost(post);
 
         Comment savedComment = commentRepository.save(comment);
 
-        User author = userRepository.findById(savedComment.getAuthor().getId())
-                .orElseThrow(() -> UserNotFoundException.forId(savedComment.getAuthor().getId()));
-
-        savedComment.setAuthor(author);
-
         return CommentMapper.toCommentDTO(savedComment);
     }
 
-    public CommentDTO getComment(Long commentId) {
+    public CommentWithPostDTO getComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> CommentNotFoundException.forId(commentId));
 
-        return CommentMapper.toCommentDTO(comment);
+        return CommentWithPostMapper.toCommentWithPostDTO(comment);
     }
 
-    public CommentDTO updateComment(Comment updatedComment) {
-        Comment existingComment = commentRepository.findById(updatedComment.getId())
-                .orElseThrow(() -> CommentNotFoundException.forId(updatedComment.getId()));
+    public CommentDTO updateComment(Long commentId, CommentRequestDTO updatedComment) {
+        Comment existingComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> CommentNotFoundException.forId(commentId));
 
-        existingComment.setText(updatedComment.getText());
+        existingComment.setText(updatedComment.text());
 
         Comment comment = commentRepository.save(existingComment);
 

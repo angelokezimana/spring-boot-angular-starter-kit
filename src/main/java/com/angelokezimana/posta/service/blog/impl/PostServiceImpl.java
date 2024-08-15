@@ -2,6 +2,7 @@ package com.angelokezimana.posta.service.blog.impl;
 
 import com.angelokezimana.posta.controller.blog.PostController;
 import com.angelokezimana.posta.dto.blog.PostDTO;
+import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.entity.blog.PhotoPost;
 import com.angelokezimana.posta.entity.blog.Post;
 import com.angelokezimana.posta.entity.security.User;
@@ -19,6 +20,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -41,33 +45,45 @@ public class PostServiceImpl implements PostService {
         return posts.map(PostMapper::toPostDTO);
     }
 
-    public PostDTO createPost(Post post) {
+    public PostDTO createPost(PostRequestDTO postRequestDTO) {
+        Long userId = postRequestDTO.author().id();
+
+        User author = userRepository.findById(userId)
+                .orElseThrow(() -> UserNotFoundException.forId(userId));
+
+        Post post = new Post();
+
+        post.setText(postRequestDTO.text());
+        post.setAuthor(author);
+
         Post savedPost = postRepository.save(post);
 
-        for (PhotoPost photoPost : post.getPhotoPosts()) {
-            photoPost.setPost(savedPost);
-            photoPostRepository.save(photoPost);
-        }
+        List<PhotoPost> photoPosts = postRequestDTO.photoPosts().stream()
+                .map(photoPostDTO -> {
+                    PhotoPost photoPost = new PhotoPost();
+                    photoPost.setImage(photoPostDTO.image());
+                    photoPost.setPost(savedPost);
+                    return photoPost;
+                })
+                .collect(Collectors.toList());
 
-        User author = userRepository.findById(savedPost.getAuthor().getId())
-                .orElseThrow(() -> UserNotFoundException.forId(savedPost.getAuthor().getId()));
+        photoPostRepository.saveAll(photoPosts);
 
-        savedPost.setAuthor(author);
         return PostMapper.toPostDTO(savedPost);
     }
 
-    public PostDTO getPost(long postId) {
+    public PostDTO getPost(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
         return PostMapper.toPostDTO(post);
     }
 
-    public PostDTO updatePost(Post updatedPost) {
-        Post existingPost = postRepository.findById(updatedPost.getId())
-                .orElseThrow(() -> PostNotFoundException.forId(updatedPost.getId()));
+    public PostDTO updatePost(Long postId, PostRequestDTO postRequestDTO) {
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> PostNotFoundException.forId(postId));
 
-        existingPost.setText(updatedPost.getText());
+        existingPost.setText(postRequestDTO.text());
 
         Post post = postRepository.save(existingPost);
 

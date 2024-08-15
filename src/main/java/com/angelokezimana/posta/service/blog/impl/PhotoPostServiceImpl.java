@@ -1,5 +1,6 @@
 package com.angelokezimana.posta.service.blog.impl;
 
+import com.angelokezimana.posta.dto.blog.PhotoPostDTO;
 import com.angelokezimana.posta.entity.blog.PhotoPost;
 import com.angelokezimana.posta.entity.blog.Post;
 import com.angelokezimana.posta.exception.blog.PhotoPostNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PhotoPostServiceImpl implements PhotoPostService {
@@ -21,14 +23,20 @@ public class PhotoPostServiceImpl implements PhotoPostService {
     @Autowired
     private PhotoPostRepository photoPostRepository;
 
-    public void createPost(Long postId, List<PhotoPost> newPhotosPost) {
+    public void createPhotoPost(Long postId, List<PhotoPostDTO> photoPostDTOs) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
-        for (PhotoPost photoPost : newPhotosPost) {
-            photoPost.setPost(post);
-            photoPostRepository.save(photoPost);
-        }
+        List<PhotoPost> photoPosts = photoPostDTOs.stream()
+                .map(photoPostDTO -> {
+                    PhotoPost photoPost = new PhotoPost();
+                    photoPost.setImage(photoPostDTO.image());
+                    photoPost.setPost(post);
+                    return photoPost;
+                })
+                .collect(Collectors.toList());
+
+        photoPostRepository.saveAll(photoPosts);
     }
 
     public void deletePhotoPost(Long photoPostId) {

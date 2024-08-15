@@ -1,8 +1,6 @@
 package com.angelokezimana.posta.controller.blog;
 
-import com.angelokezimana.posta.dto.blog.PostDTO;
-import com.angelokezimana.posta.entity.blog.PhotoPost;
-import com.angelokezimana.posta.entity.blog.Post;
+import com.angelokezimana.posta.dto.blog.PhotoPostDTO;
 import com.angelokezimana.posta.service.blog.PhotoPostService;
 import com.angelokezimana.posta.service.blog.PostService;
 import jakarta.validation.Valid;
@@ -24,22 +22,26 @@ public class PhotoPostController {
     private PostService postService;
 
     @PostMapping("/{postId}")
-    private ResponseEntity<PostDTO> create(@PathVariable Long postId,
-                                           @Valid @RequestBody List<PhotoPost> newPhotosPost) {
-        photoPostService.createPost(postId, newPhotosPost);
-
-        return ResponseEntity.ok(postService.getPost(postId));
+    private ResponseEntity<?> create(@PathVariable Long postId,
+                                           @Valid @RequestBody List<PhotoPostDTO> newPhotosPost) {
+        try {
+            photoPostService.createPhotoPost(postId, newPhotosPost);
+            return ResponseEntity.ok(postService.getPost(postId));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to create new photo. " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{postId}/{photoPostId}")
-    private ResponseEntity<PostDTO> delete(@PathVariable Long postId,
-                                        @PathVariable Long photoPostId) {
+    private ResponseEntity<?> delete(@PathVariable Long postId,
+                                           @PathVariable Long photoPostId) {
         try {
             photoPostService.deletePhotoPost(photoPostId);
             return ResponseEntity.ok(postService.getPost(postId));
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(postService.getPost(postId));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to delete photo. " + e.getMessage());
         }
     }
 }

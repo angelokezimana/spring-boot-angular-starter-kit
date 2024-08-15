@@ -5,6 +5,6 @@ import java.time.LocalDateTime;
 public record CommentWithPostDTO(Long id,
                                  String text,
                                  LocalDateTime publishedOn,
-                                 PostDTO postDTO,
+                                 PostDTO post,
                                  AuthorDTO author) {
 }

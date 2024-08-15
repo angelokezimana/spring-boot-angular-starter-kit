@@ -1,6 +1,5 @@
 package com.angelokezimana.posta.dto.security;
 
-import com.angelokezimana.posta.dto.blog.CommentDTO;
 import com.angelokezimana.posta.dto.blog.CommentWithPostDTO;
 import com.angelokezimana.posta.dto.blog.PostDTO;
 
