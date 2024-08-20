@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "permissions")
@@ -18,7 +18,7 @@ public class Permission {
     private String name;
 
     @ManyToMany(mappedBy = "permissions")
-    private Collection<Role> roles;
+    private Set<Role> roles;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -32,11 +32,11 @@ public class Permission {
         this.name = name;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

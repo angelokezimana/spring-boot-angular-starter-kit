@@ -3,8 +3,8 @@ package com.angelokezimana.posta.mapper.security;
 import com.angelokezimana.posta.dto.security.RoleDTO;
 import com.angelokezimana.posta.entity.security.Role;
 
-import java.util.List;
 import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class RoleMapper {

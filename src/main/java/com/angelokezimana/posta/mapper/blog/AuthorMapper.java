@@ -14,7 +14,7 @@ public class AuthorMapper {
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getEmail()
+                user.getUsername()
         );
     }
 

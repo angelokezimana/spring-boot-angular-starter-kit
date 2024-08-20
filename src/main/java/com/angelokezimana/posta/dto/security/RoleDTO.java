@@ -1,8 +1,8 @@
 package com.angelokezimana.posta.dto.security;
 
-import java.util.List;
+import java.util.Set;
 
 public record RoleDTO(Long id,
                       String name,
-                      List<PermissionDTO> permissions) {
+                      Set<PermissionDTO> permissions) {
 }

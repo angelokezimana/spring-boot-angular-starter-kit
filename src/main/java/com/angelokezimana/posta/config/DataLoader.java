@@ -4,12 +4,14 @@ package com.angelokezimana.posta.config;
 import com.angelokezimana.posta.entity.security.Permission;
 import com.angelokezimana.posta.entity.security.Role;
 import com.angelokezimana.posta.entity.security.User;
+import com.angelokezimana.posta.entity.security.UserStatus;
 import com.angelokezimana.posta.repository.security.PermissionRepository;
 import com.angelokezimana.posta.repository.security.RoleRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +48,7 @@ public class DataLoader implements
         List<Permission> userPermission = createPermissionIfNotFound("USER");
         List<Permission> blogPermission = createPermissionIfNotFound("BLOG");
 
-        List<Permission> adminPrivileges = new ArrayList<>();
+        Set<Permission> adminPrivileges = new HashSet<>();
 
         adminPrivileges.addAll(rolePermission);
         adminPrivileges.addAll(userPermission);
@@ -82,7 +84,7 @@ public class DataLoader implements
     }
 
     @Transactional
-    void createRoleIfNotFound(String name, Collection<Permission> permissions) {
+    void createRoleIfNotFound(String name, Set<Permission> permissions) {
 
         Role role = roleRepository.findByName(name);
         if (role == null) {
@@ -95,15 +97,15 @@ public class DataLoader implements
     @Transactional
     void createAdminIfNotFound(Role role) {
 
-        User user = userRepository.findByEmail("test@test.com");
-        if (user == null) {
-            user = new User();
+        Optional<User> optionalUser = userRepository.findByEmail("test@test.com");
+        if (optionalUser.isEmpty()) {
+            User user = new User();
             user.setFirstName("Test");
             user.setLastName("Test");
             user.setPassword(passwordEncoder.encode("test"));
             user.setEmail("test@test.com");
             user.setRoles(Collections.singleton(role));
-            user.setEnabled(true);
+            user.setStatus(UserStatus.ACTIVE.getValue());
             userRepository.save(user);
         }
     }

@@ -15,7 +15,7 @@ public class UserMapper {
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getEmail(),
+                user.getUsername(),
                 PostMapper.toPostDTOList(user.getPosts()),
                 CommentWithPostMapper.toCommentWithPostDTOList(user.getComments()),
                 RoleMapper.toRoleDTOList(user.getRoles())

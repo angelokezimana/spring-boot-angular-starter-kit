@@ -3,19 +3,24 @@ package com.angelokezimana.posta.entity.security;
 import com.angelokezimana.posta.entity.blog.Comment;
 import com.angelokezimana.posta.entity.blog.Post;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,16 +38,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private boolean enabled;
-
-    private int failedLoginAttempts;
-    private boolean loginDisabled;
-
-    @Column(name = "token_expired")
-    private boolean tokenExpired;
-    private String token;
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "role_user",
@@ -57,7 +53,14 @@ public class User {
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "user")
-    private Set<SecureToken> tokens;
+    private Set<Token> tokens;
+
+    @NotEmpty
+    @Column(name = "locale", nullable = false, length = 2)
+    private String locale = Locale.ENGLISH.value;
+
+    @Column(name = "status", length = 15, nullable = false)
+    private String status = UserStatus.LOCKED.value;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -87,7 +90,8 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 
@@ -95,6 +99,7 @@ public class User {
         this.email = email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -103,28 +108,12 @@ public class User {
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public boolean isTokenExpired() {
-        return tokenExpired;
-    }
-
-    public void setTokenExpired(boolean tokenExpired) {
-        this.tokenExpired = tokenExpired;
     }
 
     public List<Post> getPosts() {
@@ -143,39 +132,66 @@ public class User {
         this.comments = comments;
     }
 
-    public Set<SecureToken> getTokens() {
+    public Set<Token> getTokens() {
         return tokens;
     }
 
-    public int getFailedLoginAttempts() {
-        return failedLoginAttempts;
-    }
-
-    public void setFailedLoginAttempts(int failedLoginAttempts) {
-        this.failedLoginAttempts = failedLoginAttempts;
-    }
-
-    public boolean isLoginDisabled() {
-        return loginDisabled;
-    }
-
-    public void setLoginDisabled(boolean loginDisabled) {
-        this.loginDisabled = loginDisabled;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setTokens(Set<SecureToken> tokens) {
+    public void setTokens(Set<Token> tokens) {
         this.tokens = tokens;
     }
 
-    public void addToken(final SecureToken token){
+    public void addToken(final Token token){
         tokens.add(token);
+    }
+
+    public @NotEmpty String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(@NotEmpty String locale) {
+        this.locale = locale;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .flatMap(role -> role.getAuthorities().stream())
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserStatus.ACTIVE.value.equals(this.status) || UserStatus.PENDING.value.equals(this.status);
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return !getAuthorities().isEmpty();
     }
 }
