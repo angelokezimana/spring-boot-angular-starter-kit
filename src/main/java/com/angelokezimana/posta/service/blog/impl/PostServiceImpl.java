@@ -3,6 +3,7 @@ package com.angelokezimana.posta.service.blog.impl;
 import com.angelokezimana.posta.controller.blog.PostController;
 import com.angelokezimana.posta.dto.blog.PostDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
+import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.entity.blog.PhotoPost;
 import com.angelokezimana.posta.entity.blog.Post;
 import com.angelokezimana.posta.entity.security.User;
@@ -79,7 +80,7 @@ public class PostServiceImpl implements PostService {
         return PostMapper.toPostDTO(post);
     }
 
-    public PostDTO updatePost(Long postId, PostRequestDTO postRequestDTO) {
+    public PostDTO updatePost(Long postId, PostRequestUpdateDTO postRequestDTO) {
         Post existingPost = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 

@@ -2,7 +2,13 @@ package com.angelokezimana.posta.controller.blog;
 
 import com.angelokezimana.posta.dto.blog.PostDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
+import com.angelokezimana.posta.dto.ResponseMessage;
+import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.service.blog.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +59,14 @@ public class PostController {
         return ResponseEntity.ok(postDTO);
     }
 
+    @Operation(responses = {
+        @ApiResponse(responseCode = "200", description = "Post found",
+                content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                        schema = @Schema(implementation = PostDTO.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                        schema = @Schema(implementation = ResponseMessage.class)))
+    })
     @GetMapping("/{postId}")
     private ResponseEntity<?> findById(@PathVariable Long postId) {
         Map<String, Object> response = new HashMap<>();
@@ -65,8 +80,16 @@ public class PostController {
         }
     }
 
+    @Operation(responses = {
+            @ApiResponse(responseCode = "200", description = "Post found",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = PostDTO.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ResponseMessage.class)))
+    })
     @PutMapping("/{postId}")
-    private ResponseEntity<?> update(@PathVariable Long postId, @Valid @RequestBody PostRequestDTO updatedPost) {
+    private ResponseEntity<?> update(@PathVariable Long postId, @Valid @RequestBody PostRequestUpdateDTO updatedPost) {
         Map<String, Object> response = new HashMap<>();
         try {
             PostDTO updatedPostResult = postService.updatePost(postId, updatedPost);
@@ -79,6 +102,10 @@ public class PostController {
         }
     }
 
+    @Operation(responses = {
+            @ApiResponse(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = ResponseMessage.class)))
+    })
     @DeleteMapping("/{postId}")
     private ResponseEntity<Map<String, Object>> delete(@PathVariable Long postId) {
         Map<String, Object> response = new HashMap<>();
