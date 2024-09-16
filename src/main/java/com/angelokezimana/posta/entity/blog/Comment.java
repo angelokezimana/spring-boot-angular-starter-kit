@@ -2,6 +2,7 @@ package com.angelokezimana.posta.entity.blog;
 
 import com.angelokezimana.posta.entity.security.User;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -27,12 +28,8 @@ public class Comment {
     @JoinColumn(name = "author",nullable = false)
     private User author;
 
+    @CreationTimestamp
     private LocalDateTime publishedOn;
-
-    @PrePersist
-    protected void onCreate() {
-        this.publishedOn = LocalDateTime.now();
-    }
 
     public long getId() {
         return id;
