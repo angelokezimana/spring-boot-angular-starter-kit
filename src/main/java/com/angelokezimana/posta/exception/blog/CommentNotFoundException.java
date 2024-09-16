@@ -1,7 +1,9 @@
 package com.angelokezimana.posta.exception.blog;
 
 
-public class CommentNotFoundException extends RuntimeException {
+import jakarta.persistence.EntityNotFoundException;
+
+public class CommentNotFoundException extends EntityNotFoundException {
     public CommentNotFoundException(String message) {
         super(message);
     }

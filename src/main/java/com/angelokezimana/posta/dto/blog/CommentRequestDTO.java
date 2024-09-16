@@ -1,5 +1,10 @@
 package com.angelokezimana.posta.dto.blog;
 
-public record CommentRequestDTO(String text,
-                                AuthorDTO author) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CommentRequestDTO(
+        @NotBlank(message = "Text is mandatory")
+        String text,
+
+        AuthorDTO author) {
 }

@@ -1,4 +1,9 @@
 package com.angelokezimana.posta.dto.blog;
 
-public record PostRequestUpdateDTO(String text) {
+import jakarta.validation.constraints.NotBlank;
+
+public record PostRequestUpdateDTO(
+        @NotBlank(message = "Text is mandatory")
+        String text
+) {
 }

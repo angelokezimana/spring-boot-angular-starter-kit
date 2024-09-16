@@ -17,11 +17,14 @@ import java.util.stream.Collectors;
 @Service
 public class PhotoPostServiceImpl implements PhotoPostService {
 
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
+    private final PhotoPostRepository photoPostRepository;
 
     @Autowired
-    private PhotoPostRepository photoPostRepository;
+    public PhotoPostServiceImpl(PostRepository postRepository, PhotoPostRepository photoPostRepository) {
+        this.postRepository = postRepository;
+        this.photoPostRepository = photoPostRepository;
+    }
 
     public void createPhotoPost(Long postId, List<PhotoPostDTO> photoPostDTOs) {
         Post post = postRepository.findById(postId)
@@ -39,14 +42,13 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         photoPostRepository.saveAll(photoPosts);
     }
 
-    public PhotoPost getPhotoPost(Long photoPostId) {
-        return photoPostRepository.findById(photoPostId)
-                .orElseThrow(() -> PhotoPostNotFoundException.forId(photoPostId));
-    }
-
-    public void deletePhotoPost(Long photoPostId) {
+    public void deletePhotoPost(Long photoPostId, Long postId) {
         PhotoPost photoPost = photoPostRepository.findById(photoPostId)
                 .orElseThrow(() -> PhotoPostNotFoundException.forId(photoPostId));
+
+        if (photoPost.getPost().getId() != postId) {
+            throw new PhotoPostNotFoundException("Photo does not belong to the specified post, or the post does not exist.");
+        }
 
         photoPostRepository.delete(photoPost);
     }

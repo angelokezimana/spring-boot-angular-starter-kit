@@ -7,6 +7,7 @@ import com.angelokezimana.posta.dto.security.RegisterRequestDTO;
 import com.angelokezimana.posta.entity.security.Token;
 import com.angelokezimana.posta.entity.security.TokenType;
 import com.angelokezimana.posta.entity.security.User;
+import com.angelokezimana.posta.exception.security.UserNotFoundException;
 import com.angelokezimana.posta.repository.security.TokenRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.security.AuthenticationService;
@@ -27,20 +28,24 @@ import java.util.List;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    private TokenRepository tokenRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    public AuthenticationServiceImpl(UserRepository userRepository,
+                                     TokenRepository tokenRepository,
+                                     PasswordEncoder passwordEncoder,
+                                     JwtService jwtService,
+                                     AuthenticationManager authenticationManager) {
+        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+    }
 
     public AuthenticationResponseDTO register(RegisterRequestDTO request) {
         User user = new User();
@@ -62,7 +67,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 request.email(),
                 request.password()
         ));
-        User user = userRepository.findByEmail(request.email()).orElseThrow();
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);

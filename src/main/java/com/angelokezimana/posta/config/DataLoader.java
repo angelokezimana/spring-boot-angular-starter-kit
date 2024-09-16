@@ -11,7 +11,6 @@ import com.angelokezimana.posta.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,17 +23,21 @@ public class DataLoader implements
 
     boolean alreadySetup = false;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PermissionRepository permissionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PermissionRepository permissionRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public DataLoader(UserRepository userRepository,
+                      RoleRepository roleRepository,
+                      PermissionRepository permissionRepository,
+                      PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.permissionRepository = permissionRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional
@@ -72,7 +75,7 @@ public class DataLoader implements
             permissionRepository.save(permission);
 
             List<String> subPermissions = Arrays.asList("CREATE", "READ", "UPDATE", "DELETE");
-            System.out.println("getPermission="+permission.getId());
+            System.out.println("getPermission=" + permission.getId());
 
             for (String subPermission : subPermissions) {
                 Permission subPerm = new Permission(subPermission);

@@ -15,25 +15,36 @@ import com.angelokezimana.posta.repository.blog.CommentRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.blog.CommentService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+@Transactional
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public CommentServiceImpl(CommentRepository commentRepository,
+                              PostRepository postRepository,
+                              UserRepository userRepository) {
+        this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
+        this.userRepository = userRepository;
+    }
 
     public Page<CommentDTO> getCommentsByPost(Long postId, Pageable pageable) {
         Page<Comment> comments = commentRepository.findByPostId(postId, pageable);
+
+        if (comments.isEmpty()) {
+            throw PostNotFoundException.forId(postId);
+        }
+
         return comments.map(CommentMapper::toCommentDTO);
     }
 

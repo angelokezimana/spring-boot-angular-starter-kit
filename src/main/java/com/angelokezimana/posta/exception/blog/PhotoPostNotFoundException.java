@@ -1,7 +1,9 @@
 package com.angelokezimana.posta.exception.blog;
 
 
-public class PhotoPostNotFoundException extends RuntimeException{
+import jakarta.persistence.EntityNotFoundException;
+
+public class PhotoPostNotFoundException extends EntityNotFoundException {
     public PhotoPostNotFoundException(String message) {
         super(message);
     }

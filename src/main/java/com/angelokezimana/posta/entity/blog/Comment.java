@@ -2,7 +2,6 @@ package com.angelokezimana.posta.entity.blog;
 
 import com.angelokezimana.posta.entity.security.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -16,7 +15,6 @@ public class Comment {
     private long id;
 
     @Column(columnDefinition = "LONGTEXT", nullable = false)
-    @NotBlank(message = "Text is mandatory")
     private String text;
 
     @ManyToOne

@@ -2,13 +2,8 @@ package com.angelokezimana.posta.controller.blog;
 
 import com.angelokezimana.posta.dto.blog.PostDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
-import com.angelokezimana.posta.dto.ResponseMessage;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.service.blog.PostService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,10 +24,14 @@ import java.util.Map;
 @RequestMapping("/api/v1/posts")
 public class PostController {
 
-    @Autowired
-    private PostService postService;
-
     private static final Logger log = LogManager.getLogger(PostController.class);
+
+    private final PostService postService;
+
+    @Autowired
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @GetMapping
     private ResponseEntity<List<PostDTO>> findAll(
@@ -53,71 +50,32 @@ public class PostController {
     }
 
     @PostMapping
-    private ResponseEntity<PostDTO> create(@Valid @RequestBody PostRequestDTO newPost) {
+    private ResponseEntity<PostDTO> create(@RequestBody @Valid PostRequestDTO newPost) {
         log.info("Received POST request with post: {}", newPost);
         PostDTO postDTO = postService.createPost(newPost);
         return ResponseEntity.ok(postDTO);
     }
 
-    @Operation(responses = {
-        @ApiResponse(responseCode = "200", description = "Post found",
-                content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = PostDTO.class))),
-        @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = ResponseMessage.class)))
-    })
     @GetMapping("/{postId}")
-    private ResponseEntity<?> findById(@PathVariable Long postId) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            PostDTO postDTO = postService.getPost(postId);
-            return ResponseEntity.ok(postDTO);
-        } catch (RuntimeException e) {
-            response.put("message", "Failed to fetch post. " + e.getMessage());
-            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+    private ResponseEntity<PostDTO> findById(@PathVariable Long postId) {
+
+        PostDTO postDTO = postService.getPost(postId);
+        return ResponseEntity.ok(postDTO);
     }
 
-    @Operation(responses = {
-            @ApiResponse(responseCode = "200", description = "Post found",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = PostDTO.class))),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ResponseMessage.class)))
-    })
     @PutMapping("/{postId}")
-    private ResponseEntity<?> update(@PathVariable Long postId, @Valid @RequestBody PostRequestUpdateDTO updatedPost) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            PostDTO updatedPostResult = postService.updatePost(postId, updatedPost);
+    private ResponseEntity<PostDTO> update(@PathVariable Long postId, @RequestBody @Valid PostRequestUpdateDTO updatedPost) {
 
-            return ResponseEntity.ok(updatedPostResult);
-        } catch (RuntimeException e) {
-            response.put("message", "Failed to update post. " + e.getMessage());
-            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+        PostDTO updatedPostResult = postService.updatePost(postId, updatedPost);
+        return ResponseEntity.ok(updatedPostResult);
     }
 
-    @Operation(responses = {
-            @ApiResponse(content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ResponseMessage.class)))
-    })
     @DeleteMapping("/{postId}")
-    private ResponseEntity<Map<String, Object>> delete(@PathVariable Long postId) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            postService.deletePost(postId);
-            response.put("message", "Post deleted successfully");
-            response.put("status", HttpStatus.OK.value());
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            response.put("message", "Failed to delete post. " + e.getMessage());
-            response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+    private ResponseEntity<Map<String, String>> delete(@PathVariable Long postId) {
+
+        Map<String, String> response = new HashMap<>();
+        postService.deletePost(postId);
+        response.put("message", "Post deleted successfully");
+        return ResponseEntity.ok(response);
     }
 }

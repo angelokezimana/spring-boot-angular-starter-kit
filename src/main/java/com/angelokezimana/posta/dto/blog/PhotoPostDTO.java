@@ -1,5 +1,10 @@
 package com.angelokezimana.posta.dto.blog;
 
-public record PhotoPostDTO(Long id,
-                           String image) {
+import jakarta.validation.constraints.NotBlank;
+
+public record PhotoPostDTO(
+        Long id,
+
+        @NotBlank(message = "Image is mandatory")
+        String image) {
 }

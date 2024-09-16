@@ -1,13 +1,13 @@
 package com.angelokezimana.posta.controller.auth;
 
 
-import com.angelokezimana.posta.controller.blog.PostController;
 import com.angelokezimana.posta.dto.security.AuthenticationRequestDTO;
 import com.angelokezimana.posta.dto.security.AuthenticationResponseDTO;
 import com.angelokezimana.posta.dto.security.RegisterRequestDTO;
 import com.angelokezimana.posta.service.security.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +23,22 @@ import java.io.IOException;
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
-    private static final Logger log = LogManager.getLogger(PostController.class);
+    private static final Logger log = LogManager.getLogger(AuthenticationController.class);
+
+    @Autowired
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody RegisterRequestDTO request) {
+    public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody @Valid RegisterRequestDTO request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody @Valid AuthenticationRequestDTO request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
