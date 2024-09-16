@@ -60,7 +60,7 @@ public class User implements UserDetails {
     private String locale = Locale.ENGLISH.value;
 
     @Column(name = "status", length = 15, nullable = false)
-    private String status = UserStatus.LOCKED.value;
+    private String status = UserStatus.INACTIVE.value;
 
     @CreationTimestamp
     @Column(updatable = false)
