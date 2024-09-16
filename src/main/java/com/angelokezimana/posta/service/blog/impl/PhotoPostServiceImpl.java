@@ -10,11 +10,13 @@ import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.service.blog.PhotoPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class PhotoPostServiceImpl implements PhotoPostService {
 
     private final PostRepository postRepository;

@@ -1,6 +1,5 @@
 package com.angelokezimana.posta.service.blog.impl;
 
-import com.angelokezimana.posta.controller.blog.PostController;
 import com.angelokezimana.posta.dto.blog.PostDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
@@ -12,8 +11,8 @@ import com.angelokezimana.posta.exception.security.UserNotFoundException;
 import com.angelokezimana.posta.mapper.blog.PostMapper;
 import com.angelokezimana.posta.repository.blog.PhotoPostRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
-import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.blog.PostService;
+import com.angelokezimana.posta.service.security.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +29,20 @@ import java.util.stream.Collectors;
 @Transactional
 public class PostServiceImpl implements PostService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final PostRepository postRepository;
+    private final PhotoPostRepository photoPostRepository;
+    private final UserService userService;
+
+    private static final Logger log = LogManager.getLogger(PostServiceImpl.class);
 
     @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    private PhotoPostRepository photoPostRepository;
-
-    private static final Logger log = LogManager.getLogger(PostController.class);
+    public PostServiceImpl(PostRepository postRepository,
+                           PhotoPostRepository photoPostRepository,
+                           UserService userService) {
+        this.postRepository = postRepository;
+        this.photoPostRepository = photoPostRepository;
+        this.userService = userService;
+    }
 
     public Page<PostDTO> getAllPosts(Pageable pageable) {
         Page<Post> posts = postRepository.findAll(pageable);
@@ -47,10 +50,9 @@ public class PostServiceImpl implements PostService {
     }
 
     public PostDTO createPost(PostRequestDTO postRequestDTO) {
-        Long userId = postRequestDTO.author().id();
 
-        User author = userRepository.findById(userId)
-                .orElseThrow(() -> UserNotFoundException.forId(userId));
+        User author = userService.getCurrentUser()
+                .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
 
         Post post = new Post();
 

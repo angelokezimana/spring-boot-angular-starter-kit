@@ -15,6 +15,7 @@ import com.angelokezimana.posta.repository.blog.CommentRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.blog.CommentService;
+import com.angelokezimana.posta.service.security.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,15 +28,15 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository,
                               PostRepository postRepository,
-                              UserRepository userRepository) {
+                              UserService userService) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public Page<CommentDTO> getCommentsByPost(Long postId, Pageable pageable) {
@@ -53,10 +54,8 @@ public class CommentServiceImpl implements CommentService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
-        Long userId = commentRequestDTO.author().id();
-
-        User author = userRepository.findById(userId)
-                .orElseThrow(() -> UserNotFoundException.forId(userId));
+        User author = userService.getCurrentUser()
+                .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
 
         Comment comment = new Comment();
 

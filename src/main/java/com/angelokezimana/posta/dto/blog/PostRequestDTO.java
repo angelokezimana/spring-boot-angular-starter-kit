@@ -8,7 +8,6 @@ public record PostRequestDTO(
         @NotBlank(message = "Text is mandatory")
         String text,
 
-        List<PhotoPostDTO> photoPosts,
-        AuthorDTO author
+        List<PhotoPostDTO> photoPosts
 ) {
 }
