@@ -11,6 +11,7 @@ import com.angelokezimana.posta.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.lang.NonNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class DataLoader implements
 
     @Override
     @Transactional
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    public void onApplicationEvent(@NonNull ContextRefreshedEvent event) {
 
         if (alreadySetup) {
             return;
@@ -57,9 +58,8 @@ public class DataLoader implements
         adminPrivileges.addAll(userPermission);
         adminPrivileges.addAll(blogPermission);
 
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
+        createRoleIfNotFound("ROLE_USER", new HashSet<>());
 
         createAdminIfNotFound(adminRole);
 
@@ -87,14 +87,14 @@ public class DataLoader implements
     }
 
     @Transactional
-    void createRoleIfNotFound(String name, Set<Permission> permissions) {
+    Role createRoleIfNotFound(String name, Set<Permission> permissions) {
 
-        Role role = roleRepository.findByName(name);
-        if (role == null) {
-            role = new Role(name);
-            role.setPermissions(permissions);
-            roleRepository.save(role);
-        }
+        return roleRepository.findByName(name)
+                .orElseGet(() -> {
+                    Role newRole = new Role(name);
+                    newRole.setPermissions(permissions);
+                    return roleRepository.save(newRole);
+                });
     }
 
     @Transactional

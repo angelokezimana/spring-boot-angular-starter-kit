@@ -3,6 +3,8 @@ package com.angelokezimana.posta.entity.security;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "tokens")
 public class Token {
@@ -19,6 +21,12 @@ public class Token {
     private boolean revoked;
 
     private boolean expired;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime expiresAt;
+
+    private LocalDateTime validatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName ="id")
@@ -62,6 +70,30 @@ public class Token {
 
     public void setExpired(boolean expired) {
         this.expired = expired;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    public LocalDateTime getValidatedAt() {
+        return validatedAt;
+    }
+
+    public void setValidatedAt(LocalDateTime validatedAt) {
+        this.validatedAt = validatedAt;
     }
 
     public User getUser() {

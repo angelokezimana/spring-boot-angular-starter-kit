@@ -74,6 +74,9 @@ CREATE TABLE IF NOT EXISTS tokens (
     token_type ENUM('BEARER') NOT NULL,
     revoked BOOLEAN NOT NULL DEFAULT FALSE,
     expired BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP,
+    expires_at TIMESTAMP,
+    validated_at TIMESTAMP,
     user_id BIGINT(20) UNSIGNED NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
