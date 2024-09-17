@@ -164,6 +164,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         tokenRepository.save(savedToken);
     }
 
+    private void sendValidationEmail(User user) throws MessagingException {
+        var newToken = generateAndSaveActivationToken(user);
+
+        emailService.sendEmail(
+                user.getUsername(),
+                user.getFirstName()+" "+user.getLastName(),
+                EmailTemplateName.ACTIVATE_ACCOUNT,
+                activationUrl,
+                newToken,
+                "Account activation"
+        );
+    }
+
     private String generateAndSaveActivationToken(User user) {
 
         String generatedToken = generateActivationCode(6);
@@ -176,19 +189,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         tokenRepository.save(token);
 
         return generatedToken;
-    }
-
-    private void sendValidationEmail(User user) throws MessagingException {
-        var newToken = generateAndSaveActivationToken(user);
-
-        emailService.sendEmail(
-                user.getUsername(),
-                user.getFirstName()+" "+user.getLastName(),
-                EmailTemplateName.ACTIVATE_ACCOUNT,
-                activationUrl,
-                newToken,
-                "Account activation"
-        );
     }
 
     private String generateActivationCode(int length) {
