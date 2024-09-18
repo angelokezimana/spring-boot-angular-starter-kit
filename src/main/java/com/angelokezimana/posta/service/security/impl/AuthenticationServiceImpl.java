@@ -18,11 +18,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,8 @@ import java.util.List;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+
+    private static final Logger log = LogManager.getLogger(AuthenticationServiceImpl.class);
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -82,12 +87,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+
+        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.email(),
                 request.password()
         ));
-        User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        User user = (User) auth.getPrincipal();
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);

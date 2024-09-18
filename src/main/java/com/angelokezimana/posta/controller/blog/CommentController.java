@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/comments")
 public class CommentController {
 
-    private static final Logger log = LogManager.getLogger(PostController.class);
+    private static final Logger log = LogManager.getLogger(CommentController.class);
 
     private final CommentService commentService;
 
