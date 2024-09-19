@@ -59,8 +59,9 @@ public class User implements UserDetails {
     @Column(name = "locale", nullable = false, length = 2)
     private String locale = Locale.ENGLISH.value;
 
-    @Column(name = "status", length = 15, nullable = false)
-    private String status = UserStatus.INACTIVE.value;
+    private boolean accountLocked;
+
+    private boolean enabled;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -152,12 +153,16 @@ public class User implements UserDetails {
         this.locale = locale;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isAccountLocked() {
+        return accountLocked;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAccountLocked(boolean accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Timestamp getCreatedAt() {
@@ -182,7 +187,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserStatus.ACTIVE.value.equals(this.status) || UserStatus.PENDING.value.equals(this.status);
+        return !accountLocked;
     }
 
     @Override
@@ -192,6 +197,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !getAuthorities().isEmpty();
+        return enabled;
     }
 }

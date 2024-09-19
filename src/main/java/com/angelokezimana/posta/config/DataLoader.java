@@ -4,7 +4,6 @@ package com.angelokezimana.posta.config;
 import com.angelokezimana.posta.entity.security.Permission;
 import com.angelokezimana.posta.entity.security.Role;
 import com.angelokezimana.posta.entity.security.User;
-import com.angelokezimana.posta.entity.security.UserStatus;
 import com.angelokezimana.posta.repository.security.PermissionRepository;
 import com.angelokezimana.posta.repository.security.RoleRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
@@ -108,7 +107,8 @@ public class DataLoader implements
             user.setPassword(passwordEncoder.encode("test"));
             user.setEmail("test@test.com");
             user.setRoles(Collections.singleton(role));
-            user.setStatus(UserStatus.ACTIVE.getValue());
+            user.setEnabled(true);
+            user.setAccountLocked(false);
             userRepository.save(user);
         }
     }

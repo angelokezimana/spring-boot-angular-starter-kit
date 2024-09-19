@@ -13,7 +13,6 @@ import com.angelokezimana.posta.mapper.blog.CommentMapper;
 import com.angelokezimana.posta.mapper.blog.CommentWithPostMapper;
 import com.angelokezimana.posta.repository.blog.CommentRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
-import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.blog.CommentService;
 import com.angelokezimana.posta.service.security.UserService;
 import jakarta.transaction.Transactional;
@@ -43,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
         Page<Comment> comments = commentRepository.findByPostId(postId, pageable);
 
         if (comments.isEmpty()) {
-            throw PostNotFoundException.forId(postId);
+            throw new CommentNotFoundException("No comments with post id "+postId+" exist");
         }
 
         return comments.map(CommentMapper::toCommentDTO);

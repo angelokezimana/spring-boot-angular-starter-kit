@@ -79,6 +79,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setEmail(request.email());
+        user.setEnabled(false);
+        user.setAccountLocked(false);
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setRoles(Collections.singleton(role));
 
@@ -163,7 +165,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         long userId = savedToken.getUser().getId();
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.forId(userId));
-        user.setStatus(UserStatus.ACTIVE.getValue());
+        user.setEnabled(true);
         userRepository.save(user);
 
         savedToken.setValidatedAt(LocalDateTime.now());
