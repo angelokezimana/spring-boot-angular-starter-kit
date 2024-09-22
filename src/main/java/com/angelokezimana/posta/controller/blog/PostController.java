@@ -12,9 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +52,10 @@ public class PostController {
         return ResponseEntity.ok(postDTOs.getContent());
     }
 
-    @PostMapping
-    private ResponseEntity<PostDTO> create(@RequestBody @Valid PostRequestDTO newPost) {
-        log.info("Received POST request with post: {}", newPost);
-        PostDTO postDTO = postService.createPost(newPost);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    private ResponseEntity<PostDTO> create(@ModelAttribute PostRequestDTO postRequestDTO,
+                                           @RequestParam("photos") List<MultipartFile> photos) throws IOException {
+        PostDTO postDTO = postService.createPost(postRequestDTO, photos);
         return ResponseEntity.ok(postDTO);
     }
 

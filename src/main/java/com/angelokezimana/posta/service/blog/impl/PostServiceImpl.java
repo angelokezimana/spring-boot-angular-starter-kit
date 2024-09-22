@@ -16,18 +16,29 @@ import com.angelokezimana.posta.service.security.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
+
+    @Value("${file.storage.path}")
+    private String fileStoragePath;
 
     private final PostRepository postRepository;
     private final PhotoPostRepository photoPostRepository;
@@ -49,7 +60,7 @@ public class PostServiceImpl implements PostService {
         return posts.map(PostMapper::toPostDTO);
     }
 
-    public PostDTO createPost(PostRequestDTO postRequestDTO) {
+    public PostDTO createPost(PostRequestDTO postRequestDTO, List<MultipartFile> images) throws IOException {
 
         User author = userService.getCurrentUser()
                 .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
@@ -61,16 +72,19 @@ public class PostServiceImpl implements PostService {
 
         Post savedPost = postRepository.save(post);
 
-        List<PhotoPost> photoPosts = postRequestDTO.photoPosts().stream()
-                .map(photoPostDTO -> {
-                    PhotoPost photoPost = new PhotoPost();
-                    photoPost.setImage(photoPostDTO.image());
-                    photoPost.setPost(savedPost);
-                    return photoPost;
-                })
-                .collect(Collectors.toList());
+        if (images != null && !images.isEmpty()) {
+            List<PhotoPost> photoPosts = new ArrayList<>();
 
-        photoPostRepository.saveAll(photoPosts);
+            for (MultipartFile image : images) {
+                String imageUrl = saveImage(image);
+                PhotoPost photoPost = new PhotoPost();
+                photoPost.setImage(imageUrl);
+                photoPost.setPost(savedPost);
+                photoPosts.add(photoPost);
+            }
+
+            photoPostRepository.saveAll(photoPosts);
+        }
 
         return PostMapper.toPostDTO(savedPost);
     }
@@ -98,5 +112,15 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
         postRepository.delete(post);
+    }
+
+    private String saveImage(MultipartFile image) throws IOException {
+        Path uploadPath = Paths.get(fileStoragePath);
+
+        String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        Path filePath = uploadPath.resolve(fileName);
+
+        Files.write(filePath, image.getBytes());
+        return filePath.toString();
     }
 }
