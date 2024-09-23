@@ -14,4 +14,5 @@ public interface AuthenticationService {
     void register(RegisterRequestDTO request) throws MessagingException;
     AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request);
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
+    void activateAccount(String token) throws MessagingException;
 }
