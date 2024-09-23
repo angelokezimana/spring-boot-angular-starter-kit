@@ -80,7 +80,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Map<String, String> handleException(Exception ex) {
         Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", "An unexpected error occurred: " + ex.getMessage());
+        errorMap.put("errorMessage", ex.getMessage());
         return errorMap;
     }
 }

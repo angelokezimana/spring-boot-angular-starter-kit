@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/posts/**").authenticated()
                         .requestMatchers("/api/v1/photo_posts/**").authenticated()
                         .requestMatchers("/api/v1/comments/**").authenticated()
+                        .requestMatchers("/api/v1/profile/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
