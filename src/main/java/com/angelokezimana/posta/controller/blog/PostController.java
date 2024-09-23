@@ -54,7 +54,7 @@ public class PostController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     private ResponseEntity<PostDTO> create(@ModelAttribute PostRequestDTO postRequestDTO,
-                                           @RequestParam("photos") List<MultipartFile> photos) throws IOException {
+                                           @RequestParam(value = "photos", required = false) List<MultipartFile> photos) throws IOException {
         PostDTO postDTO = postService.createPost(postRequestDTO, photos);
         return ResponseEntity.ok(postDTO);
     }
@@ -74,7 +74,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    private ResponseEntity<Map<String, String>> delete(@PathVariable Long postId) {
+    private ResponseEntity<Map<String, String>> delete(@PathVariable Long postId) throws IOException {
 
         Map<String, String> response = new HashMap<>();
         postService.deletePost(postId);

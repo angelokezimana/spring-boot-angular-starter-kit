@@ -19,5 +19,5 @@ public interface PostService {
 
     PostDTO updatePost(Long postId, PostRequestUpdateDTO postRequestDTO);
 
-    void deletePost(Long postId);
+    void deletePost(Long postId) throws IOException;
 }
