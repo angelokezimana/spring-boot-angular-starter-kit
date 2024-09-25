@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url("../../../assets/vintage-typewriter-blogging.jpg");
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
+.mat-mdc-card {
+  border-radius: 4px;
+  width: 100%;
+  height: fit-content;
+}
+
+@media (min-width: 768px) {
+  .mat-mdc-card {
+    width: 500px;
+    height: fit-content;
+  }
+}

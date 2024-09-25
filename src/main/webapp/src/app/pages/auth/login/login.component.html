@@ -1,0 +1,38 @@
+<mat-card-header class="auth-card-header">
+  <mat-card-title class="auth-card-title">Welcome to Posta 👋</mat-card-title>
+  <mat-card-subtitle class="auth-card-subtitle">Please provide your credentials to log in</mat-card-subtitle>
+</mat-card-header>
+
+<mat-card-content>
+  <mat-form-field appearance="outline" class="auth-form-field">
+    <mat-label>Email</mat-label>
+    <mat-icon matPrefix>account_circle</mat-icon>
+    <input matInput type="email" autocomplete="off">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="auth-form-field">
+    <mat-label>Password</mat-label>
+    <mat-icon matPrefix>vpn_key</mat-icon>
+    <input matInput type="password" autocomplete="off">
+  </mat-form-field>
+
+  <div class="login-options-group">
+    <div>
+      <mat-checkbox color="primary">Remember me!</mat-checkbox>
+    </div>
+    <div>
+      <a mat-button color="primary" routerLink="/auth/forgot-password">Forgot password ?</a>
+    </div>
+  </div>
+</mat-card-content>
+
+<mat-card-actions>
+  <button mat-flat-button color="primary" class="btn">Login</button>
+</mat-card-actions>
+
+<mat-card-footer class="auth-card-footer">
+  <p>
+    Don't have an account? <a mat-button color="primary" routerLink="/auth/register">Create one now</a>
+  </p>
+  <app-footer></app-footer>
+</mat-card-footer>

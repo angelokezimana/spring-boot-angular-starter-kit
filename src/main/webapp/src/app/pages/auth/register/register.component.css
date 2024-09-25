@@ -1,0 +1,10 @@
+.form-group {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .form-group {
+    display: flex;
+    gap: .1em;
+  }
+}

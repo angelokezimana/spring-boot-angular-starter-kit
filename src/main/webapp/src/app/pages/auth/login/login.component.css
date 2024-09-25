@@ -1,0 +1,4 @@
+.login-options-group {
+  display: flex;
+  justify-content: space-between;
+}
