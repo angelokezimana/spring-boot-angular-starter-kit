@@ -14,7 +14,7 @@ export class WebApiService {
    * GET
    */
   get(url: string): Observable<any> {
-    const httpOtions = {
+    const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Cache-Control' : 'no-cache',
@@ -25,7 +25,7 @@ export class WebApiService {
 
     return this.http.get(
       url,
-      httpOtions
+      httpOptions
     ).pipe(map((response:any) => response), catchError(throwError))
   }
 
@@ -33,7 +33,7 @@ export class WebApiService {
    * POST
    */
   post(url: string, model: any): Observable<any> {
-    const httpOtions = {
+    const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       }),
@@ -43,7 +43,7 @@ export class WebApiService {
     return this.http.post(
       url,
       model,
-      httpOtions
+      httpOptions
     ).pipe(map((response: any) => response), catchError(throwError));
   }
 
@@ -51,7 +51,7 @@ export class WebApiService {
    * PUT
    */
   put(url: string, model: any): Observable<any> {
-    const httpOtions = {
+    const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       }),
@@ -61,7 +61,7 @@ export class WebApiService {
     return this.http.put(
       url,
       model,
-      httpOtions
+      httpOptions
     ).pipe(map((response: any) => response), catchError(throwError));
   }
 
