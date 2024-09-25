@@ -1,0 +1,14 @@
+<app-header (toggleMenu)="toggleMenu()"></app-header>
+<mat-sidenav-container autosize="true">
+  <app-sidebar
+    [isCollapsed]="isCollapsed"
+    [isMobile]="isMobile"
+    (sidenavToggle)="toggleMenu()"
+  ></app-sidebar>
+  <mat-sidenav-content>
+    <div>
+      <h2>Content</h2>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
