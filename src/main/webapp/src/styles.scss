@@ -1,47 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@use '@angular/material' as mat;
+
+$custom-primary: mat.define-palette(mat.$blue-gray-palette);
+$custom-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$custom-warn: mat.define-palette(mat.$red-palette);
+
+$custom-theme: mat.define-light-theme((
+  color:(
+    primary: $custom-primary,
+    accent: $custom-accent,
+    warn: $custom-warn,
+  )
+));
+
+@include mat.all-component-themes($custom-theme);
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 h1 {
-    padding: 0 1rem;
+  padding: 0 1rem;
 }
+
 h2 {
-    padding: 1rem;
+  padding: 1rem;
 }
-mat-toolbar {
-    position: fixed;
-    top: 0;
-    z-index: 2;
-}
+
 mat-sidenav-container {
-    height: 100%;
+  height: 100%;
 }
+
 mat-sidenav {
-    padding-top: 3.5rem;
-    transition: width 0.3s ease;
+  padding-top: 0;
+  transition: width 0.3s ease;
 }
+
 @media screen and (min-width: 600px) {
-    mat-sidenav {
-        padding-top: 4rem;
-   }
+  mat-sidenav {
+    padding-top: 0;
+  }
 }
+
 mat-sidenav .entry {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
 }
-mat-sidenav-content {
-    padding-top: 3.5rem;
-}
-@media screen and (min-width: 600px) {
-    mat-sidenav-content {
-        padding-top: 4rem;
-   }
-}
+
 .expanded {
-    width: 250px;
+  width: 250px;
 }
 
 /*Start:====Auth css=====*/
@@ -79,4 +94,5 @@ mat-sidenav-content {
   margin-top: 10px;
   padding: 0 10px 10px 0;
 }
+
 /*End:====Auth css=====*/

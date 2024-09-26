@@ -10,7 +10,7 @@ import {MatCardModule} from "@angular/material/card";
     MatCardModule
   ],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css'
+  styleUrl: './auth.component.scss'
 })
 export class AuthComponent {
 

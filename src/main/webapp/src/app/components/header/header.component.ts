@@ -8,7 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
   standalone: true,
   imports: [MatToolbarModule, MatIconModule, MatButtonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   @Output() toggleMenu = new EventEmitter<void>();

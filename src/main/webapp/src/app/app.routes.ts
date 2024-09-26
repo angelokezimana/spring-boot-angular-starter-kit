@@ -18,6 +18,7 @@ export const routes: Routes = [
       {path: 'forgot-password', component: ForgotPasswordComponent}
     ]
   },
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
   {
     path: '', component: DefaultComponent, children: [
       {path: 'home', component: HomeComponent},
@@ -35,6 +36,5 @@ export const routes: Routes = [
       },
     ]
   },
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', component: NotFoundComponent}
 ];

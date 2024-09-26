@@ -1,0 +1,60 @@
+mat-sidenav-container {
+  background-image: url("../../../assets/vintage-typewriter-blogging.jpg");
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-sidenav {
+  background-color: #607d8b;
+
+  * {
+    color: white;
+  }
+}
+
+h1 {
+  padding: 0 1rem;
+}
+
+.content {
+  margin: 1rem;
+  flex: 1;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  transition: width 0.3s ease;
+
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+
+}
+
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.expanded {
+  width: 250px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content-username {
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}

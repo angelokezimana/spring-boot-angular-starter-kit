@@ -10,7 +10,7 @@ import {MatListModule} from '@angular/material/list';
   standalone: true,
   imports: [MatSidenavModule, MatIconModule, NgClass, NgIf, MatListModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   @Input() isCollapsed = true;

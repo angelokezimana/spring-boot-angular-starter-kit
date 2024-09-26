@@ -16,7 +16,7 @@ import {FooterComponent} from "../../../components/footer/footer.component";
     MatButtonModule, MatIconModule, MatCheckboxModule, RouterModule, FooterComponent
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 

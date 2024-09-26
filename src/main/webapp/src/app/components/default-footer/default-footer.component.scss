@@ -1,0 +1,12 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  * {
+    font-size: medium;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
