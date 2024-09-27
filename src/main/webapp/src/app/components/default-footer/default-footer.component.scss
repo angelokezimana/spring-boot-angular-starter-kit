@@ -1,9 +1,10 @@
 mat-toolbar {
   display: flex;
   justify-content: space-between;
+  height: fit-content;
 
   * {
-    font-size: medium;
+    font-size: small;
   }
 }
 

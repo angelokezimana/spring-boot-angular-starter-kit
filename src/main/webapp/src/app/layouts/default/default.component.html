@@ -1,11 +1,12 @@
 <mat-sidenav-container autosize="true">
+
   <mat-sidenav [ngClass]="!isCollapsed ? 'expanded' : ''" [mode]="isMobile ? 'over' : 'side'"
                [opened]="isMobile ? 'false' : 'true'" class="custom-sidenav">
     <mat-nav-list>
       <h1 *ngIf="!isCollapsed">Posta</h1>
     </mat-nav-list>
     <mat-nav-list>
-      <a mat-list-item>
+      <a mat-list-item class="list-item">
         <span class="entry">
           <mat-icon>house</mat-icon>
           <span *ngIf="!isCollapsed">Dashboard</span>
@@ -13,37 +14,17 @@
       </a>
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content>
-    <mat-toolbar>
-      <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
-        <mat-icon>menu</mat-icon>
-      </button>
 
-      <span class="spacer"></span>
-
-      <button mat-icon-button [matMenuTriggerFor]="langMenu" aria-label="Change language">
-        <mat-icon>language</mat-icon>
-      </button>
-      <mat-menu #langMenu="matMenu">
-        <button mat-menu-item>English</button>
-        <button mat-menu-item>French</button>
-        <button mat-menu-item>Spanish</button>
-      </mat-menu>
-
-      <button mat-button [matMenuTriggerFor]="userMenu" aria-label="User profile">
-        <mat-icon>account_circle</mat-icon>
-        <span class="content-username">admin&#64;mail.com</span>
-      </button>
-      <mat-menu #userMenu="matMenu">
-        <button mat-menu-item>Profile</button>
-        <button mat-menu-item>Logout</button>
-      </mat-menu>
-    </mat-toolbar>
+    <app-header (toggleMenu)="toggleMenu($event)"></app-header>
 
     <div class="content">
       <router-outlet></router-outlet>
     </div>
 
     <app-default-footer></app-default-footer>
+
   </mat-sidenav-content>
+
 </mat-sidenav-container>

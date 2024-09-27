@@ -1,3 +1,18 @@
+h1 {
+  margin: 0;
+}
+
+.list-item {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+mat-sidenav mat-nav-list:nth-of-type(2) a {
+  border-top: 1px solid #f2f2f2;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 mat-sidenav-container {
   background-image: url("../../../assets/vintage-typewriter-blogging.jpg");
   background-size: cover;
@@ -47,10 +62,6 @@ mat-sidenav-content {
 
 .expanded {
   width: 250px;
-}
-
-.spacer {
-  flex: 1 1 auto;
 }
 
 .content-username {

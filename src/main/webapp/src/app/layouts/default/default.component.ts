@@ -50,7 +50,7 @@ export class DefaultComponent {
     });
   }
 
-  toggleMenu() {
+  toggleMenu(event:any) {
     if(this.isMobile){
       this.sidenav.toggle();
       this.isCollapsed = false;
