@@ -2,10 +2,17 @@
   <h1 *ngIf="!isCollapsed()">Posta</h1>
 </mat-nav-list>
 <mat-nav-list>
-  <a mat-list-item [ngClass]="!isCollapsed() ? 'list-item' : ''">
+  <a mat-list-item [ngClass]="!isCollapsed() ? 'list-item' : ''" routerLink="/home" routerLinkActive="active-link">
         <span class="entry">
           <mat-icon>house</mat-icon>
           <span *ngIf="!isCollapsed()">Dashboard</span>
+        </span>
+  </a>
+
+  <a mat-list-item [ngClass]="!isCollapsed() ? 'list-item' : ''" routerLink="/my-posts" routerLinkActive="active-link">
+        <span class="entry">
+          <mat-icon>article</mat-icon>
+          <span *ngIf="!isCollapsed()">My posts</span>
         </span>
   </a>
 </mat-nav-list>
