@@ -7,6 +7,11 @@ import {ActivateAccountComponent} from "./pages/auth/activate-account/activate-a
 import {DefaultComponent} from "./layouts/default/default.component";
 import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {ForgotPasswordComponent} from "./pages/auth/forgot-password/forgot-password.component";
+import {MyPostsComponent} from "./pages/my-posts/my-posts.component";
+import {PostFormComponent} from "./pages/post-form/post-form.component";
+import {UsersComponent} from "./pages/admin/users/users.component";
+import {RolesComponent} from "./pages/admin/roles/roles.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 
 
 export const routes: Routes = [
@@ -22,16 +27,13 @@ export const routes: Routes = [
   {
     path: '', component: DefaultComponent, children: [
       {path: 'home', component: HomeComponent},
+      {path: 'profile', component: ProfileComponent},
+      {path: 'my-posts', component: MyPostsComponent},
+      {path: 'post-form', component: PostFormComponent},
       {
-        path: 'posts', children: [
-          {path: '', component: HomeComponent},
-          {path: 'add', component: HomeComponent}
-        ]
-      },
-      {
-        path: 'comments', children: [
-          {path: '', component: HomeComponent},
-          {path: 'add', component: HomeComponent}
+        path: 'admin', children: [
+          {path: 'users', component: UsersComponent},
+          {path: 'roles', component: RolesComponent}
         ]
       },
     ]
