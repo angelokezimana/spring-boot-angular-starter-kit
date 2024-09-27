@@ -1,15 +1,11 @@
-<mat-sidenav
-  #sidenav
-  [ngClass]="!isCollapsed ? 'expanded' : ''"
-  [mode]="isMobile ? 'over' : 'side'"
-  [opened]="!isMobile"
->
-  <mat-nav-list>
-    <a mat-list-item>
-      <span class="entry">
-        <mat-icon>house</mat-icon>
-        <span *ngIf="!isCollapsed">Dashboard</span>
-      </span>
-    </a>
-  </mat-nav-list>
-</mat-sidenav>
+<mat-nav-list>
+  <h1 *ngIf="!isCollapsed()">Posta</h1>
+</mat-nav-list>
+<mat-nav-list>
+  <a mat-list-item [ngClass]="!isCollapsed() ? 'list-item' : ''">
+        <span class="entry">
+          <mat-icon>house</mat-icon>
+          <span *ngIf="!isCollapsed()">Dashboard</span>
+        </span>
+  </a>
+</mat-nav-list>
