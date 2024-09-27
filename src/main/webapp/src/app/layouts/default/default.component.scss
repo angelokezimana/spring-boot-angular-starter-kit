@@ -18,6 +18,7 @@ mat-sidenav-container {
   background-size: cover;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 .custom-sidenav {
@@ -35,10 +36,6 @@ h1 {
 .content {
   margin: 1rem;
   flex: 1;
-}
-
-mat-sidenav-container {
-  height: 100%;
 }
 
 mat-sidenav {
@@ -62,10 +59,4 @@ mat-sidenav-content {
 
 .expanded {
   width: 250px;
-}
-
-.content-username {
-  @media screen and (max-width: 600px) {
-    display: none;
-  }
 }
