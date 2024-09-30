@@ -1,6 +1,7 @@
 package com.angelokezimana.posta.controller.auth;
 
 
+import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.security.AuthenticationRequestDTO;
 import com.angelokezimana.posta.dto.security.AuthenticationResponseDTO;
 import com.angelokezimana.posta.dto.security.RegisterRequestDTO;
@@ -16,8 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -33,12 +32,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> register(@RequestBody @Valid RegisterRequestDTO request) throws MessagingException {
+    public ResponseEntity<ResponseDTO> register(@RequestBody @Valid RegisterRequestDTO request) throws MessagingException {
 
-        Map<String, String> response = new HashMap<>();
         authenticationService.register(request);
-        response.put("message", "User created successfully");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ResponseDTO("message", "User created successfully"));
     }
 
     @PostMapping("/authenticate")

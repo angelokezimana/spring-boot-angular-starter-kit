@@ -1,5 +1,6 @@
 package com.angelokezimana.posta.controller.blog;
 
+import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.blog.PostDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
@@ -18,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -74,11 +73,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    private ResponseEntity<Map<String, String>> delete(@PathVariable Long postId) throws IOException {
+    private ResponseEntity<ResponseDTO> delete(@PathVariable Long postId) throws IOException {
 
-        Map<String, String> response = new HashMap<>();
         postService.deletePost(postId);
-        response.put("message", "Post deleted successfully");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ResponseDTO("message", "Post deleted successfully"));
     }
 }

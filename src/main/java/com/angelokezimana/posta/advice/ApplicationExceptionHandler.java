@@ -1,5 +1,6 @@
 package com.angelokezimana.posta.advice;
 
+import com.angelokezimana.posta.dto.ResponseDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,57 +31,43 @@ public class ApplicationExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EntityNotFoundException.class)
-    public Map<String, String> handleException(EntityNotFoundException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", ex.getMessage());
-        return errorMap;
+    public ResponseDTO handleException(EntityNotFoundException ex) {
+        return new ResponseDTO("errorMessage", ex.getMessage());
     }
 
     @ResponseStatus(HttpStatus.LOCKED)
     @ExceptionHandler(LockedException.class)
-    public Map<String, String> handleException(LockedException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", "Your account is locked. Please contact your administrator for assistance.");
-        return errorMap;
+    public ResponseDTO handleException(LockedException ex) {
+        return new ResponseDTO("errorMessage", "Your account is locked. Please contact your administrator for assistance.");
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(DisabledException.class)
-    public Map<String, String> handleException(DisabledException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", "Your account is disabled. Please contact your administrator for assistance.");
-        return errorMap;
+    public ResponseDTO handleException(DisabledException ex) {
+        return new ResponseDTO("errorMessage", "Your account is disabled. Please contact your administrator for assistance.");
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(BadCredentialsException.class)
-    public Map<String, String> handleException(BadCredentialsException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", "Invalid username or password.");
-        return errorMap;
+    public ResponseDTO handleException(BadCredentialsException ex) {
+        return new ResponseDTO("errorMessage", "Invalid username or password.");
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(MessagingException.class)
-    public Map<String, String> handleException(MessagingException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", "Error while sending email: " + ex.getMessage());
-        return errorMap;
+    public ResponseDTO handleException(MessagingException ex) {
+        return new ResponseDTO("errorMessage", "Error while sending email: " + ex.getMessage());
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
-    public Map<String, String> handleException(ExpiredJwtException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", "Your session has expired or the token is not valid. Please log in again.");
-        return errorMap;
+    public ResponseDTO handleException(ExpiredJwtException ex) {
+        return new ResponseDTO("errorMessage", "Your session has expired or the token is not valid. Please log in again.");
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public Map<String, String> handleException(Exception ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorMessage", ex.getMessage());
-        return errorMap;
+    public ResponseDTO handleException(Exception ex) {
+        return new ResponseDTO("errorMessage", ex.getMessage());
     }
 }

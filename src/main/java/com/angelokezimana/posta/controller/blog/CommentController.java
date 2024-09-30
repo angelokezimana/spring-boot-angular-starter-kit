@@ -1,5 +1,6 @@
 package com.angelokezimana.posta.controller.blog;
 
+import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.blog.CommentDTO;
 import com.angelokezimana.posta.dto.blog.CommentRequestDTO;
 import com.angelokezimana.posta.dto.blog.CommentWithPostDTO;
@@ -15,9 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/comments")
@@ -74,12 +73,9 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    private ResponseEntity<Map<String, String>> delete(@PathVariable Long commentId) {
+    private ResponseEntity<ResponseDTO> delete(@PathVariable Long commentId) {
 
-        Map<String, String> response = new HashMap<>();
         commentService.deleteComment(commentId);
-        response.put("message", "Comment deleted successfully");
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ResponseDTO("message", "Comment deleted successfully"));
     }
 }

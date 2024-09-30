@@ -1,5 +1,6 @@
 package com.angelokezimana.posta.controller.profile;
 
+import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.profile.ChangePasswordRequestDTO;
 import com.angelokezimana.posta.dto.profile.ChangeProfileInfoRequestDTO;
 import com.angelokezimana.posta.service.security.UserService;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/profile")
@@ -27,20 +26,16 @@ public class ProfileController {
     }
 
     @PatchMapping("/change-password")
-    public ResponseEntity<Map<String, String>> changePassword(@RequestBody @Valid ChangePasswordRequestDTO request) {
+    public ResponseEntity<ResponseDTO> changePassword(@RequestBody @Valid ChangePasswordRequestDTO request) {
 
-        Map<String, String> response = new HashMap<>();
         userService.changePassword(request);
-        response.put("message", "Password changed successfully");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ResponseDTO("message", "Password changed successfully"));
     }
 
     @PatchMapping("/change-profile")
-    public ResponseEntity<Map<String, String>> changeProfileInfo(@RequestBody ChangeProfileInfoRequestDTO request) {
+    public ResponseEntity<ResponseDTO> changeProfileInfo(@RequestBody ChangeProfileInfoRequestDTO request) {
 
-        Map<String, String> response = new HashMap<>();
         userService.changeProfile(request);
-        response.put("message", "Info changed successfully");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new ResponseDTO("message", "Info changed successfully"));
     }
 }
