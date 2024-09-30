@@ -1,5 +1,5 @@
-<mat-nav-list>
-  <h1 *ngIf="!isCollapsed()">Posta</h1>
+<mat-nav-list class="mat-nav-title">
+  <h1>{{ !isCollapsed() ? 'Posta' : 'P' }}</h1>
 </mat-nav-list>
 <mat-nav-list>
   <a mat-list-item [ngClass]="!isCollapsed() ? 'list-item' : ''" routerLink="/home" routerLinkActive="active-link">
