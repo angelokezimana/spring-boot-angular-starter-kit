@@ -32,10 +32,13 @@ export class SidebarComponent {
       submenu: []
     },
     {
-      name: 'My posts',
-      link: '/my-posts',
-      icon: 'article',
-      submenu: []
+      name: 'Posts',
+      link: '',
+      icon: 'newspaper',
+      submenu: [
+        {name: 'My posts', link: '/my-posts', icon: 'article', submenu: []},
+        {name: 'Add post', link: '/post-form', icon: 'add', submenu: []},
+      ]
     },
     {
       name: 'Admin',
