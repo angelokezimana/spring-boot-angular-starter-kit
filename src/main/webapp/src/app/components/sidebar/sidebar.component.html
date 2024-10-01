@@ -1,18 +1,64 @@
 <mat-nav-list class="mat-nav-title">
   <h1>{{ !isCollapsed() ? 'Posta' : 'P' }}</h1>
 </mat-nav-list>
-<mat-nav-list>
-  <a mat-list-item [ngClass]="!isCollapsed() ? 'list-item' : ''" routerLink="/home" routerLinkActive="active-link">
-        <span class="entry">
-          <mat-icon>house</mat-icon>
-          <span *ngIf="!isCollapsed()">Dashboard</span>
-        </span>
-  </a>
 
-  <a mat-list-item [ngClass]="!isCollapsed() ? 'list-item' : ''" routerLink="/my-posts" routerLinkActive="active-link">
-        <span class="entry">
-          <mat-icon>article</mat-icon>
-          <span *ngIf="!isCollapsed()">My posts</span>
-        </span>
-  </a>
+<mat-nav-list>
+  @for(item of menuItems; track item.name; let i = $index) {
+    <ng-container>
+      @if(item.submenu.length === 0) {
+        <a mat-list-item
+           [ngClass]="{
+             'list-item': !isCollapsed(),
+             'active-link': (currentUrl$ | async) && isMenuItemActive(currentUrl$ | async, item)
+           }"
+           [routerLink]="item.link"
+           routerLinkActive="active-link">
+          <span class="entry">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            @if(!isCollapsed()) {
+              <span>{{ item.name }}</span>
+            }
+          </span>
+        </a>
+      } @else {
+        <div>
+          <button mat-list-item (click)="toggleSubMenu(i)"
+                  [ngClass]="!isCollapsed() ? 'list-item' : ''"
+                  class="mat-btn-list-item">
+            <span class="entry">
+              <span>
+                <mat-icon>{{ item.icon }}</mat-icon>
+                @if(!isCollapsed()) {
+                  <span>{{ item.name }}</span>
+                }
+              </span>
+
+              @if(!isCollapsed()) {
+                <mat-icon>{{ isSubMenuOpen(i) ? 'keyboard_arrow_down' : 'keyboard_arrow_right' }}</mat-icon>
+              }
+            </span>
+          </button>
+
+          <!-- Submenu Items -->
+          @if(isSubMenuOpen(i)) {
+            <div class="submenu">
+              @for(subItem of item.submenu; track subItem.name) {
+                <a mat-list-item
+                   [ngClass]="!isCollapsed() ? 'list-item' : ''"
+                   [routerLink]="subItem.link"
+                   routerLinkActive="active-link">
+                  <span class="entry">
+                    <mat-icon>{{ subItem.icon }}</mat-icon>
+                    @if(!isCollapsed()) {
+                      <span>{{ subItem.name }}</span>
+                    }
+                  </span>
+                </a>
+              }
+            </div>
+          }
+        </div>
+      }
+    </ng-container>
+  }
 </mat-nav-list>

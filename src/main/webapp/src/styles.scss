@@ -48,13 +48,6 @@ mat-sidenav {
   }
 }
 
-mat-sidenav .entry {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem;
-}
-
 .expanded {
   width: 250px;
 }
@@ -96,3 +89,19 @@ mat-sidenav .entry {
 }
 
 /*End:====Auth css=====*/
+
+
+/*Start:=========Sidebar===========*/
+.mat-expansion-panel-sidebar .mat-expansion-panel-body {
+  padding: 0 10px;
+}
+
+.mat-expansion-panel-sidebar .mat-expansion-indicator::after {
+  color: inherit;
+}
+
+.hide-indicator .mat-expansion-indicator {
+  display: none;
+}
+
+/*End:====Sidebar=====*/

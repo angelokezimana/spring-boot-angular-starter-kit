@@ -29,7 +29,38 @@ mat-nav-list a {
   padding: 0.75rem;
 }
 
+mat-nav-list .mdc-list-item {
+  padding: 0;
+}
+
 .active-link {
   border-left: 3px solid #f6f6f6;
   background-color: #78909c;
+}
+
+.submenu {
+  background-color: transparent;
+}
+
+.submenu .list-item {
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.mat-btn-list-item {
+  border: none;
+  border-radius: 0 !important;
+
+  .entry {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      display: inline-flex;
+
+      span {
+        margin-left: 1rem;
+      }
+    }
+  }
 }
