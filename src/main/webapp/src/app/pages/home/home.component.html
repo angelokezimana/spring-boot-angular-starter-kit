@@ -1,7 +1,271 @@
-<mat-card appearance="outlined">
-  <mat-card-header>
-    <mat-card-title>Home</mat-card-title>
-    <mat-card-subtitle>&sol;home</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>home works!</mat-card-content>
-</mat-card>
+<ng-container>
+  <mat-toolbar>
+      <mat-toolbar-row>Home</mat-toolbar-row>
+      <mat-toolbar-row>&sol;home</mat-toolbar-row>
+  </mat-toolbar>
+  <div class="card-container">
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+          "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+          "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+          "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card class="post-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." | truncate: 30 }}</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          {{ "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. "+
+        "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!"+
+        "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!"+
+        "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. " | truncate: 120 }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="warn">Delete</button>
+        <button mat-flat-button color="primary">Edit</button>
+        <button mat-flat-button>3 comments</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</ng-container>

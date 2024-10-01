@@ -1,4 +1,70 @@
-mat-card-header {
-  border-bottom: 1px solid #607d8b;
+.card-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: .2rem;
+}
+
+.post-card {
+  flex: 1;
+  box-sizing: border-box;
+  max-width: calc(100% - .2rem);
+  padding: .2rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+@media (min-width: 600px) and (max-width: 999px) {
+  .post-card {
+    max-width: calc(50% - .2rem);
+  }
+}
+
+@media (min-width: 1000px) {
+  .post-card {
+    max-width: calc(33.33% - .2rem);
+  }
+}
+
+mat-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 1rem;
+  height: fit-content;
+  min-height: fit-content;
+  border-radius: 2px;
+
+  mat-toolbar-row {
+    height: 20px;
+    padding: 10px 16px;
+  }
+
+  mat-toolbar-row:first-child {
+    padding-top: 16px;
+    border-bottom: 1px solid #607d8b;
+  }
+
+  mat-toolbar-row:last-child {
+    font-size: small;
+    color: gray;
+    font-weight: normal;
+  }
+}
+
+mat-card-content p {
+  text-align: justify;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-card-footer {
+  padding: 8px;
+  font-size: small;
+  color: gray;
+  font-weight: normal;
+  border-top: 1px solid #607d8b;
 }
