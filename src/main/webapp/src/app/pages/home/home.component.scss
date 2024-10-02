@@ -12,6 +12,10 @@
   padding: .2rem;
   background-color: #f0f0f0;
   border-radius: 8px;
+
+  mat-card-header, img, mat-card-content {
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 600px) and (max-width: 999px) {
@@ -58,7 +62,7 @@ mat-card-content p {
 
 mat-card-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
 }
 
 mat-card-footer {
