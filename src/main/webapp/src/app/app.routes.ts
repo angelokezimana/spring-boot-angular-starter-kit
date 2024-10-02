@@ -13,6 +13,7 @@ import {UsersComponent} from "./pages/admin/users/users.component";
 import {RolesComponent} from "./pages/admin/roles/roles.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {PostDetailComponent} from "./pages/posts/post-detail/post-detail.component";
+import {AllPostsComponent} from "./pages/posts/all-posts/all-posts.component";
 
 
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
     path: '', component: DefaultComponent, children: [
       {path: 'home', component: HomeComponent},
       {path: 'profile', component: ProfileComponent},
+      {path: 'all-posts', component: AllPostsComponent},
       {path: 'my-posts', component: MyPostsComponent},
       {path: 'post-form', component: PostFormComponent},
       {path: 'post/:id', component: PostDetailComponent},

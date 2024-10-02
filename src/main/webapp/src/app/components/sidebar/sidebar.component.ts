@@ -36,6 +36,7 @@ export class SidebarComponent {
       link: '',
       icon: 'newspaper',
       submenu: [
+        {name: 'All posts', link: '/all-posts', icon: 'grid_view', submenu: []},
         {name: 'My posts', link: '/my-posts', icon: 'article', submenu: []},
         {name: 'Add post', link: '/post-form', icon: 'add', submenu: []},
       ]
