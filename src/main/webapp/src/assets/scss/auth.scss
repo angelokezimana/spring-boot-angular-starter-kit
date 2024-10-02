@@ -1,0 +1,34 @@
+.btn {
+  display: block;
+  width: 100%;
+  margin: 0 10px 0 10px;
+}
+
+.auth-card-header {
+  margin: auto;
+  width: fit-content;
+}
+
+.auth-card-title {
+  text-align: center;
+}
+
+.auth-card-subtitle {
+  margin: 0 0 16px 0 !important;
+}
+
+.auth-form-field {
+  width: 100%;
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+}
+
+.auth-card-footer {
+  text-align: right;
+  color: #9a9797;
+}
+
+.auth-card-footer p {
+  margin-top: 10px;
+  padding: 0 10px 10px 0;
+}

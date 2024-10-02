@@ -1,0 +1,22 @@
+app-post-card {
+  flex: 1;
+  box-sizing: border-box;
+  max-width: calc(100% - .2rem);
+  border-radius: 8px;
+
+  mat-card-header, img, mat-card-content {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 999px) {
+  app-post-card {
+    max-width: calc(50% - .2rem);
+  }
+}
+
+@media (min-width: 1000px) {
+  app-post-card {
+    max-width: calc(33.33% - .2rem);
+  }
+}

@@ -1,1 +1,16 @@
-<p>my-posts works!</p>
+<ng-container>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <p>My posts</p>
+      <div>
+        <a mat-mini-fab aria-label="Add a post" color="primary" routerLink='/post-form'>
+          <mat-icon>add</mat-icon>
+        </a>
+      </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row>&sol;Posts&sol;My post</mat-toolbar-row>
+  </mat-toolbar>
+  <div class="card-container">
+    <app-post-card/>
+  </div>
+</ng-container>
