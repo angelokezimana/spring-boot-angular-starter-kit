@@ -1,1 +1,33 @@
-<p>post-form works!</p>
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Add post</mat-card-title>
+    <mat-card-subtitle>&sol;Posts&sol;Add post</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <mat-form-field appearance="outline" class="auth-form-field">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" autocomplete="off">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="textarea-form-field">
+        <mat-label>Add a comment</mat-label>
+        <textarea matInput placeholder="Add a comment"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-button color="primary" (click)="fileInput.click()">
+        <mat-icon>photo_library</mat-icon>
+        Upload images
+      </button>
+      <input id="files" #fileInput type="file" accept="image/*" multiple (change)="onFileSelected($event)">
+      <div id="preview">
+        @for (image of images; track image) {
+          <img [src]="image.src" [alt]="image.alt" loading="lazy" />
+        }
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-flat-button color="primary">Post</button>
+  </mat-card-actions>
+</mat-card>

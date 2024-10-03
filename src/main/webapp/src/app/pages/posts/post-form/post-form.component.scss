@@ -1,0 +1,20 @@
+.textarea-form-field {
+  width: 100%;
+  --mat-form-field-container-height: 100px;
+}
+
+mat-card-header {
+  margin-bottom: 1rem;
+}
+
+mat-card-actions {
+  padding-right: 15px;
+}
+
+#files {
+  display: none;
+}
+
+#preview img {
+  max-height: 100px;
+}
