@@ -4,7 +4,6 @@ import com.angelokezimana.posta.dto.security.RoleDTO;
 import com.angelokezimana.posta.entity.security.Role;
 
 import java.util.Set;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class RoleMapper {
@@ -17,9 +16,9 @@ public class RoleMapper {
         );
     }
 
-    public static List<RoleDTO> toRoleDTOList(Set<Role> roles) {
+    public static Set<RoleDTO> toRoleDTOList(Set<Role> roles) {
         return roles.stream()
                 .map(RoleMapper::toRoleDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }

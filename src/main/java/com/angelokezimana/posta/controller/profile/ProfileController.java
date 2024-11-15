@@ -3,6 +3,7 @@ package com.angelokezimana.posta.controller.profile;
 import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.profile.ChangePasswordRequestDTO;
 import com.angelokezimana.posta.dto.profile.ChangeProfileInfoRequestDTO;
+import com.angelokezimana.posta.dto.security.UserDTO;
 import com.angelokezimana.posta.service.security.UserService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
@@ -37,5 +38,12 @@ public class ProfileController {
 
         userService.changeProfile(request);
         return ResponseEntity.ok(new ResponseDTO("message", "Info changed successfully"));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getUserInfo() {
+
+        UserDTO user = userService.getCurrentUserDTO();
+        return ResponseEntity.ok(user);
     }
 }

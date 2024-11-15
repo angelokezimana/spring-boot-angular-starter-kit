@@ -4,7 +4,7 @@ import com.angelokezimana.posta.dto.blog.CommentWithPostDTO;
 import com.angelokezimana.posta.entity.blog.Comment;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CommentWithPostMapper {
@@ -19,13 +19,13 @@ public class CommentWithPostMapper {
         );
     }
 
-    public static List<CommentWithPostDTO> toCommentWithPostDTOList(List<Comment> comments) {
+    public static Set<CommentWithPostDTO> toCommentWithPostDTOList(Set<Comment> comments) {
         if (comments == null) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
 
         return comments.stream()
                 .map(CommentWithPostMapper::toCommentWithPostDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }

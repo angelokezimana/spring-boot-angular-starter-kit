@@ -4,7 +4,7 @@ import com.angelokezimana.posta.dto.blog.PostDTO;
 import com.angelokezimana.posta.entity.blog.Post;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PostMapper {
@@ -20,13 +20,13 @@ public class PostMapper {
         );
     }
 
-    public static List<PostDTO> toPostDTOList(List<Post> posts) {
+    public static Set<PostDTO> toPostDTOList(Set<Post> posts) {
         if (posts == null) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
 
         return posts.stream()
                 .map(PostMapper::toPostDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }

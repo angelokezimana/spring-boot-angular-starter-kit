@@ -2,8 +2,11 @@ package com.angelokezimana.posta.service.security.impl;
 
 import com.angelokezimana.posta.dto.profile.ChangePasswordRequestDTO;
 import com.angelokezimana.posta.dto.profile.ChangeProfileInfoRequestDTO;
+import com.angelokezimana.posta.dto.security.UserDTO;
 import com.angelokezimana.posta.entity.security.User;
 import com.angelokezimana.posta.exception.security.UserNotFoundException;
+import com.angelokezimana.posta.mapper.blog.PostMapper;
+import com.angelokezimana.posta.mapper.security.UserMapper;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.security.UserService;
 import org.springframework.security.core.Authentication;
@@ -31,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.getPrincipal() instanceof User) {
-            return Optional.of((User) authentication.getPrincipal());
+        if (authentication != null && authentication.getPrincipal() instanceof User user) {
+            return userRepository.findByEmailWithAssociations(user.getUsername());
         }
         return Optional.empty();
     }
@@ -60,6 +63,10 @@ public class UserServiceImpl implements UserService {
         updateFieldIfPresent(request.lastName(), user::setLastName);
 
         userRepository.save(user);
+    }
+
+    public UserDTO getCurrentUserDTO() {
+        return UserMapper.toUserDTO(getCurrentUser().orElseThrow(() -> new IllegalStateException("User not found")));
     }
 
     private void updateFieldIfPresent(String newValue, Consumer<String> updateMethod) {

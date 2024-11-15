@@ -23,7 +23,7 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "role_permission",

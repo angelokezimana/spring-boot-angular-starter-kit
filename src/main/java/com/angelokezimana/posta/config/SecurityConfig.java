@@ -36,14 +36,17 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
+    private final CustomCorsConfiguration customCorsConfiguration;
 
     @Autowired
     public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter,
                           AuthenticationProvider authenticationProvider,
-                          LogoutHandler logoutHandler) {
+                          LogoutHandler logoutHandler,
+                          CustomCorsConfiguration customCorsConfiguration) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.authenticationProvider = authenticationProvider;
         this.logoutHandler = logoutHandler;
+        this.customCorsConfiguration = customCorsConfiguration;
     }
 
     @Bean
@@ -58,6 +61,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/profile/**").authenticated()
                         .anyRequest().authenticated()
                 )
+                .cors(c -> c.configurationSource(customCorsConfiguration))
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
