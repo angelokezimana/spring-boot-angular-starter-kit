@@ -17,8 +17,10 @@ public class Post {
     private long id;
 
     @Column(columnDefinition = "LONGTEXT", nullable = false)
-
     private String text;
+
+    @Column(nullable = false)
+    private String imageCover;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
@@ -28,7 +30,7 @@ public class Post {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="author", nullable = false)
+    @JoinColumn(name = "author", nullable = false)
     private User author;
 
     @CreationTimestamp
@@ -48,6 +50,14 @@ public class Post {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getImageCover() {
+        return imageCover;
+    }
+
+    public void setImageCover(String imageCover) {
+        this.imageCover = imageCover;
     }
 
     public List<Comment> getComments() {

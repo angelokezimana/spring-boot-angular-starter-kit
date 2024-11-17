@@ -1,6 +1,6 @@
 package com.angelokezimana.posta.controller.blog;
 
-import com.angelokezimana.posta.dto.blog.PostDTO;
+import com.angelokezimana.posta.dto.blog.PostDetailDTO;
 import com.angelokezimana.posta.service.blog.PhotoPostService;
 import com.angelokezimana.posta.service.blog.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ public class PhotoPostController {
     }
 
     @PostMapping(value = "/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    private ResponseEntity<PostDTO> create(@PathVariable Long postId,
-                                           @RequestParam("photos") List<MultipartFile> photos) throws IOException {
+    private ResponseEntity<PostDetailDTO> create(@PathVariable Long postId,
+                                                 @RequestParam("photos") List<MultipartFile> photos) throws IOException {
         photoPostService.createPhotoPost(postId, photos);
         return ResponseEntity.ok(postService.getPost(postId));
     }

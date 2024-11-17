@@ -11,6 +11,8 @@
     <mat-toolbar-row>&sol;home</mat-toolbar-row>
   </mat-toolbar>
   <div class="card-container">
-    <app-post-card/>
+    @for (post of posts; track post.id) {
+      <app-post-card/>
+    }
   </div>
 </ng-container>

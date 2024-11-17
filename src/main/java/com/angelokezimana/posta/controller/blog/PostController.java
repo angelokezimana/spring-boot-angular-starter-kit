@@ -2,6 +2,7 @@ package com.angelokezimana.posta.controller.blog;
 
 import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.blog.PostDTO;
+import com.angelokezimana.posta.dto.blog.PostDetailDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.service.blog.PostService;
@@ -52,23 +53,26 @@ public class PostController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    private ResponseEntity<PostDTO> create(@ModelAttribute PostRequestDTO postRequestDTO,
-                                           @RequestParam(value = "photos", required = false) List<MultipartFile> photos) throws IOException {
-        PostDTO postDTO = postService.createPost(postRequestDTO, photos);
+    private ResponseEntity<PostDetailDTO> create(@ModelAttribute PostRequestDTO postRequestDTO,
+                                                 @RequestParam(value = "imageCover") MultipartFile imageCover,
+                                                 @RequestParam(value = "photos", required = false) List<MultipartFile> photos) throws IOException {
+        PostDetailDTO postDTO = postService.createPost(postRequestDTO, imageCover, photos);
         return ResponseEntity.ok(postDTO);
     }
 
     @GetMapping("/{postId}")
-    private ResponseEntity<PostDTO> findById(@PathVariable Long postId) {
+    private ResponseEntity<PostDetailDTO> findById(@PathVariable Long postId) {
 
-        PostDTO postDTO = postService.getPost(postId);
+        PostDetailDTO postDTO = postService.getPost(postId);
         return ResponseEntity.ok(postDTO);
     }
 
-    @PutMapping("/{postId}")
-    private ResponseEntity<PostDTO> update(@PathVariable Long postId, @RequestBody @Valid PostRequestUpdateDTO updatedPost) {
+    @PutMapping(path = "/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    private ResponseEntity<PostDetailDTO> update(@PathVariable Long postId,
+                                                 @ModelAttribute PostRequestUpdateDTO updatedPost,
+                                                 @RequestParam(value = "imageCover", required = false) MultipartFile imageCover) throws IOException {
 
-        PostDTO updatedPostResult = postService.updatePost(postId, updatedPost);
+        PostDetailDTO updatedPostResult = postService.updatePost(postId, updatedPost, imageCover);
         return ResponseEntity.ok(updatedPostResult);
     }
 

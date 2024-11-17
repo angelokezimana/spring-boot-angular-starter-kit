@@ -8,6 +8,8 @@ import java.util.List;
 public record PostRequestDTO(
         @NotBlank(message = "Text is mandatory")
         String text,
+        @NotBlank(message = "Image cover is mandatory")
+        MultipartFile imageCover,
         List<MultipartFile> photos
 ) {
 }

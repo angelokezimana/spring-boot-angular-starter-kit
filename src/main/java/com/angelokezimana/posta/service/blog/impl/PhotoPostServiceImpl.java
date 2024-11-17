@@ -7,6 +7,7 @@ import com.angelokezimana.posta.exception.blog.PostNotFoundException;
 import com.angelokezimana.posta.repository.blog.PhotoPostRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.service.blog.PhotoPostService;
+import com.angelokezimana.posta.service.image.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -32,13 +34,30 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         this.imageService = imageService;
     }
 
-    public void createPhotoPost(Long postId, List<MultipartFile> images) {
+    public void createPhotoPost(Long postId, List<MultipartFile> images) throws IOException {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
-        List<PhotoPost> photoPosts = imageService.savePhotoPosts(images, post);
+        List<PhotoPost> photoPosts = savePhotoPosts(images, post);
 
         photoPostRepository.saveAll(photoPosts);
+    }
+
+    public List<PhotoPost> savePhotoPosts(List<MultipartFile> images, Post post) {
+        return images.stream()
+                .map(image -> {
+                    try {
+                        String imageUrl = imageService.saveImage(image);
+                        PhotoPost photoPost = new PhotoPost();
+                        photoPost.setImage(imageUrl);
+                        photoPost.setPost(post);
+                        return photoPost;
+                    }catch (IOException e){
+                        throw new RuntimeException("Failed to save image ", e);
+                    }
+                })
+                .collect(Collectors.toList());
+
     }
 
     public void deletePhotoPost(Long photoPostId, Long postId) throws IOException {

@@ -1,6 +1,7 @@
 package com.angelokezimana.posta.service.blog.impl;
 
 import com.angelokezimana.posta.dto.blog.PostDTO;
+import com.angelokezimana.posta.dto.blog.PostDetailDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.entity.blog.PhotoPost;
@@ -11,7 +12,9 @@ import com.angelokezimana.posta.exception.security.UserNotFoundException;
 import com.angelokezimana.posta.mapper.blog.PostMapper;
 import com.angelokezimana.posta.repository.blog.PhotoPostRepository;
 import com.angelokezimana.posta.repository.blog.PostRepository;
+import com.angelokezimana.posta.service.blog.PhotoPostService;
 import com.angelokezimana.posta.service.blog.PostService;
+import com.angelokezimana.posta.service.image.ImageService;
 import com.angelokezimana.posta.service.security.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +37,7 @@ public class PostServiceImpl implements PostService {
     private final PhotoPostRepository photoPostRepository;
     private final UserService userService;
     private final ImageService imageService;
+    private final PhotoPostService photoPostService;
 
     private static final Logger log = LogManager.getLogger(PostServiceImpl.class);
 
@@ -41,11 +45,13 @@ public class PostServiceImpl implements PostService {
     public PostServiceImpl(PostRepository postRepository,
                            PhotoPostRepository photoPostRepository,
                            UserService userService,
-                           ImageService imageService) {
+                           ImageService imageService,
+                           PhotoPostService photoPostService) {
         this.postRepository = postRepository;
         this.photoPostRepository = photoPostRepository;
         this.userService = userService;
         this.imageService = imageService;
+        this.photoPostService = photoPostService;
     }
 
     public Page<PostDTO> getAllPosts(Pageable pageable) {
@@ -53,44 +59,55 @@ public class PostServiceImpl implements PostService {
         return posts.map(PostMapper::toPostDTO);
     }
 
-    public PostDTO createPost(PostRequestDTO postRequestDTO, List<MultipartFile> images) {
+    public PostDetailDTO createPost(PostRequestDTO postRequestDTO,
+                                    MultipartFile imageCover,
+                                    List<MultipartFile> images) throws IOException {
 
         User author = userService.getCurrentUser()
                 .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
 
         Post post = new Post();
 
+        String imageUrl = imageService.saveImage(imageCover);
+
         post.setText(postRequestDTO.text());
+        post.setImageCover(imageUrl);
         post.setAuthor(author);
 
         Post savedPost = postRepository.save(post);
 
         if (images != null && !images.isEmpty()) {
 
-            List<PhotoPost> photoPosts = imageService.savePhotoPosts(images, savedPost);
+            List<PhotoPost> photoPosts = photoPostService.savePhotoPosts(images, savedPost);
             photoPostRepository.saveAll(photoPosts);
             savedPost.setPhotoPosts(photoPosts);
         }
 
-        return PostMapper.toPostDTO(savedPost);
+        return PostMapper.toPostDetailDTO(savedPost);
     }
 
-    public PostDTO getPost(Long postId) {
+    public PostDetailDTO getPost(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
-        return PostMapper.toPostDTO(post);
+        return PostMapper.toPostDetailDTO(post);
     }
 
-    public PostDTO updatePost(Long postId, PostRequestUpdateDTO postRequestDTO) {
+    public PostDetailDTO updatePost(Long postId, PostRequestUpdateDTO postRequestDTO, MultipartFile imageCover) throws IOException {
         Post existingPost = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
         existingPost.setText(postRequestDTO.text());
 
+        if (imageCover != null && !imageCover.isEmpty()) {
+            imageService.deleteImageFromFileSystem(existingPost.getImageCover());
+            String imageUrl = imageService.saveImage(imageCover);
+            existingPost.setImageCover(imageUrl);
+        }
+
         Post post = postRepository.save(existingPost);
 
-        return PostMapper.toPostDTO(post);
+        return PostMapper.toPostDetailDTO(post);
     }
 
     public void deletePost(Long postId) throws IOException {
@@ -100,6 +117,8 @@ public class PostServiceImpl implements PostService {
         for (PhotoPost photoPost : post.getPhotoPosts()) {
             imageService.deleteImageFromFileSystem(photoPost.getImage());
         }
+
+        imageService.deleteImageFromFileSystem(post.getImageCover());
 
         postRepository.delete(post);
     }

@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.getPrincipal() instanceof User user) {
-            return userRepository.findByEmailWithAssociations(user.getUsername());
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            return Optional.of((User) authentication.getPrincipal());
         }
         return Optional.empty();
     }
