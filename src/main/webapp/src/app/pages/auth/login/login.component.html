@@ -5,15 +5,6 @@
 
 <form (submit)="login()" [formGroup]="loginFormGroup">
   <mat-card-content>
-    <div class="msg-error">
-      <mat-error>
-        <mat-icon>error</mat-icon>
-        <span>
-          Email and/or Password incorrect
-        </span>
-      </mat-error>
-    </div>
-
     <mat-form-field appearance="outline" class="auth-form-field" [ngClass]="{'has-error': isFieldValid('email')}">
       <mat-label>Email</mat-label>
       <mat-icon matPrefix [color]="isFieldValid('email') ? 'warn':'primary'">account_circle</mat-icon>
