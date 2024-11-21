@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,8 @@ import {
 } from '../../../service/login/login.service';
 import User from '../../../models/security/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SnackBarService } from '../../../service/SnackBar/snack-bar.service';
+import { SnackBarService } from '../../../service/snack-bar/snack-bar.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +33,7 @@ import { SnackBarService } from '../../../service/SnackBar/snack-bar.service';
     MatIconModule,
     MatCheckboxModule,
     RouterModule,
+    MatProgressSpinnerModule,
     FooterComponent,
   ],
   templateUrl: './login.component.html',
@@ -41,6 +44,8 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
+
+  isLoading: boolean = false;
 
   constructor(
     private router: Router,
@@ -55,8 +60,11 @@ export class LoginComponent {
   }
 
   login(): void {
+    this.isLoading = true;
+
     this.loginService
       .login(this.loginFormGroup.value as Credentials)
+      .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (result: User | null | undefined) => {
           this.router.navigate(['home']);
