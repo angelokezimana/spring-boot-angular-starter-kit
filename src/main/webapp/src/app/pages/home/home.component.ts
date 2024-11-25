@@ -5,7 +5,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import Post from "../../models/blog/post.model";
-import {PostService} from "../../service/post-service/post.service";
+import {PostService} from "../../services/post-service/post.service";
 
 @Component({
   selector: 'app-home',

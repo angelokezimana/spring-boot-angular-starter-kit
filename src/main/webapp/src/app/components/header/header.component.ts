@@ -1,9 +1,10 @@
 import {Component, output} from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from "@angular/material/menu";
 import {RouterLink} from "@angular/router";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,11 @@ import {RouterLink} from "@angular/router";
 })
 export class HeaderComponent {
   toggleMenu = output();
+
+  email: string | null = this.authService.getUsername();
+
+  constructor(private authService: AuthService) {
+  }
 
   onToggleMenu() {
     this.toggleMenu.emit();

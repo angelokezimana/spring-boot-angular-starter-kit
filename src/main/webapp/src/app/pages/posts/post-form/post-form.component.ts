@@ -4,6 +4,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import {FileService} from "../../../services/file/file.service";
 
 @Component({
   selector: 'app-post-form',
@@ -14,24 +15,25 @@ import {MatIconModule} from "@angular/material/icon";
 })
 export class PostFormComponent {
 
-  images: { src: string | ArrayBuffer | null, alt: string }[] = [];
+  imageCover: { src: string | ArrayBuffer | null, file: File | null, alt: string } = {src: '', file: null, alt: ''};
+  images: { src: string | ArrayBuffer | null, file: File | null, alt: string }[] = [];
 
-  onFileSelected(event: Event): void {
-    const input: HTMLInputElement = event.target as HTMLInputElement;
-    if (!input.files) return;
-
-    this.images = [];
-    Array.from(input.files).forEach(file => this.preview(file));
+  constructor(private fileService: FileService) {
   }
 
-  private preview(file: File): void {
-    const reader: FileReader = new FileReader();
-    reader.onload = (): void => {
-      this.images.push({
-        src: reader.result,
-        alt: file.name
-      });
-    };
-    reader.readAsDataURL(file);
+  onFileSelected(event: Event): void {
+    this.fileService.handleFiles(event, (result, file) => {
+      this.images.push({src: result, file, alt: file.name});
+    });
+  }
+
+  onImageCoverSelected(event: Event): void {
+    this.fileService.handleFiles(event, (result, file) => {
+      this.imageCover = {src: result, file, alt: file.name};
+    });
+  }
+
+  onDelete(index: number) {
+    this.images.splice(index, 1);
   }
 }

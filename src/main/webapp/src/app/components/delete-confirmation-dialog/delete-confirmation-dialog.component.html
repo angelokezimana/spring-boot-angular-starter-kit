@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>Delete file</h2>
+<h2 mat-dialog-title>{{ data.title }}</h2>
 <mat-dialog-content>
-  <p>Do you want to delete the selected post ?</p>
+  <p>{{ data.message }}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button [mat-dialog-close]="false">No</button>

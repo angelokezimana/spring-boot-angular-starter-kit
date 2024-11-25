@@ -14,6 +14,7 @@ import {RolesComponent} from "./pages/admin/roles/roles.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {PostDetailComponent} from "./pages/posts/post-detail/post-detail.component";
 import {AllPostsComponent} from "./pages/posts/all-posts/all-posts.component";
+import {authGuard} from "./guards/auth/auth.guard";
 
 
 export const routes: Routes = [
@@ -27,20 +28,59 @@ export const routes: Routes = [
   },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {
-    path: '', component: DefaultComponent, children: [
-      {path: 'home', component: HomeComponent},
-      {path: 'profile', component: ProfileComponent},
-      {path: 'all-posts', component: AllPostsComponent},
-      {path: 'my-posts', component: MyPostsComponent},
-      {path: 'post-form', component: PostFormComponent},
-      {path: 'post/:id', component: PostDetailComponent},
+    path: '',
+    component: DefaultComponent,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'home',
+        title: 'Dashboard',
+        component: HomeComponent
+      },
+      {
+        path: 'profile',
+        title: 'User profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'all-posts',
+        title: 'Posts list',
+        component: AllPostsComponent
+      },
+      {
+        path: 'my-posts',
+        title: 'My posts',
+        component: MyPostsComponent
+      },
+      {
+        path: 'post-form',
+        title: 'Post form',
+        component: PostFormComponent
+      },
+      {
+        path: 'post/:id',
+        title: 'Post details',
+        component: PostDetailComponent
+      },
       {
         path: 'admin', children: [
-          {path: 'users', component: UsersComponent},
-          {path: 'roles', component: RolesComponent}
+          {
+            path: 'users',
+            title: 'Users',
+            component: UsersComponent
+          },
+          {
+            path: 'roles',
+            title: 'Roles',
+            component: RolesComponent
+          }
         ]
       },
     ]
   },
-  {path: '**', component: NotFoundComponent}
+  {
+    path: '**',
+    title: 'Page not found',
+    component: NotFoundComponent
+  }
 ];

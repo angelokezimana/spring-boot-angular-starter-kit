@@ -16,7 +16,7 @@
 
   <button mat-button [matMenuTriggerFor]="userMenu" aria-label="User profile">
     <mat-icon>account_circle</mat-icon>
-    <span class="content-username">admin&#64;mail.com</span>
+    <span class="content-username">{{ email }}</span>
   </button>
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item routerLink="/profile">Profile</button>

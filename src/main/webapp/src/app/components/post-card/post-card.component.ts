@@ -2,10 +2,10 @@ import {Component, inject} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {TruncatePipe} from "../../pipe/truncate.pipe";
+import {TruncatePipe} from "../../pipes/truncate.pipe";
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
-import {DeletePostConfirmationDialogComponent} from "../delete-post-confirmation-dialog/delete-post-confirmation-dialog.component";
+import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
 
 @Component({
   selector: 'app-post-card',
@@ -27,7 +27,13 @@ export class PostCardComponent {
   }
 
   deletePost(): void {
-    const dialogRef = this.dialog.open(DeletePostConfirmationDialogComponent);
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      data: {
+        title: 'Delete Post',
+        message: 'Do you want to delete the selected post?'
+      }
+    });
+
     dialogRef.afterClosed().subscribe(confirmation => {
       if (confirmation) {
         console.log("Deleted post...");

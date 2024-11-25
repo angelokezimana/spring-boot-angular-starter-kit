@@ -10,14 +10,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { FormValidationService } from '../../../service/form-validation/form-validation.service';
+import { FormValidationService } from '../../../services/form-validation/form-validation.service';
 import {
   Credentials,
-  LoginService,
-} from '../../../service/login/login.service';
+  AuthService,
+} from '../../../services/auth/auth.service';
 import User from '../../../models/security/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SnackBarService } from '../../../service/snack-bar/snack-bar.service';
+import { SnackBarService } from '../../../services/snack-bar/snack-bar.service';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -49,7 +49,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private loginService: LoginService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private formValidationService: FormValidationService,
     private snackbarService: SnackBarService
@@ -62,7 +62,7 @@ export class LoginComponent {
   login(): void {
     this.isLoading = true;
 
-    this.loginService
+    this.authService
       .login(this.loginFormGroup.value as Credentials)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
