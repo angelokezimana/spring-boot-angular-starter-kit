@@ -30,7 +30,9 @@ public class SecurityConfig {
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            // static files
+            "/index.html", "/", "/media/**", "/assets/**", "/*.js", "/*.css", "/*.ico"
     };
 
     private final JwtAuthenticationFilter jwtAuthFilter;

@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebApiService {
-  private BASE_URL: string = 'http://localhost:8080';
+  private BASE_URL: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
