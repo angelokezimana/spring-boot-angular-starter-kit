@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class DataLoader implements
@@ -76,8 +75,6 @@ public class DataLoader implements
             if (permission == null) {
                 permission = new Permission(resource, action);
                 permissionRepository.save(permission);
-
-                System.out.println("getPermission=" + permission.getId());
             }
         }
         return permissionRepository.findByResource(resource);
