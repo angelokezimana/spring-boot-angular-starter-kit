@@ -12,7 +12,8 @@ public class PermissionMapper {
     public static PermissionDTO toPermissionDTO(Permission permission) {
         return new PermissionDTO(
                 permission.getId(),
-                permission.getName()
+                permission.getResource(),
+                permission.getAction()
         );
     }
 

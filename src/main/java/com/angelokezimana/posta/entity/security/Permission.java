@@ -1,8 +1,6 @@
 package com.angelokezimana.posta.entity.security;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
 
@@ -15,21 +13,20 @@ public class Permission {
     private Long id;
 
     @Column(length = 50, nullable = false)
-    private String name;
+    private String resource;
+
+    @Column(length = 50, nullable = false)
+    private String action;
 
     @ManyToMany(mappedBy = "permissions")
     private Set<Role> roles;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "parent_id")
-    private Permission parent;
-
     public Permission() {
     }
 
-    public Permission(String name) {
-        this.name = name;
+    public Permission(String resource, String action) {
+        this.resource = resource;
+        this.action = action;
     }
 
     public Set<Role> getRoles() {
@@ -40,14 +37,6 @@ public class Permission {
         this.roles = roles;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }
@@ -56,11 +45,19 @@ public class Permission {
         this.id = id;
     }
 
-    public Permission getParent() {
-        return parent;
+    public String getAction() {
+        return action;
     }
 
-    public void setParent(Permission parent) {
-        this.parent = parent;
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class DataLoader implements
@@ -47,9 +48,11 @@ public class DataLoader implements
             return;
         }
 
-        List<Permission> rolePermission = createPermissionIfNotFound("ROLE");
-        List<Permission> userPermission = createPermissionIfNotFound("USER");
-        List<Permission> blogPermission = createPermissionIfNotFound("BLOG");
+        List<String> actions = Arrays.asList("CREATE", "READ", "UPDATE", "DELETE");
+
+        List<Permission> rolePermission = createPermissionIfNotFound("ROLE", actions);
+        List<Permission> userPermission = createPermissionIfNotFound("USER", actions);
+        List<Permission> blogPermission = createPermissionIfNotFound("BLOG", actions);
 
         Set<Permission> adminPrivileges = new HashSet<>();
 
@@ -66,23 +69,18 @@ public class DataLoader implements
     }
 
     @Transactional
-    List<Permission> createPermissionIfNotFound(String name) {
+    List<Permission> createPermissionIfNotFound(String resource, List<String> actions) {
 
-        Permission permission = permissionRepository.findByName(name);
-        if (permission == null) {
-            permission = new Permission(name);
-            permissionRepository.save(permission);
+        for (String action : actions) {
+            Permission permission = permissionRepository.findByResourceAndAction(resource, action);
+            if (permission == null) {
+                permission = new Permission(resource, action);
+                permissionRepository.save(permission);
 
-            List<String> subPermissions = Arrays.asList("CREATE", "READ", "UPDATE", "DELETE");
-            System.out.println("getPermission=" + permission.getId());
-
-            for (String subPermission : subPermissions) {
-                Permission subPerm = new Permission(subPermission);
-                subPerm.setParent(permission);
-                permissionRepository.save(subPerm);
+                System.out.println("getPermission=" + permission.getId());
             }
         }
-        return permissionRepository.getParent(permission);
+        return permissionRepository.findByResource(resource);
     }
 
     @Transactional
@@ -99,13 +97,13 @@ public class DataLoader implements
     @Transactional
     void createAdminIfNotFound(Role role) {
 
-        Optional<User> optionalUser = userRepository.findByEmail("test@test.com");
+        Optional<User> optionalUser = userRepository.findByEmail("admin@gmail.com");
         if (optionalUser.isEmpty()) {
             User user = new User();
             user.setFirstName("Test");
-            user.setLastName("Test");
-            user.setPassword(passwordEncoder.encode("test"));
-            user.setEmail("test@test.com");
+            user.setLastName("Admin");
+            user.setPassword(passwordEncoder.encode("password"));
+            user.setEmail("admin@gmail.com");
             user.setRoles(Collections.singleton(role));
             user.setEnabled(true);
             user.setAccountLocked(false);
