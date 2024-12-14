@@ -74,12 +74,11 @@ public class Role {
     }
 
     public List<SimpleGrantedAuthority> getAuthorities() {
-        var authorities = getPermissions()
-                .stream()
+        var authorities = permissions.stream()
                 .map(permission -> new SimpleGrantedAuthority(
                         String.format("%s:%s", permission.getResource(), permission.getAction()))
                 ).collect(Collectors.toList());
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + name.toUpperCase()));
+        authorities.add(new SimpleGrantedAuthority(name));
         return authorities;
     }
 }

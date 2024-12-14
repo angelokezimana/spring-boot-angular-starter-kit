@@ -3,7 +3,10 @@ package com.angelokezimana.posta.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,8 +18,9 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 
-@Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@Configuration
 public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {
@@ -39,16 +43,19 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
     private final CustomCorsConfiguration customCorsConfiguration;
+    private final CustomPermissionEvaluator customPermissionEvaluator;
 
     @Autowired
     public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter,
                           AuthenticationProvider authenticationProvider,
                           LogoutHandler logoutHandler,
-                          CustomCorsConfiguration customCorsConfiguration) {
+                          CustomCorsConfiguration customCorsConfiguration,
+                          CustomPermissionEvaluator customPermissionEvaluator) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.authenticationProvider = authenticationProvider;
         this.logoutHandler = logoutHandler;
         this.customCorsConfiguration = customCorsConfiguration;
+        this.customPermissionEvaluator = customPermissionEvaluator;
     }
 
     @Bean
@@ -57,10 +64,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST_URL).permitAll()
-                        .requestMatchers("/api/v1/posts/**").authenticated()
-                        .requestMatchers("/api/v1/photo_posts/**").authenticated()
-                        .requestMatchers("/api/v1/comments/**").authenticated()
-                        .requestMatchers("/api/v1/profile/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .cors(c -> c.configurationSource(customCorsConfiguration))
@@ -74,5 +77,12 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    @Bean
+    public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
+        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+        expressionHandler.setPermissionEvaluator(customPermissionEvaluator);
+        return expressionHandler;
     }
 }

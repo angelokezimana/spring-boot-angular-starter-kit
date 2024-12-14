@@ -6,7 +6,6 @@ import com.angelokezimana.posta.dto.blog.PostDetailDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.service.blog.PostService;
-import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

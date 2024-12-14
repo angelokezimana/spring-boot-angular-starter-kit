@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -93,6 +94,7 @@ public class PostServiceImpl implements PostService {
         return PostMapper.toPostDetailDTO(post);
     }
 
+    @PreAuthorize("hasPermission(#postId, 'POST', 'UPDATE') || hasPermission('POST', 'UPDATE')")
     public PostDetailDTO updatePost(Long postId, PostRequestUpdateDTO postRequestDTO, MultipartFile imageCover) throws IOException {
         Post existingPost = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
@@ -110,6 +112,7 @@ public class PostServiceImpl implements PostService {
         return PostMapper.toPostDetailDTO(post);
     }
 
+    @PreAuthorize("hasPermission(#postId, 'POST', 'DELETE') || hasPermission('POST', 'DELETE')")
     public void deletePost(Long postId) throws IOException {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));

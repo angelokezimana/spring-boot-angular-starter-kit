@@ -9,6 +9,7 @@ import com.angelokezimana.posta.repository.blog.PostRepository;
 import com.angelokezimana.posta.service.blog.PhotoPostService;
 import com.angelokezimana.posta.service.image.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,7 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         this.imageService = imageService;
     }
 
+    @PreAuthorize("hasPermission(#postId, 'POST', 'CREATE') || hasPermission('POST', 'CREATE')")
     public void createPhotoPost(Long postId, List<MultipartFile> images) throws IOException {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
@@ -60,6 +62,7 @@ public class PhotoPostServiceImpl implements PhotoPostService {
 
     }
 
+    @PreAuthorize("hasPermission(#postId, 'POST', 'DELETE') || hasPermission('POST', 'DELETE')")
     public void deletePhotoPost(Long photoPostId, Long postId) throws IOException {
         PhotoPost photoPost = photoPostRepository.findById(photoPostId)
                 .orElseThrow(() -> PhotoPostNotFoundException.forId(photoPostId));

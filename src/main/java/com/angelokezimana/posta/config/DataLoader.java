@@ -51,13 +51,15 @@ public class DataLoader implements
 
         List<Permission> rolePermission = createPermissionIfNotFound("ROLE", actions);
         List<Permission> userPermission = createPermissionIfNotFound("USER", actions);
-        List<Permission> blogPermission = createPermissionIfNotFound("BLOG", actions);
+        List<Permission> postPermission = createPermissionIfNotFound("POST", actions);
+        List<Permission> commentPermission = createPermissionIfNotFound("COMMENT", actions);
 
         Set<Permission> adminPrivileges = new HashSet<>();
 
         adminPrivileges.addAll(rolePermission);
         adminPrivileges.addAll(userPermission);
-        adminPrivileges.addAll(blogPermission);
+        adminPrivileges.addAll(postPermission);
+        adminPrivileges.addAll(commentPermission);
 
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", new HashSet<>());

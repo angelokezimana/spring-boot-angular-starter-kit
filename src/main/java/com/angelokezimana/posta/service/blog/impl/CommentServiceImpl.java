@@ -19,6 +19,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Transactional
@@ -74,6 +75,7 @@ public class CommentServiceImpl implements CommentService {
         return CommentWithPostMapper.toCommentWithPostDTO(comment);
     }
 
+    @PreAuthorize("hasPermission(#commentId, 'COMMENT', 'UPDATE') || hasPermission('COMMENT', 'UPDATE')")
     public CommentDTO updateComment(Long commentId, CommentRequestDTO updatedComment) {
         Comment existingComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> CommentNotFoundException.forId(commentId));
@@ -85,6 +87,7 @@ public class CommentServiceImpl implements CommentService {
         return CommentMapper.toCommentDTO(comment);
     }
 
+    @PreAuthorize("hasPermission(#commentId, 'COMMENT', 'DELETE') || hasPermission('COMMENT', 'DELETE')")
     public void deleteComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> CommentNotFoundException.forId(commentId));
