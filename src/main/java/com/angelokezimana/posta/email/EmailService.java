@@ -30,15 +30,15 @@ public class EmailService {
     @Async
     public void sendEmail(
             String to,
-            String username,
+            String fullName,
             EmailTemplateName emailTemplate,
-            String confirmationUrl,
-            String activationCode,
+            String url,
+            String token,
             String subject
     ) throws MessagingException {
         String templateName;
         if (emailTemplate == null) {
-            templateName = "confirm-email";
+            templateName = "activate_account";
         } else {
             templateName = emailTemplate.name();
         }
@@ -49,14 +49,14 @@ public class EmailService {
                 UTF_8.name()
         );
         Map<String, Object> properties = new HashMap<>();
-        properties.put("username", username);
-        properties.put("confirmationUrl", confirmationUrl);
-        properties.put("activationCode", activationCode);
+        properties.put("fullName", fullName);
+        properties.put("url", url);
+        properties.put("token", token);
 
         Context context = new Context();
         context.setVariables(properties);
 
-        helper.setFrom("contact@angelokezimana.com");
+        helper.setFrom("contact@posta.com");
         helper.setTo(to);
         helper.setSubject(subject);
 
