@@ -15,6 +15,7 @@ import {ProfileComponent} from "./pages/profile/profile.component";
 import {PostDetailComponent} from "./pages/posts/post-detail/post-detail.component";
 import {AllPostsComponent} from "./pages/posts/all-posts/all-posts.component";
 import {authGuard} from "./guards/auth/auth.guard";
+import {ResetPasswordComponent} from "./pages/auth/reset-password/reset-password.component";
 
 
 export const routes: Routes = [
@@ -23,7 +24,8 @@ export const routes: Routes = [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'activate-account', component: ActivateAccountComponent},
-      {path: 'forgot-password', component: ForgotPasswordComponent}
+      {path: 'forgot-password', component: ForgotPasswordComponent},
+      {path: 'reset-password', component: ResetPasswordComponent}
     ]
   },
   {path: '', redirectTo: '/home', pathMatch: 'full'},
