@@ -33,7 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -131,12 +133,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private void saveUserToken(User user, String jwtToken) {
+        Date expiryDate = jwtService.extractExpiration(jwtToken);
+
+        LocalDateTime expiresAt = expiryDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+
         Token token = new Token();
         token.setUser(user);
         token.setToken(jwtToken);
         token.setTokenType(TokenType.BEARER);
         token.setExpired(false);
         token.setRevoked(false);
+        token.setExpiresAt(expiresAt);
 
         tokenRepository.save(token);
     }
