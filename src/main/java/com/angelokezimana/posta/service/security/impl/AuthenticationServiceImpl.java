@@ -1,6 +1,7 @@
 package com.angelokezimana.posta.service.security.impl;
 
 import com.angelokezimana.posta.config.JwtService;
+import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.security.AuthenticationRequestDTO;
 import com.angelokezimana.posta.dto.security.AuthenticationResponseDTO;
 import com.angelokezimana.posta.dto.security.RegisterRequestDTO;
@@ -10,10 +11,12 @@ import com.angelokezimana.posta.entity.security.*;
 import com.angelokezimana.posta.exception.security.RoleNotFoundException;
 import com.angelokezimana.posta.exception.security.TokenNotFoundException;
 import com.angelokezimana.posta.exception.security.UserNotFoundException;
+import com.angelokezimana.posta.repository.security.ActivationTokenRepository;
 import com.angelokezimana.posta.repository.security.RoleRepository;
-import com.angelokezimana.posta.repository.security.TokenRepository;
+import com.angelokezimana.posta.repository.security.BlacklistedTokenRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.security.AuthenticationService;
+import com.angelokezimana.posta.service.security.BlacklistedTokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,9 +26,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -46,11 +48,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final TokenRepository tokenRepository;
+    private final BlacklistedTokenRepository blacklistedTokenRepository;
+    private final ActivationTokenRepository activationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
+    private final UserDetailsService userDetailsService;
+    private final BlacklistedTokenService blacklistedTokenService;
 
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
@@ -58,18 +63,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     public AuthenticationServiceImpl(UserRepository userRepository,
                                      RoleRepository roleRepository,
-                                     TokenRepository tokenRepository,
+                                     BlacklistedTokenRepository blacklistedTokenRepository,
+                                     ActivationTokenRepository activationTokenRepository,
                                      PasswordEncoder passwordEncoder,
                                      JwtService jwtService,
                                      AuthenticationManager authenticationManager,
-                                     EmailService emailService) {
+                                     EmailService emailService,
+                                     UserDetailsService userDetailsService,
+                                     BlacklistedTokenService blacklistedTokenService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.tokenRepository = tokenRepository;
+        this.blacklistedTokenRepository = blacklistedTokenRepository;
+        this.activationTokenRepository = activationTokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.emailService = emailService;
+        this.userDetailsService = userDetailsService;
+        this.blacklistedTokenService = blacklistedTokenService;
     }
 
     public void register(RegisterRequestDTO request) throws MessagingException {
@@ -100,73 +111,60 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = (User) auth.getPrincipal();
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
 
         return new AuthenticationResponseDTO(jwtToken, refreshToken);
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        final String refreshToken;
-        final String userEmail;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(),
+                    new ResponseDTO("error", "Refresh token is missing or invalid."));
             return;
         }
 
-        refreshToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(refreshToken);
+        final String refreshToken = authHeader.substring(7);
+        final String extractRefreshToken = jwtService.extractExtraClaim(refreshToken, "token_type");
 
-        if (userEmail != null) {
-            User user = userRepository.findByEmail(userEmail).orElseThrow();
+        final String userEmail = jwtService.extractUsername(refreshToken);
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-            if (jwtService.isTokenValid(refreshToken, user)) {
-                String accessToken = jwtService.generateToken(user);
-                revokeAllUserTokens(user);
-                saveUserToken(user, accessToken);
-                AuthenticationResponseDTO authResponse = new AuthenticationResponseDTO(accessToken, refreshToken);
-
-                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-            }
-        }
-    }
-
-    private void saveUserToken(User user, String jwtToken) {
-        Date expiryDate = jwtService.extractExpiration(jwtToken);
-
-        LocalDateTime expiresAt = expiryDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-
-        Token token = new Token();
-        token.setUser(user);
-        token.setToken(jwtToken);
-        token.setTokenType(TokenType.BEARER);
-        token.setExpired(false);
-        token.setRevoked(false);
-        token.setExpiresAt(expiresAt);
-
-        tokenRepository.save(token);
-    }
-
-    private void revokeAllUserTokens(User user) {
-        List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-        if (validUserTokens.isEmpty())
+        if (!extractRefreshToken.equals("refresh") ||
+                !jwtService.isTokenValid(refreshToken, userDetails)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(),
+                    new ResponseDTO("error", "Refresh token not valid or expired."));
             return;
-        validUserTokens.forEach(token -> {
-            token.setExpired(true);
-            token.setRevoked(true);
-        });
-        tokenRepository.saveAll(validUserTokens);
+        }
+
+        // Retrieve user entity
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalStateException("User not found."));
+
+        // Blacklist the old refresh token
+        blacklistedTokenService.saveBlacklistedToken(response, refreshToken, user);
+
+        // Generate new tokens
+        String accessToken = jwtService.generateToken(userDetails);
+        String newRefreshToken = jwtService.generateRefreshToken(userDetails);
+
+        // Send response with new tokens
+        AuthenticationResponseDTO authResponse = new AuthenticationResponseDTO(accessToken, newRefreshToken);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpServletResponse.SC_OK);
+        new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
     }
 
     @Transactional
     public void activateAccount(String token) throws MessagingException {
-        Token savedToken = tokenRepository.findByToken(token)
+        ActivationToken savedToken = activationTokenRepository.findByTokenAndValidatedAtIsNull(token)
                 .orElseThrow(() -> new TokenNotFoundException("Invalid token"));
 
-        if (savedToken.isExpired()) {
+        if (savedToken.getExpiresAt().isBefore(LocalDateTime.now())) {
             sendValidationEmail(savedToken.getUser());
             throw new RuntimeException("Activation token has expired. A new token has been send to the same email address");
         }
@@ -178,7 +176,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(user);
 
         savedToken.setValidatedAt(LocalDateTime.now());
-        tokenRepository.save(savedToken);
+        activationTokenRepository.save(savedToken);
     }
 
     private void sendValidationEmail(User user) throws MessagingException {
@@ -186,7 +184,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         emailService.sendEmail(
                 user.getUsername(),
-                user.getFirstName()+" "+user.getLastName(),
+                user.getFirstName() + " " + user.getLastName(),
                 EmailTemplateName.ACTIVATE_ACCOUNT,
                 activationUrl,
                 newToken,
@@ -197,13 +195,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private String generateAndSaveActivationToken(User user) {
 
         String generatedToken = generateActivationCode(6);
-        Token token = new Token();
-        token.setToken(generatedToken);
-        token.setCreatedAt(LocalDateTime.now());
-        token.setExpiresAt(LocalDateTime.now().plusMinutes(15));
-        token.setUser(user);
+        ActivationToken activationToken = new ActivationToken();
+        activationToken.setToken(generatedToken);
+        activationToken.setCreatedAt(LocalDateTime.now());
+        activationToken.setExpiresAt(LocalDateTime.now().plusMinutes(15));
+        activationToken.setUser(user);
 
-        tokenRepository.save(token);
+        activationTokenRepository.save(activationToken);
 
         return generatedToken;
     }

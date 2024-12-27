@@ -1,13 +1,12 @@
 package com.angelokezimana.posta.entity.security;
 
-
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tokens")
-public class Token {
+@Table(name = "blacklisted_tokens")
+public class BlacklistedToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,18 +14,14 @@ public class Token {
     @Column(unique = true)
     private String token;
 
-    @Enumerated(EnumType.STRING)
-    private TokenType tokenType = TokenType.BEARER;
-
-    private boolean revoked;
-
-    private boolean expired;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime expiresAt;
 
-    private LocalDateTime validatedAt;
+    private LocalDateTime blacklistedAt;
+
+    @Column(unique = true)
+    public String jti;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName ="id")
@@ -48,30 +43,6 @@ public class Token {
         this.token = token;
     }
 
-    public TokenType getTokenType() {
-        return tokenType;
-    }
-
-    public void setTokenType(TokenType tokenType) {
-        this.tokenType = tokenType;
-    }
-
-    public boolean isRevoked() {
-        return revoked;
-    }
-
-    public void setRevoked(boolean revoked) {
-        this.revoked = revoked;
-    }
-
-    public boolean isExpired() {
-        return expired;
-    }
-
-    public void setExpired(boolean expired) {
-        this.expired = expired;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -88,12 +59,12 @@ public class Token {
         this.expiresAt = expiresAt;
     }
 
-    public LocalDateTime getValidatedAt() {
-        return validatedAt;
+    public LocalDateTime getBlacklistedAt() {
+        return blacklistedAt;
     }
 
-    public void setValidatedAt(LocalDateTime validatedAt) {
-        this.validatedAt = validatedAt;
+    public void setBlacklistedAt(LocalDateTime blacklistedAt) {
+        this.blacklistedAt = blacklistedAt;
     }
 
     public User getUser() {
@@ -102,5 +73,13 @@ public class Token {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getJti() {
+        return jti;
+    }
+
+    public void setJti(String jti) {
+        this.jti = jti;
     }
 }

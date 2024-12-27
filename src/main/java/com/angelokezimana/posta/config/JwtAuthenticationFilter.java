@@ -1,6 +1,5 @@
 package com.angelokezimana.posta.config;
 
-import com.angelokezimana.posta.repository.security.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,17 +27,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    private final TokenRepository tokenRepository;
     private final HandlerExceptionResolver resolver;
 
     @Autowired
     public JwtAuthenticationFilter(JwtService jwtService,
                                    UserDetailsService userDetailsService,
-                                   TokenRepository tokenRepository,
                                    @Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
-        this.tokenRepository = tokenRepository;
         this.resolver = resolver;
     }
 
@@ -64,10 +60,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             userEmail = jwtService.extractUsername(jwt);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-                var isTokenValid = tokenRepository.findByToken(jwt)
-                        .map(t -> !t.isExpired() && !t.isRevoked())
-                        .orElse(false);
-                if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+                String tokenType = jwtService.extractExtraClaim(jwt, "token_type");
+
+                if (jwtService.isTokenValid(jwt, userDetails) && tokenType.equals("access")) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,

@@ -13,6 +13,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -34,20 +35,19 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("token_type", "access");
+        extraClaims.put("jti", generateJti());
 
-    public String generateToken(
-            Map<String, Object> extraClaims,
-            UserDetails userDetails
-    ) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
-    public String generateRefreshToken(
-            UserDetails userDetails
-    ) {
-        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
+    public String generateRefreshToken(UserDetails userDetails) {
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("token_type", "refresh");
+        extraClaims.put("jti", generateJti());
+
+        return buildToken(extraClaims, userDetails, refreshExpiration);
     }
 
     private String buildToken(
@@ -72,6 +72,14 @@ public class JwtService {
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
+    }
+
+    public String extractExtraClaim(String token, String claimKey) {
+        return extractClaim(token, claims -> claims.get(claimKey, String.class));
+    }
+
+    public String generateJti() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
     private boolean isTokenExpired(String token) {

@@ -52,7 +52,10 @@ public class User implements UserDetails {
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<Token> tokens;
+    private Set<ActivationToken> activationTokens;
+
+    @OneToMany(mappedBy = "user")
+    private Set<BlacklistedToken> blacklistedTokens;
 
     @NotEmpty
     @Column(name = "locale", nullable = false, length = 2)
@@ -132,16 +135,20 @@ public class User implements UserDetails {
         this.comments = comments;
     }
 
-    public Set<Token> getTokens() {
-        return tokens;
+    public Set<ActivationToken> getActivationTokens() {
+        return activationTokens;
     }
 
-    public void setTokens(Set<Token> tokens) {
-        this.tokens = tokens;
+    public void setActivationTokens(Set<ActivationToken> activationTokens) {
+        this.activationTokens = activationTokens;
     }
 
-    public void addToken(final Token token){
-        tokens.add(token);
+    public Set<BlacklistedToken> getBlacklistedTokens() {
+        return blacklistedTokens;
+    }
+
+    public void setBlacklistedTokens(Set<BlacklistedToken> blacklistedTokens) {
+        this.blacklistedTokens = blacklistedTokens;
     }
 
     public @NotEmpty String getLocale() {
