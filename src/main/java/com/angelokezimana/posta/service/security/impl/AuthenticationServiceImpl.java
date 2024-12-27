@@ -13,7 +13,6 @@ import com.angelokezimana.posta.exception.security.TokenNotFoundException;
 import com.angelokezimana.posta.exception.security.UserNotFoundException;
 import com.angelokezimana.posta.repository.security.ActivationTokenRepository;
 import com.angelokezimana.posta.repository.security.RoleRepository;
-import com.angelokezimana.posta.repository.security.BlacklistedTokenRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.security.AuthenticationService;
 import com.angelokezimana.posta.service.security.BlacklistedTokenService;
@@ -48,7 +47,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final BlacklistedTokenRepository blacklistedTokenRepository;
     private final ActivationTokenRepository activationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -63,7 +61,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     public AuthenticationServiceImpl(UserRepository userRepository,
                                      RoleRepository roleRepository,
-                                     BlacklistedTokenRepository blacklistedTokenRepository,
                                      ActivationTokenRepository activationTokenRepository,
                                      PasswordEncoder passwordEncoder,
                                      JwtService jwtService,
@@ -73,7 +70,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      BlacklistedTokenService blacklistedTokenService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.blacklistedTokenRepository = blacklistedTokenRepository;
         this.activationTokenRepository = activationTokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;

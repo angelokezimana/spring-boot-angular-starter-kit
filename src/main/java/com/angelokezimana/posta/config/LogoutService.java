@@ -74,6 +74,16 @@ public class LogoutService implements LogoutHandler {
             String extractRefreshToken = jwtService.extractExtraClaim(refreshToken, "token_type");
             final String userEmail = jwtService.extractUsername(jwt);
 
+            User authUser = (User) authentication.getPrincipal();
+
+            if(authUser == null || !authUser.getUsername().equals(userEmail)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                new ObjectMapper().writeValue(response.getOutputStream(),
+                        new ResponseDTO("error", "There is a problem with the authenticated user."));
+                return;
+            }
+
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
             if (!accessToken.equals("access") ||
