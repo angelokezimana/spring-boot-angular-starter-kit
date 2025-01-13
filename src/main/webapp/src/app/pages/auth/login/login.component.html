@@ -45,11 +45,12 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-flat-button color="primary" class="btn" [disabled]="loginFormGroup.invalid">
+    <button mat-flat-button color="primary" class="btn" [disabled]="loginFormGroup.invalid || isLoading">
       <span class="flex-spinner">
-        <span class="mr-1">Login</span>
         @if(isLoading) {
           <span><mat-spinner [diameter]="30"></mat-spinner></span>
+        } @else {
+          <span class="mr-1">Login</span>
         }
       </span>
     </button>
