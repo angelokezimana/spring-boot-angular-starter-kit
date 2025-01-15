@@ -1,21 +1,24 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {TruncatePipe} from "../../pipes/truncate.pipe";
+import {TruncatePipe} from "../../pipes/truncate/truncate.pipe";
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
+import Post from "../../models/blog/post.model";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-post-card',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule, TruncatePipe],
+  imports: [MatCardModule, MatIconModule, MatButtonModule, TruncatePipe, DatePipe],
   templateUrl: './post-card.component.html',
   styleUrl: './post-card.component.scss'
 })
 export class PostCardComponent {
   private readonly dialog = inject(MatDialog);
+  post = input.required<Post>();
 
   constructor(
     private router: Router
@@ -23,10 +26,11 @@ export class PostCardComponent {
   }
 
   goToPostDetail(id: number): void {
+
     this.router.navigate(['post', id]);
   }
 
-  deletePost(): void {
+  deletePost(id: number): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
       data: {
         title: 'Delete Post',

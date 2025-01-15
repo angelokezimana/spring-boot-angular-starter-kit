@@ -14,7 +14,7 @@ public class PostMapper {
         return new PostDetailDTO(
                 post.getId(),
                 post.getText(),
-                post.getImageCover(),
+                post.getImageCoverByte(),
                 post.getPublishedOn(),
                 CommentMapper.toCommentDTOList(post.getComments()),
                 PhotoPostMapper.toPhotoPostDTOList(post.getPhotoPosts()),
@@ -26,7 +26,7 @@ public class PostMapper {
         return new PostDTO(
                 post.getId(),
                 post.getText(),
-                post.getImageCover(),
+                post.getImageCoverByte(),
                 post.getPublishedOn(),
                 post.getComments().size(),
                 AuthorMapper.toAuthorDTO(post.getAuthor())

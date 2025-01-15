@@ -24,4 +24,8 @@ export class HeaderComponent {
   onToggleMenu() {
     this.toggleMenu.emit();
   }
+
+  logout() {
+    this.authService.logout();
+  }
 }

@@ -12,7 +12,7 @@ public class PhotoPostMapper {
     public static PhotoPostDTO toPhotoPostDTO(PhotoPost photoPost) {
         return new PhotoPostDTO(
                 photoPost.getId(),
-                photoPost.getImage()
+                photoPost.getImageByte()
         );
     }
 

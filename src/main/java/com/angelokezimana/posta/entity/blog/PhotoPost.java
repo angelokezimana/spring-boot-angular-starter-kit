@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 @Entity
 @Table(name = "photo_posts")
 public class PhotoPost {
@@ -18,6 +22,9 @@ public class PhotoPost {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    @Transient
+    byte[] imageByte;
 
     public long getId() {
         return id;
@@ -41,5 +48,16 @@ public class PhotoPost {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public byte[] getImageByte() {
+        if (image != null && image.length() > 4) {
+            try {
+                imageByte = Files.readAllBytes(Paths.get(image));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return imageByte;
     }
 }

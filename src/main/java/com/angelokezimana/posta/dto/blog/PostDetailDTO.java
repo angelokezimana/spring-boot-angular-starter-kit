@@ -5,7 +5,7 @@ import java.util.List;
 
 public record PostDetailDTO(Long id,
                             String text,
-                            String imageCover,
+                            byte[] imageCover,
                             LocalDateTime publishedOn,
                             List<CommentDTO> comments,
                             List<PhotoPostDTO> photoPosts,

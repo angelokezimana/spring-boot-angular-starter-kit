@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record PostDTO(Long id,
                       String text,
-                      String imageCover,
+                      byte[] imageCover,
                       LocalDateTime publishedOn,
                       Integer numberOfComments,
                       AuthorDTO author) {

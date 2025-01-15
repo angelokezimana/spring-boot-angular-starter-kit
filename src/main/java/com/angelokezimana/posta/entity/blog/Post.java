@@ -6,6 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,6 +38,9 @@ public class Post {
 
     @CreationTimestamp
     private LocalDateTime publishedOn;
+
+    @Transient
+    byte[] imageCoverByte;
 
     public long getId() {
         return id;
@@ -86,5 +92,16 @@ public class Post {
 
     public LocalDateTime getPublishedOn() {
         return publishedOn;
+    }
+
+    public byte[] getImageCoverByte() {
+        if (imageCover != null && imageCover.length() > 4) {
+            try {
+                imageCoverByte = Files.readAllBytes(Paths.get(imageCover));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return imageCoverByte;
     }
 }

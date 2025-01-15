@@ -6,5 +6,5 @@ public record PhotoPostDTO(
         Long id,
 
         @NotBlank(message = "Image is mandatory")
-        String image) {
+        byte[] image) {
 }
