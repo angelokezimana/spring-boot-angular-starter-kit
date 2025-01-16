@@ -5,11 +5,11 @@
 
 <form (submit)="login()" [formGroup]="loginFormGroup">
   <mat-card-content>
-    <mat-form-field appearance="outline" class="auth-form-field" [ngClass]="{'has-error': isFieldValid('email')}">
+    <mat-form-field appearance="outline" class="auth-form-field" [ngClass]="{'has-error': isFieldInvalid('email')}">
       <mat-label>Email</mat-label>
-      <mat-icon matPrefix [color]="isFieldValid('email') ? 'warn':'primary'">account_circle</mat-icon>
+      <mat-icon matPrefix [color]="isFieldInvalid('email') ? 'warn':'primary'">account_circle</mat-icon>
       <input matInput type="email" formControlName="email" autocomplete="off">
-      @if (isFieldValid('email')) {
+      @if (isFieldInvalid('email')) {
         <mat-error>
           @if (loginFormGroup.get('email')?.errors?.['required']) {
             Email is required
@@ -23,9 +23,9 @@
 
     <mat-form-field appearance="outline" class="auth-form-field">
       <mat-label>Password</mat-label>
-      <mat-icon matPrefix [color]="isFieldValid('password') ? 'warn':'primary'">vpn_key</mat-icon>
+      <mat-icon matPrefix [color]="isFieldInvalid('password') ? 'warn':'primary'">vpn_key</mat-icon>
       <input matInput type="password" formControlName="password" autocomplete="off">
-      @if (isFieldValid('password')) {
+      @if (isFieldInvalid('password')) {
         <mat-error>
           @if (loginFormGroup.get('password')?.errors?.['required']) {
             Password is required
@@ -35,17 +35,12 @@
     </mat-form-field>
 
     <div class="login-options-group">
-      <div>
-        <mat-checkbox color="primary">Remember me!</mat-checkbox>
-      </div>
-      <div>
         <a mat-button color="primary" routerLink="/auth/forgot-password">Forgot password ?</a>
-      </div>
     </div>
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-flat-button color="primary" class="btn" [disabled]="loginFormGroup.invalid || isLoading">
+    <button type="submit" mat-flat-button color="primary" class="btn" [disabled]="loginFormGroup.invalid || isLoading">
       <span class="flex-spinner">
         @if(isLoading) {
           <span><mat-spinner [diameter]="30"></mat-spinner></span>

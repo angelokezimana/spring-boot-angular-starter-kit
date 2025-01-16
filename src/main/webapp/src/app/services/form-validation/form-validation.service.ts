@@ -8,7 +8,7 @@ export class FormValidationService {
 
   constructor() { }
 
-  isFieldValid(formGroup:FormGroup,name: string): boolean | undefined {
+  isFieldInvalid(formGroup:FormGroup, name: string): boolean | undefined {
     const formControl = formGroup.get(name);
     return formControl?.invalid && (formControl?.dirty || formControl?.touched)
   }

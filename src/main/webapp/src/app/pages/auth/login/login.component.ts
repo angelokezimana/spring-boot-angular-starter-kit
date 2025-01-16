@@ -55,8 +55,8 @@ export class LoginComponent {
     private snackbarService: SnackBarService
   ) {}
 
-  isFieldValid(name: string): boolean | undefined {
-    return this.formValidationService.isFieldValid(this.loginFormGroup, name);
+  isFieldInvalid(name: string): boolean | undefined {
+    return this.formValidationService.isFieldInvalid(this.loginFormGroup, name);
   }
 
   login(): void {
