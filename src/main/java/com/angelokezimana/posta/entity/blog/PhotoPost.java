@@ -24,7 +24,7 @@ public class PhotoPost {
     private Post post;
 
     @Transient
-    byte[] imageByte;
+    private byte[] imageByte;
 
     public long getId() {
         return id;

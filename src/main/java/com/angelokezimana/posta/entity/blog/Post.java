@@ -40,7 +40,7 @@ public class Post {
     private LocalDateTime publishedOn;
 
     @Transient
-    byte[] imageCoverByte;
+    private byte[] imageCoverByte;
 
     public long getId() {
         return id;
