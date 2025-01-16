@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, throwError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -10,7 +10,8 @@ import {environment} from "../../../environments/environment";
 export class WebApiService {
   private BASE_URL: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * GET
@@ -36,9 +37,9 @@ export class WebApiService {
   /**
    * POST
    */
-  post(url: string, model: any): Observable<any> {
+  post(url: string, model: any, isFormData: boolean = false): Observable<any> {
     const httpOptions = {
-      headers: new HttpHeaders({
+      headers: new HttpHeaders(isFormData ? {} : {
         'Content-Type': 'application/json',
       }),
       observe: 'response' as 'body',
