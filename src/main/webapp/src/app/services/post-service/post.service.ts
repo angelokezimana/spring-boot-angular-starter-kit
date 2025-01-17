@@ -3,6 +3,7 @@ import {WebApiService} from '../web-api/web-api.service';
 import {Observable} from 'rxjs';
 import Post from '../../models/blog/post.model';
 import PostDetail from "../../models/blog/post-detail.model";
+import {HttpResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class PostService {
     return this.http.get('/api/v1/posts');
   }
 
-  savePost(formData: FormData): Observable<PostDetail | null | undefined> {
+  savePost(formData: FormData): Observable<HttpResponse<PostDetail> | null | undefined> {
     return this.http.post('/api/v1/posts', formData, true);
   }
 }

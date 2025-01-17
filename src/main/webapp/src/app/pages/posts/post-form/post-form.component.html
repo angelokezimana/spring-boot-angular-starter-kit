@@ -3,50 +3,63 @@
     <mat-card-title>Add post</mat-card-title>
     <mat-card-subtitle>&sol;Posts&sol;Add post</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    <div>
-      <mat-form-field appearance="outline" class="auth-form-field">
-        <mat-label>Title*</mat-label>
-        <input matInput type="text" autocomplete="off">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="textarea-form-field">
-        <mat-label>Add a comment*</mat-label>
-        <textarea matInput placeholder="Add a comment"></textarea>
-      </mat-form-field>
-    </div>
-    <div>
-      <button mat-button color="primary" (click)="ImageCoverInput.click()">
-        <mat-icon>image</mat-icon>
-        Upload image cover*
-      </button>
-      <input id="fileImageCover" #ImageCoverInput type="file" accept="image/*" (change)="onImageCoverSelected($event)">
-      @if(imageCover.src) {
-        <div id="previewImageCover">
-          <img [src]="imageCover.src" [alt]="imageCover.alt" loading="lazy"/>
-        </div>
-      }
-    </div>
-    <div>
-      <button mat-button color="primary" (click)="fileInput.click()">
-        <mat-icon>photo_library</mat-icon>
-        Upload images
-      </button>
-      <input id="files" #fileInput type="file" accept="image/*" multiple (change)="onFileSelected($event)">
-      <div id="preview">
+  <form (submit)="save()" [formGroup]="postFormGroup">
+    <mat-card-content>
+      <div>
+        <mat-form-field appearance="outline" class="textarea-form-field">
+          <mat-label>Add a comment</mat-label>
+          <textarea matInput formControlName="text" placeholder="Add a comment"></textarea>
+          @if (isFieldInvalid('text')) {
+            <mat-error>
+              @if (postFormGroup.get('text')?.errors?.['required']) {
+                This field is required
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div>
+        <button type="button" mat-button color="primary" (click)="ImageCoverInput.click()">
+          <mat-icon>image</mat-icon>
+          Upload image cover*
+        </button>
+        <input id="fileImageCover" #ImageCoverInput type="file" accept="image/*"
+               (change)="onImageCoverSelected($event)">
+        @if (isFieldInvalid('imageCover')) {
+          <mat-error>
+            @if (postFormGroup.get('imageCover')?.errors?.['required']) {
+              The image cover is required
+            }
+          </mat-error>
+        }
+        @if (imgCover.src) {
+          <div id="previewImageCover">
+            <img [src]="imgCover.src" [alt]="imgCover.alt" loading="lazy"/>
+          </div>
+        }
+      </div>
+      <div>
+        <button type="button" mat-button color="primary" (click)="fileInput.click()">
+          <mat-icon>photo_library</mat-icon>
+          Upload images
+        </button>
+        <input id="files" #fileInput type="file" accept="image/*" multiple (change)="onFileSelected($event)">
+        <div id="preview">
           @for (image of images; track image; let id = $index) {
             <div class="container">
-            <div class="image-wrapper">
-              <img [src]="image.src" [alt]="image.alt" loading="lazy"/>
-              <button class="btn delete-button" (click)="onDelete(id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
+              <div class="image-wrapper">
+                <img [src]="image.src" [alt]="image.alt" loading="lazy"/>
+                <button class="btn delete-button" (click)="onDelete(id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             </div>
           }
+        </div>
       </div>
-    </div>
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-flat-button color="primary">Post</button>
-  </mat-card-actions>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button type="submit" mat-flat-button color="primary" [disabled]="postFormGroup.invalid">Post</button>
+    </mat-card-actions>
+  </form>
 </mat-card>
