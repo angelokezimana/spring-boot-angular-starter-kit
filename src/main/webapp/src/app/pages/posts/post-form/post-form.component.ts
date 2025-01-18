@@ -72,31 +72,17 @@ export class PostFormComponent {
   save() {
     const formData = new FormData();
 
-    const text = this.postFormGroup.value.text;
-    if (text !== null && text !== undefined) {
-      formData.append("text", text);
-    }
+    const {text, imageCover, photos} = this.postFormGroup.value;
 
-    const imageCover = this.postFormGroup.value.imageCover;
-    if (imageCover) {
-      formData.append("imageCover", imageCover);
-    }
-
-    const photos = this.postFormGroup.value.photos;
-    if (photos && Array.isArray(photos)) {
-      (photos as (File | null)[]).flat().forEach((file) => {
-        if (file) {
-          formData.append("photos", file);
-        }
-      });
-    }
+    text && formData.append("text", text);
+    imageCover && formData.append("imageCover", imageCover);
+    (photos as (File | null)[])?.flat()?.forEach((file: File | null) => file && formData.append("photos", file));
 
     this.postService
       .savePost(formData)
       .subscribe({
         next: (result: HttpResponse<PostDetail> | null | undefined) => {
           this.snackbarService.showMessage("Post created successfully", 'success');
-          console.log(result);
           this.router.navigate(['post', result?.body?.id]);
         },
         error: (error: HttpErrorResponse) => {
