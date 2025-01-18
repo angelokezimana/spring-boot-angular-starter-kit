@@ -16,6 +16,10 @@ export class PostService {
     return this.http.get('/api/v1/posts');
   }
 
+  getPostById(id: Number): Observable<HttpResponse<PostDetail>> {
+    return this.http.get(`/api/v1/posts/${id}`);
+  }
+
   savePost(formData: FormData): Observable<HttpResponse<PostDetail> | null | undefined> {
     return this.http.post('/api/v1/posts', formData, true);
   }

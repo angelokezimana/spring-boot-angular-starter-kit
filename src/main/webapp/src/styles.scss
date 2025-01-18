@@ -149,3 +149,8 @@ mat-sidenav {
 .mr-1 {
   margin-right: 5px;
 }
+
+// primary color
+.primary {
+  color: mat.m2-get-color-from-palette($custom-primary);
+}

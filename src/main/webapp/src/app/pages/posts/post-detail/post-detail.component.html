@@ -1,7 +1,11 @@
 <mat-card class="post-card" appearance="outlined">
   <mat-card-header class="post-detail-mat-card-header">
     <mat-card-title>
-      <p>{{ "Title of the post adipisicing elit. Soluta repellendus quia facere quis architecto." }}</p>
+      <p>
+        <a routerLink="/posts" class="primary">
+          <mat-icon>arrow_back</mat-icon>
+        </a>
+      </p>
       <div>
         <button mat-icon-button color="warn" type="button" (click)="deletePost()">
           <mat-icon>delete</mat-icon>
@@ -11,24 +15,21 @@
         </button>
       </div>
     </mat-card-title>
-    <mat-card-subtitle>by akezimana&#64;villagehealthworks.com <br>on February 19th, 2024</mat-card-subtitle>
+    <mat-card-subtitle>by {{ post?.author?.email }} <br>on {{ post?.publishedOn | date }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <section>
       <p>
-        {{
-          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta repellendus quia facere quis architecto. Dicta ullam mollitia tenetur molestias obcaecati, voluptatibus assumenda debitis. Odio distinctio perferendis nesciunt at. Fugit, id. " +
-          "Aliquam quis vitae voluptatem mollitia, accusamus obcaecati odio voluptate est iusto nulla recusandae quidem tempore delectus ullam quo, impedit officiis, minus adipisci cumque voluptates optio laudantium. Aliquam dolorum ab pariatur!" +
-          "Explicabo optio consequatur consectetur? Itaque dolorem impedit aspernatur velit, nam sunt. Expedita reprehenderit hic quibusdam provident accusamus itaque rerum recusandae adipisci molestiae, atque et dicta totam voluptas quis voluptatibus a!" +
-          "Aperiam nulla voluptate, quo possimus ab eos minus optio veniam perferendis quaerat suscipit itaque beatae porro recusandae nihil quisquam magni accusantium illum cumque placeat ratione voluptatibus! Consequatur hic consequuntur placeat. "
-        }}
+        {{ post?.text }}
       </p>
       <ul class="gallery">
-        <li><img width="768" height="576" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt=""
+        <li><img width="768" height="576" src="data:image/jpeg;base64, {{ post?.imageCover }}" alt="{{ post?.text }}"
                  title="" loading="lazy"/></li>
-        <li><img width="768" height="576" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt=""
-                 title="" loading="lazy"/></li>
+        @for (photo of post?.photoPosts; track photo.id) {
+          <li><img width="768" height="576" src="data:image/jpeg;base64, {{ photo.image }}" alt="{{ post?.text }}"
+                   title="" loading="lazy"/></li>
+        }
       </ul>
     </section>
 
