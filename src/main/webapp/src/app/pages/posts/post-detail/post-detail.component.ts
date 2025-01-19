@@ -9,25 +9,28 @@ import {PostService} from "../../../services/post-service/post.service";
 import {HttpResponse} from "@angular/common/http";
 import PostDetail from "../../../models/blog/post-detail.model";
 import {DatePipe} from "@angular/common";
-import {TruncatePipe} from "../../../pipes/truncate/truncate.pipe";
+import {PreviousRouteService} from "../../../services/previous-route/previous-route.service";
 
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, DatePipe, TruncatePipe, RouterLink],
+  imports: [MatCardModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, DatePipe, RouterLink],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss'
 })
 export class PostDetailComponent implements OnInit {
   post: PostDetail | null = null;
+  previousUrl: string = '';
 
   constructor(
     private route: ActivatedRoute,
-    private postService: PostService) {
+    private postService: PostService,
+    private previousRouteService: PreviousRouteService) {
   }
 
   ngOnInit() {
     const postId = this.route.snapshot.paramMap.get('id');
+    this.previousUrl = this.previousRouteService.previousUrl;
 
     if (postId) {
       this.postService.getPostById(+postId).subscribe({
