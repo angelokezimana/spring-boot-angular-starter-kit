@@ -1,4 +1,4 @@
-import {Component, effect, input} from '@angular/core';
+import {Component, computed, effect, input, signal, Signal, WritableSignal} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatIconButton} from "@angular/material/button";
@@ -40,8 +40,9 @@ export class CommentComponent {
   });
 
   postId = input.required<Number | undefined>();
-  numberOfComments: Number = 0;
-  comments: Comment[] = [];
+
+  comments: WritableSignal<Comment[]> = signal<Comment[]>([]);
+  numberOfComments: Signal<Number> = computed(() =>  this.comments().length);
 
   constructor(
     private commentService: CommentService,
@@ -54,8 +55,7 @@ export class CommentComponent {
       if (this.postId()) {
         this.commentService.getCommentsByPostId(this.postId() as Number)
           .subscribe((results: any) => {
-            this.comments = results.body;
-            this.numberOfComments = this.comments.length;
+            this.comments.set(results.body);
           });
         console.log(`===============postId:${this.postId()}================`)
       }
@@ -72,8 +72,7 @@ export class CommentComponent {
       .saveComment(this.postId() as Number, this.commentFormGroup.value as String)
       .subscribe({
         next: (result: HttpResponse<Comment>) => {
-          this.comments.unshift(result.body as Comment);
-          this.numberOfComments = this.comments.length;
+          this.comments.update(comments => [result.body as Comment, ...comments]);
           this.snackbarService.showMessage("Comment created successfully", 'success');
           this.resetForm();
         },
@@ -83,7 +82,7 @@ export class CommentComponent {
       });
   }
 
-  update(): void {
+  update(id: Number): void {
 
   }
 

@@ -1,4 +1,4 @@
-<h2>Comments ({{ numberOfComments }})</h2>
+<h2>Comments ({{ numberOfComments() }})</h2>
 
 <form (submit)="save()" [formGroup]="commentFormGroup" class="form-post-comment">
   <mat-form-field appearance="outline">
@@ -18,7 +18,7 @@
 </form>
 
 <div class="comments">
-  @for (comment of comments; track comment.id) {
+  @for (comment of comments(); track comment.id) {
     <mat-card appearance="outlined">
       <mat-card-content>
         <p>
