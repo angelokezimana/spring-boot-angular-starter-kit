@@ -7,14 +7,14 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-        <span>
-          <button mat-icon-button color="warn" type="button" (click)="deletePost(post().id)"><mat-icon>delete</mat-icon></button>
-        </span>
+    <span class="flex primary">
+       <mat-icon>forum</mat-icon>
+       <span>{{ post().numberOfComments }}</span>
+    </span>
     <span>
-          <button mat-mini-fab color="primary">{{ post().numberOfComments }}
-            <mat-icon>forum</mat-icon></button>
-          <button mat-icon-button color="primary"><mat-icon>edit_square</mat-icon></button>
-        </span>
+      <button mat-icon-button color="warn" type="button" (click)="deletePost(post().id)"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button color="primary"><mat-icon>edit_square</mat-icon></button>
+    </span>
   </mat-card-actions>
   <mat-card-footer>
     by {{ post().author.email }} <br>on {{ post().publishedOn | date:'MMM dd, yyyy HH:mm' }}

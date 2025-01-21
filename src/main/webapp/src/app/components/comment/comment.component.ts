@@ -42,7 +42,7 @@ export class CommentComponent {
   postId = input.required<Number | undefined>();
 
   comments: WritableSignal<Comment[]> = signal<Comment[]>([]);
-  numberOfComments: Signal<Number> = computed(() =>  this.comments().length);
+  numberOfComments: Signal<Number> = computed(() => this.comments().length);
 
   constructor(
     private commentService: CommentService,
@@ -106,7 +106,10 @@ export class CommentComponent {
   }
 
   private resetForm(): void {
-    this.commentFormGroup.controls.text.reset();
-    this.commentFormGroup.controls.text.setErrors(null);
+    this.commentFormGroup.reset();
+
+    this.commentFormGroup.markAsPristine();
+    this.commentFormGroup.markAsUntouched();
+    this.commentFormGroup.updateValueAndValidity();
   }
 }
