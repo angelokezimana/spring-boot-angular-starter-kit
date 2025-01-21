@@ -15,7 +15,8 @@
         </button>
       </div>
     </mat-card-title>
-    <mat-card-subtitle>by {{ post?.author?.email }} <br>on {{ post?.publishedOn | date }}</mat-card-subtitle>
+    <mat-card-subtitle>by {{ post?.author?.email }} <br>on {{ post?.publishedOn | date:'MMM dd, yyyy HH:mm' }}
+    </mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>

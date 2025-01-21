@@ -39,7 +39,7 @@ export class CommentComponent {
     text: ['', Validators.required]
   });
 
-  postId = input.required<Number>();
+  postId = input.required<Number | undefined>();
   numberOfComments: Number = 0;
   comments: Comment[] = [];
 
@@ -52,7 +52,7 @@ export class CommentComponent {
 
     effect(() => {
       if (this.postId()) {
-        this.commentService.getCommentsByPostId(this.postId())
+        this.commentService.getCommentsByPostId(this.postId() as Number)
           .subscribe((results: any) => {
             this.comments = results.body;
             this.numberOfComments = this.comments.length;
@@ -69,7 +69,7 @@ export class CommentComponent {
 
   save(): void {
     this.commentService
-      .saveComment(this.postId(), this.commentFormGroup.value as String)
+      .saveComment(this.postId() as Number, this.commentFormGroup.value as String)
       .subscribe({
         next: (result: HttpResponse<Comment>) => {
           this.comments.unshift(result.body as Comment);

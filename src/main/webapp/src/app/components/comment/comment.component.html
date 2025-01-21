@@ -28,7 +28,7 @@
       <mat-card-actions>
         <p>
           {{ comment.author.firstName }} {{ comment.author.lastName }} <br>
-          {{ comment.publishedOn | date }}
+          {{ comment.publishedOn | date: 'MMM dd, yyyy HH:mm' }}
         </p>
         <div>
           <button mat-icon-button color="warn" type="button" (click)="deleteComment(comment.id)">
