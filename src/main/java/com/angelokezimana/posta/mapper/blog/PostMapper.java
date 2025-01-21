@@ -16,7 +16,6 @@ public class PostMapper {
                 post.getText(),
                 post.getImageCoverByte(),
                 post.getPublishedOn(),
-                CommentMapper.toCommentDTOList(post.getComments()),
                 PhotoPostMapper.toPhotoPostDTOList(post.getPhotoPosts()),
                 AuthorMapper.toAuthorDTO(post.getAuthor())
         );
