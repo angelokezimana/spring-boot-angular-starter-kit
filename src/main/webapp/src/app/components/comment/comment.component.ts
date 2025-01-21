@@ -12,6 +12,7 @@ import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/d
 import Comment from "../../models/blog/comment.model";
 import {CommentService} from "../../services/comment-service/comment.service";
 import {DatePipe} from "@angular/common";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-comment',
@@ -38,7 +39,7 @@ export class CommentComponent {
     text: ['', Validators.required]
   });
 
-  postId = input.required<Number | undefined>();
+  postId = input.required<Number>();
   numberOfComments: Number = 0;
   comments: Comment[] = [];
 
@@ -51,7 +52,7 @@ export class CommentComponent {
 
     effect(() => {
       if (this.postId()) {
-        this.commentService.getcommentsByPostId(this.postId() as Number)
+        this.commentService.getCommentsByPostId(this.postId())
           .subscribe((results: any) => {
             this.comments = results.body;
             this.numberOfComments = this.comments.length;
@@ -66,7 +67,23 @@ export class CommentComponent {
     return this.formValidationService.isFieldInvalid(this.commentFormGroup, name);
   }
 
-  save() {
+  save(): void {
+    this.commentService
+      .saveComment(this.postId(), this.commentFormGroup.value as String)
+      .subscribe({
+        next: (result: HttpResponse<Comment>) => {
+          this.comments.unshift(result.body as Comment);
+          this.numberOfComments = this.comments.length;
+          this.snackbarService.showMessage("Comment created successfully", 'success');
+          this.resetForm();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackbarService.showMessage(error.error?.value, 'error');
+        },
+      });
+  }
+
+  update(): void {
 
   }
 
@@ -87,5 +104,10 @@ export class CommentComponent {
         console.log("Deleted comment...");
       }
     });
+  }
+
+  private resetForm(): void {
+    this.commentFormGroup.controls.text.reset();
+    this.commentFormGroup.controls.text.setErrors(null);
   }
 }
