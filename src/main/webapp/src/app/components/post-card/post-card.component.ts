@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
@@ -17,16 +17,15 @@ import {DatePipe} from "@angular/common";
   styleUrl: './post-card.component.scss'
 })
 export class PostCardComponent {
-  private readonly dialog = inject(MatDialog);
   post = input.required<Post>();
 
   constructor(
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
   }
 
   goToPostDetail(id: number): void {
-
     this.router.navigate(['post', id]);
   }
 

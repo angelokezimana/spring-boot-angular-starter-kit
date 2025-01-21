@@ -1,0 +1,35 @@
+h2 {
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+
+.form-post-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.comments mat-card {
+  margin-top: .4rem;
+
+  mat-card-content {
+    padding-left: .4rem;
+    padding-right: .4rem;
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    font-size: small;
+    color: gray;
+  }
+}
+
+.comments * {
+  text-align: justify;
+  margin: 0;
+}

@@ -41,11 +41,6 @@ public class CommentServiceImpl implements CommentService {
 
     public Page<CommentDTO> getCommentsByPost(Long postId, Pageable pageable) {
         Page<Comment> comments = commentRepository.findByPostId(postId, pageable);
-
-        if (comments.isEmpty()) {
-            throw new CommentNotFoundException("No comments with post id "+postId+" exist");
-        }
-
         return comments.map(CommentMapper::toCommentDTO);
     }
 
