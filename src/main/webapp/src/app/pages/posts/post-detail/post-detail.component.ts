@@ -4,9 +4,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {PostService} from "../../../services/post-service/post.service";
-import {HttpResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import PostDetail from "../../../models/blog/post-detail.model";
 import {DatePipe} from "@angular/common";
 import {PreviousRouteService} from "../../../services/previous-route/previous-route.service";
@@ -15,6 +15,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {
   DeleteConfirmationDialogComponent
 } from "../../../components/delete-confirmation-dialog/delete-confirmation-dialog.component";
+import {SnackBarService} from "../../../services/snack-bar/snack-bar.service";
 
 @Component({
   selector: 'app-post-detail',
@@ -29,8 +30,10 @@ export class PostDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private postService: PostService,
     private previousRouteService: PreviousRouteService,
+    private snackbarService: SnackBarService,
     private dialog: MatDialog) {
   }
 
@@ -43,8 +46,10 @@ export class PostDetailComponent implements OnInit {
         next: (response: HttpResponse<PostDetail>) => {
           this.post = response.body;
         },
-        error: (err) => {
-          console.error(err);
+        error: (error: HttpErrorResponse) => {
+          console.error(error);
+          this.snackbarService.showMessage(error.error?.value, 'error');
+          this.router.navigate(['home']);
         },
       });
     }

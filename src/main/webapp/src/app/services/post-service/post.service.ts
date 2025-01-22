@@ -12,7 +12,7 @@ export class PostService {
   constructor(private http: WebApiService) {
   }
 
-  getPosts(): Observable<Post | null | undefined> {
+  getPosts(): Observable<HttpResponse<Post[]>> {
     return this.http.get('/api/v1/posts');
   }
 

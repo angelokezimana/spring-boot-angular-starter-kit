@@ -6,6 +6,7 @@ import {PostCardComponent} from "../../../components/post-card/post-card.compone
 import {RouterLink} from "@angular/router";
 import Post from "../../../models/blog/post.model";
 import {PostService} from "../../../services/post-service/post.service";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-all-posts',
@@ -22,7 +23,7 @@ import {PostService} from "../../../services/post-service/post.service";
   styleUrl: './all-posts.component.scss'
 })
 export class AllPostsComponent implements OnInit {
-  posts: Post[] = [];
+  posts: Post[] | null = [];
 
   constructor(private postService: PostService) {
   }
@@ -32,8 +33,8 @@ export class AllPostsComponent implements OnInit {
   }
 
   getAllPosts(): void {
-    this.postService.getPosts().subscribe((results: any) => {
-      this.posts = results.body;
-    })
+    this.postService.getPosts().subscribe((response: HttpResponse<Post[]>) => {
+      this.posts = response.body;
+    });
   }
 }

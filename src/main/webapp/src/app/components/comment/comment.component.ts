@@ -54,8 +54,8 @@ export class CommentComponent {
     effect(() => {
       if (this.post()) {
         this.commentService.getCommentsByPostId(this.post()?.id as number)
-          .subscribe((results: any) => {
-            this.comments.set(results.body);
+          .subscribe((response: HttpResponse<Comment[]>) => {
+            this.comments.set(response.body as Comment[]);
             this.numberOfComments.set(this.post()?.numberOfComments as number);
           });
         console.log(`===============postId:${this.post()?.id}================`)
@@ -73,7 +73,7 @@ export class CommentComponent {
       .saveComment(this.post()?.id as number, this.commentFormGroup.value as String)
       .subscribe({
         next: (result: HttpResponse<Comment>) => {
-          this.comments.update(comments => [result.body as Comment, ...comments]);
+          this.comments.update((comments: Comment[]): Comment[] => [result.body as Comment, ...comments]);
           this.numberOfComments.set(this.numberOfComments() + 1);
           this.snackbarService.showMessage("Comment created successfully", 'success');
           this.resetForm();

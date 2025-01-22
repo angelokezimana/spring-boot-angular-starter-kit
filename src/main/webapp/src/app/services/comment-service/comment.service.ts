@@ -12,7 +12,7 @@ export class CommentService {
   constructor(private http: WebApiService) {
   }
 
-  getCommentsByPostId(postId: number): Observable<Comment | null | undefined> {
+  getCommentsByPostId(postId: number): Observable<HttpResponse<Comment[]>> {
     return this.http.get(`/api/v1/comments/posts/${postId}`);
   }
 

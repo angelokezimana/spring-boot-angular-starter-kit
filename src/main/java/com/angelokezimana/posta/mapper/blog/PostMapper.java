@@ -16,7 +16,7 @@ public class PostMapper {
                 post.getText(),
                 post.getImageCoverByte(),
                 post.getPublishedOn(),
-                post.getComments().size(),
+                (post.getComments() != null && !post.getComments().isEmpty()) ? post.getComments().size() : 0,
                 PhotoPostMapper.toPhotoPostDTOList(post.getPhotoPosts()),
                 AuthorMapper.toAuthorDTO(post.getAuthor())
         );
@@ -28,7 +28,7 @@ public class PostMapper {
                 post.getText(),
                 post.getImageCoverByte(),
                 post.getPublishedOn(),
-                post.getComments().size(),
+                (post.getComments() != null && !post.getComments().isEmpty()) ? post.getComments().size() : 0,
                 AuthorMapper.toAuthorDTO(post.getAuthor())
         );
     }
