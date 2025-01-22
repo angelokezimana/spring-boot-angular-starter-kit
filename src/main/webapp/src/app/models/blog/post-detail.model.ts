@@ -7,6 +7,7 @@ export default interface PostDetail {
   text: string;
   imageCover: string;
   publishedOn: Date;
+  numberOfComments: number;
   photoPosts: PhotoPost[];
   author: Author;
 }

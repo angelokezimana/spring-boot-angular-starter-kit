@@ -1,4 +1,4 @@
-import {Component, computed, effect, input, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, effect, input, signal, WritableSignal} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton, MatIconButton} from "@angular/material/button";
@@ -13,6 +13,7 @@ import Comment from "../../models/blog/comment.model";
 import {CommentService} from "../../services/comment-service/comment.service";
 import {DatePipe} from "@angular/common";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import PostDetail from "../../models/blog/post-detail.model";
 
 @Component({
   selector: 'app-comment',
@@ -39,10 +40,9 @@ export class CommentComponent {
     text: ['', Validators.required]
   });
 
-  postId = input.required<Number | undefined>();
-
+  post = input.required<PostDetail | null>();
   comments: WritableSignal<Comment[]> = signal<Comment[]>([]);
-  numberOfComments: Signal<Number> = computed(() => this.comments().length);
+  numberOfComments: WritableSignal<number> = signal<number>(0);
 
   constructor(
     private commentService: CommentService,
@@ -52,12 +52,13 @@ export class CommentComponent {
     private dialog: MatDialog) {
 
     effect(() => {
-      if (this.postId()) {
-        this.commentService.getCommentsByPostId(this.postId() as Number)
+      if (this.post()) {
+        this.commentService.getCommentsByPostId(this.post()?.id as number)
           .subscribe((results: any) => {
             this.comments.set(results.body);
+            this.numberOfComments.set(this.post()?.numberOfComments as number);
           });
-        console.log(`===============postId:${this.postId()}================`)
+        console.log(`===============postId:${this.post()?.id}================`)
       }
     });
 
@@ -69,10 +70,11 @@ export class CommentComponent {
 
   save(): void {
     this.commentService
-      .saveComment(this.postId() as Number, this.commentFormGroup.value as String)
+      .saveComment(this.post()?.id as number, this.commentFormGroup.value as String)
       .subscribe({
         next: (result: HttpResponse<Comment>) => {
           this.comments.update(comments => [result.body as Comment, ...comments]);
+          this.numberOfComments.set(this.numberOfComments() + 1);
           this.snackbarService.showMessage("Comment created successfully", 'success');
           this.resetForm();
         },
@@ -82,15 +84,15 @@ export class CommentComponent {
       });
   }
 
-  update(id: Number): void {
+  update(id: number): void {
 
   }
 
-  editComment(id: Number) {
+  editComment(id: number) {
 
   }
 
-  deleteComment(id: Number) {
+  deleteComment(id: number) {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
       data: {
         title: 'Delete Comment',
@@ -107,9 +109,8 @@ export class CommentComponent {
 
   private resetForm(): void {
     this.commentFormGroup.reset();
-
+    this.commentFormGroup.updateValueAndValidity();
     this.commentFormGroup.markAsPristine();
     this.commentFormGroup.markAsUntouched();
-    this.commentFormGroup.updateValueAndValidity();
   }
 }

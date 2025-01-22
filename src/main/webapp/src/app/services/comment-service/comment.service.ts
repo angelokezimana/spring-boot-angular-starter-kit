@@ -12,11 +12,11 @@ export class CommentService {
   constructor(private http: WebApiService) {
   }
 
-  getCommentsByPostId(postId: Number): Observable<Comment | null | undefined> {
+  getCommentsByPostId(postId: number): Observable<Comment | null | undefined> {
     return this.http.get(`/api/v1/comments/posts/${postId}`);
   }
 
-  saveComment(postId:Number, text: String):Observable<HttpResponse<Comment>> {
+  saveComment(postId:number, text: String):Observable<HttpResponse<Comment>> {
       return this.http.post(`/api/v1/comments/posts/${postId}`, text);
   }
 }

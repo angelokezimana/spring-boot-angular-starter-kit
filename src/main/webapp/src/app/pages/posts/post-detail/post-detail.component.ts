@@ -50,11 +50,11 @@ export class PostDetailComponent implements OnInit {
     }
   }
 
-  editPost(id: Number | undefined) {
+  editPost(id: number | undefined) {
 
   }
 
-  deletePost(id: Number | undefined): void {
+  deletePost(id: number | undefined): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
       data: {
         title: 'Delete Post',

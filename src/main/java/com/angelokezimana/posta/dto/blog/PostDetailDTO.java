@@ -7,6 +7,7 @@ public record PostDetailDTO(Long id,
                             String text,
                             byte[] imageCover,
                             LocalDateTime publishedOn,
+                            Integer numberOfComments,
                             List<PhotoPostDTO> photoPosts,
                             AuthorDTO author) {
 }
