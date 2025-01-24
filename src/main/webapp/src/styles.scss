@@ -154,3 +154,20 @@ mat-sidenav {
 .primary {
   color: mat.m2-get-color-from-palette($custom-primary);
 }
+
+.m-0, .p-0 {
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-align-center {
+  align-items: flex-start;
+}
+
+.text-wrap {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}

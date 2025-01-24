@@ -29,6 +29,7 @@ import PostDetail from "../../../models/blog/post-detail.model";
 })
 export class PostFormComponent {
   postFormGroup = this.formBuilder.group({
+    title: ['', [Validators.required, Validators.maxLength(255)]],
     text: ['', Validators.required],
     imageCover: [null as File | null, Validators.required],
     photos: [null as (File | null)[] | null]
@@ -72,8 +73,9 @@ export class PostFormComponent {
   save() {
     const formData = new FormData();
 
-    const {text, imageCover, photos} = this.postFormGroup.value;
+    const {title, text, imageCover, photos} = this.postFormGroup.value;
 
+    title && formData.append("title", title);
     text && formData.append("text", text);
     imageCover && formData.append("imageCover", imageCover);
     (photos as (File | null)[])?.flat()?.forEach((file: File | null) => file && formData.append("photos", file));
@@ -86,7 +88,12 @@ export class PostFormComponent {
           this.router.navigate(['post', result?.body?.id]);
         },
         error: (error: HttpErrorResponse) => {
-          this.snackbarService.showMessage(error.error?.value, 'error');
+          this.snackbarService.showMessage(error.error?.value ??
+            error.error?.title ??
+            error.error?.text ??
+            error.error?.imageCover ??
+            error.error?.photos, 'error');
+          console.log(error.error);
         },
       });
   }

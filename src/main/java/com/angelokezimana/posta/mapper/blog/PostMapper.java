@@ -13,6 +13,7 @@ public class PostMapper {
     public static PostDetailDTO toPostDetailDTO(Post post) {
         return new PostDetailDTO(
                 post.getId(),
+                post.getTitle(),
                 post.getText(),
                 post.getImageCoverByte(),
                 post.getPublishedOn(),
@@ -25,6 +26,7 @@ public class PostMapper {
     public static PostDTO toPostDTO(Post post) {
         return new PostDTO(
                 post.getId(),
+                post.getTitle(),
                 post.getText(),
                 post.getImageCoverByte(),
                 post.getPublishedOn(),

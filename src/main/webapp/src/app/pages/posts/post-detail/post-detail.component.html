@@ -1,10 +1,14 @@
 <mat-card class="post-card" appearance="outlined">
   <mat-card-header class="post-detail-mat-card-header">
     <mat-card-title>
-      <p>
-        <a [routerLink]="previousUrl" class="primary">
+      <p class="flex flex-align-center m-0 p-0">
+        <a [routerLink]="previousUrl" class="primary flex flex-align-center">
           <mat-icon>arrow_back</mat-icon>
         </a>
+        &nbsp;
+        <span class="text-wrap">
+          {{ post?.title }}
+        </span>
       </p>
       <div>
         <button mat-icon-button color="warn" type="button" (click)="deletePost(post?.id)">
@@ -21,15 +25,15 @@
 
   <mat-card-content>
     <section>
-      <p>
+      <p class="text-wrap">
         {{ post?.text }}
       </p>
       <ul class="gallery">
-        <li><img width="768" height="576" src="data:image/jpeg;base64, {{ post?.imageCover }}" alt="{{ post?.text }}"
-                 title="" loading="lazy"/></li>
+        <li><img width="768" height="576" src="data:image/jpeg;base64, {{ post?.imageCover }}" alt="{{ post?.title }}"
+                 title="{{ post?.title }}" loading="lazy"/></li>
         @for (photo of post?.photoPosts; track photo.id) {
-          <li><img width="768" height="576" src="data:image/jpeg;base64, {{ photo.image }}" alt="{{ post?.text }}"
-                   title="" loading="lazy"/></li>
+          <li><img width="768" height="576" src="data:image/jpeg;base64, {{ photo.image }}" alt="{{ post?.title }}"
+                   title="{{ post?.title }}" loading="lazy"/></li>
         }
       </ul>
     </section>

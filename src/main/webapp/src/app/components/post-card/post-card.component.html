@@ -1,8 +1,11 @@
 <mat-card class="post-card" appearance="outlined">
+  <mat-card-header (click)="goToPostDetail(post().id)">
+    <mat-card-title>{{ post().title | truncate: 30 }}</mat-card-title>
+  </mat-card-header>
   <img mat-card-image src="data:image/jpeg;base64, {{ post().imageCover }}" alt="{{ post().text | truncate: 120 }}"
        loading="lazy" (click)="goToPostDetail(post().id)">
   <mat-card-content (click)="goToPostDetail(post().id)">
-    <p>
+    <p class="text-wrap">
       {{ post().text | truncate: 120 }}
     </p>
   </mat-card-content>

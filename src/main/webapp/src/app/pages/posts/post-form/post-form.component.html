@@ -6,8 +6,23 @@
   <form (submit)="save()" [formGroup]="postFormGroup">
     <mat-card-content>
       <div>
+        <mat-form-field appearance="outline" class="auth-form-field">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" type="text" autocomplete="off">
+          @if (isFieldInvalid('title')) {
+            <mat-error>
+              @if (postFormGroup.get('title')?.errors?.['required']) {
+                This field is required
+              }
+              @if (postFormGroup.get('title')?.errors?.['maxlength']) {
+                This field must not exceed 255 characters
+              }
+            </mat-error>
+          }
+        </mat-form-field>
+
         <mat-form-field appearance="outline" class="textarea-form-field">
-          <mat-label>Add a comment</mat-label>
+          <mat-label>Body</mat-label>
           <textarea matInput formControlName="text" placeholder="Add a comment"></textarea>
           @if (isFieldInvalid('text')) {
             <mat-error>

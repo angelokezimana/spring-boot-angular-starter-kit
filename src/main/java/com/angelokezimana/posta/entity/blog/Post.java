@@ -19,6 +19,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(length = 255, nullable = false)
+    private String title;
+
     @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String text;
 
@@ -48,6 +51,14 @@ public class Post {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getText() {

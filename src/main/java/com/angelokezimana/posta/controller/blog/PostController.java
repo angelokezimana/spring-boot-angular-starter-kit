@@ -6,6 +6,7 @@ import com.angelokezimana.posta.dto.blog.PostDetailDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.service.blog.PostService;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class PostController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    private ResponseEntity<PostDetailDTO> create(@ModelAttribute PostRequestDTO postRequestDTO,
+    private ResponseEntity<PostDetailDTO> create(@ModelAttribute @Valid PostRequestDTO postRequestDTO,
                                                  @RequestParam(value = "imageCover") MultipartFile imageCover,
                                                  @RequestParam(value = "photos", required = false) List<MultipartFile> photos) throws IOException {
         PostDetailDTO postDTO = postService.createPost(postRequestDTO, imageCover, photos);

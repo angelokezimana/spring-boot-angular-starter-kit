@@ -4,6 +4,7 @@ import Comment from "./comment.model";
 
 export default interface PostDetail {
   id: number;
+  title: string;
   text: string;
   imageCover: string;
   publishedOn: Date;

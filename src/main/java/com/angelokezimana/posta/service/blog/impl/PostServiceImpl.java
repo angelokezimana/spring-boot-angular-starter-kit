@@ -71,6 +71,7 @@ public class PostServiceImpl implements PostService {
 
         String imageUrl = imageService.saveImage(imageCover);
 
+        post.setTitle(postRequestDTO.title());
         post.setText(postRequestDTO.text());
         post.setImageCover(imageUrl);
         post.setAuthor(author);
@@ -99,6 +100,7 @@ public class PostServiceImpl implements PostService {
         Post existingPost = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
+        existingPost.setTitle(postRequestDTO.title());
         existingPost.setText(postRequestDTO.text());
 
         if (imageCover != null && !imageCover.isEmpty()) {
