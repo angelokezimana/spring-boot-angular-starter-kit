@@ -1,9 +1,9 @@
 <mat-card appearance="outlined">
   <mat-card-header>
-    <mat-card-title>Add post</mat-card-title>
-    <mat-card-subtitle>&sol;Posts&sol;Add post</mat-card-subtitle>
+    <mat-card-title>{{ post ? 'Update' : 'Add' }} post</mat-card-title>
+    <mat-card-subtitle>&sol;Posts&sol;{{ post ? 'Update' : 'Add' }} post</mat-card-subtitle>
   </mat-card-header>
-  <form (submit)="save()" [formGroup]="postFormGroup">
+  <form (submit)="post ? update() : save()" [formGroup]="postFormGroup">
     <mat-card-content>
       <div>
         <mat-form-field appearance="outline" class="auth-form-field">
@@ -47,34 +47,42 @@
             }
           </mat-error>
         }
-        @if (imgCover.src) {
+        @if(imgCover.src || post){
           <div id="previewImageCover">
-            <img [src]="imgCover.src" [alt]="imgCover.alt" loading="lazy"/>
+            @if (imgCover.src) {
+              <img [src]="imgCover.src" [alt]="imgCover.alt" loading="lazy"/>
+            } @else if (post) {
+              <img src="data:image/jpeg;base64, {{ post.imageCover }}" [alt]="post.title" loading="lazy"/>
+            }
           </div>
         }
       </div>
-      <div>
-        <button type="button" mat-button color="primary" (click)="fileInput.click()">
-          <mat-icon>photo_library</mat-icon>
-          Upload images
-        </button>
-        <input id="files" #fileInput type="file" accept="image/*" multiple (change)="onFileSelected($event)">
-        <div id="preview">
-          @for (image of images; track image; let id = $index) {
-            <div class="container">
-              <div class="image-wrapper">
-                <img [src]="image.src" [alt]="image.alt" loading="lazy"/>
-                <button class="btn delete-button" (click)="onDelete(id)">
-                  <mat-icon>delete</mat-icon>
-                </button>
+      @if(!post) {
+        <div>
+          <button type="button" mat-button color="primary" (click)="fileInput.click()">
+            <mat-icon>photo_library</mat-icon>
+            Upload images
+          </button>
+          <input id="files" #fileInput type="file" accept="image/*" multiple (change)="onFileSelected($event)">
+          <div id="preview">
+            @for (image of images; track image; let id = $index) {
+              <div class="container">
+                <div class="image-wrapper">
+                  <img [src]="image.src" [alt]="image.alt" loading="lazy"/>
+                  <button class="btn delete-button" (click)="onDelete(id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
               </div>
-            </div>
-          }
+            }
+          </div>
         </div>
-      </div>
+      }
     </mat-card-content>
     <mat-card-actions align="end">
-      <button type="submit" mat-flat-button color="primary" [disabled]="postFormGroup.invalid">Post</button>
+      <button type="submit" mat-flat-button color="primary" [disabled]="postFormGroup.invalid">
+        {{ post ? "Update" : "Post"}}
+      </button>
     </mat-card-actions>
   </form>
 </mat-card>

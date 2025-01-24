@@ -56,9 +56,9 @@ export class WebApiService {
   /**
    * PUT
    */
-  put(url: string, model: any): Observable<any> {
+  put(url: string, model: any, isFormData: boolean = false): Observable<any> {
     const httpOptions = {
-      headers: new HttpHeaders({
+      headers: new HttpHeaders(isFormData ? {} : {
         'Content-Type': 'application/json',
       }),
       observe: 'response' as 'body',

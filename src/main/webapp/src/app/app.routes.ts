@@ -60,6 +60,11 @@ export const routes: Routes = [
         component: PostFormComponent
       },
       {
+        path: 'post/edit/:id',
+        title: 'Post Update',
+        component: PostFormComponent
+      },
+      {
         path: 'post/:id',
         title: 'Post details',
         component: PostDetailComponent

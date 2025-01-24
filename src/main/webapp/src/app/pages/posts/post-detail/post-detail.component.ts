@@ -20,7 +20,16 @@ import {SnackBarService} from "../../../services/snack-bar/snack-bar.service";
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, DatePipe, RouterLink, CommentComponent],
+  imports: [
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    DatePipe,
+    RouterLink,
+    CommentComponent
+  ],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss'
 })
@@ -53,10 +62,6 @@ export class PostDetailComponent implements OnInit {
         },
       });
     }
-  }
-
-  editPost(id: number | undefined) {
-
   }
 
   deletePost(id: number | undefined): void {

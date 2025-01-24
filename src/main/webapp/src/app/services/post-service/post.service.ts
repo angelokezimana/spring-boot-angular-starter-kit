@@ -23,4 +23,8 @@ export class PostService {
   savePost(formData: FormData): Observable<HttpResponse<PostDetail> | null | undefined> {
     return this.http.post('/api/v1/posts', formData, true);
   }
+
+  updatePost(formData: FormData, id: number): Observable<any> {
+    return this.http.put(`/api/v1/posts/${id}`, formData, true);
+  }
 }

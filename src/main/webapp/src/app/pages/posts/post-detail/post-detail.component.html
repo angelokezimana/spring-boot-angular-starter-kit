@@ -14,9 +14,9 @@
         <button mat-icon-button color="warn" type="button" (click)="deletePost(post?.id)">
           <mat-icon>delete</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="editPost(post?.id)">
+        <a mat-icon-button aria-label="Edit a post" color="primary" [routerLink]="['/post/edit', post?.id]">
           <mat-icon>edit_square</mat-icon>
-        </button>
+        </a>
       </div>
     </mat-card-title>
     <mat-card-subtitle>by {{ post?.author?.email }} <br>on {{ post?.publishedOn | date:'MMM dd, yyyy HH:mm' }}
