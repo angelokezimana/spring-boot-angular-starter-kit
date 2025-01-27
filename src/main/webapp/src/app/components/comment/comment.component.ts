@@ -79,7 +79,8 @@ export class CommentComponent {
           this.resetForm();
         },
         error: (error: HttpErrorResponse) => {
-          this.snackbarService.showMessage(error.error?.value, 'error');
+          const err = error.error;
+          this.snackbarService.showMessage(err?.value ?? err?.text, 'error');
         },
       });
   }
