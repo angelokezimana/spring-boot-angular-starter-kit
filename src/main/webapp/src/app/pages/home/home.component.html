@@ -11,8 +11,22 @@
     <mat-toolbar-row>&sol;home</mat-toolbar-row>
   </mat-toolbar>
   <div class="card-container">
-    @for (post of posts; track post.id) {
-      <app-post-card [post]="post"/>
-    }
+
+    <ng-container>
+      @defer (when !loading()) {
+        @if ((posts() ?? []).length > 0) {
+          @for (post of posts(); track post.id) {
+            <app-post-card [post]="post"/>
+          }
+        } @else {
+          <app-no-posts-found/>
+        }
+      } @loading {
+        <app-post-card-skeleton/>
+      } @placeholder {
+        <app-post-card-skeleton/>
+      }
+    </ng-container>
+
   </div>
 </ng-container>
