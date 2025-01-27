@@ -11,7 +11,7 @@
     <mat-toolbar-row>&sol;Posts&sol;All posts</mat-toolbar-row>
   </mat-toolbar>
   <div class="card-container">
-    @for (post of posts; track post.id) {
+    @for (post of posts(); track post.id) {
       <app-post-card [post]="post"/>
     }
   </div>
