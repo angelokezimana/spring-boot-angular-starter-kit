@@ -1,0 +1,22 @@
+.post-card {
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: .2rem;
+}
+
+mat-card-content p {
+  text-align: justify;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content:space-between;
+}
+
+mat-card-footer {
+  padding: 8px;
+  font-size: small;
+  color: gray;
+  font-weight: normal;
+  border-top: 1px solid #607d8b;
+}
