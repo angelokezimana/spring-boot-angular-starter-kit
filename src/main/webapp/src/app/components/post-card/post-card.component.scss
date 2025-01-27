@@ -4,13 +4,21 @@
   padding: .2rem;
 }
 
-mat-card-content p {
-  text-align: justify;
+.img-container {
+  height: 250px;
+  object-fit: cover;
+}
+
+mat-card-content {
+  height: 80px;
+  p {
+    text-align: justify;
+  }
 }
 
 mat-card-actions {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
 }
 
 mat-card-footer {

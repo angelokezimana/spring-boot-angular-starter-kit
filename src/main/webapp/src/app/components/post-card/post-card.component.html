@@ -3,7 +3,7 @@
     <mat-card-title>{{ post().title | truncate: 30 }}</mat-card-title>
   </mat-card-header>
   <img mat-card-image src="data:image/jpeg;base64, {{ post().imageCover }}" alt="{{ post().text | truncate: 120 }}"
-       loading="lazy" (click)="goToPostDetail(post().id)">
+       loading="lazy" (click)="goToPostDetail(post().id)" class="img-container">
   <mat-card-content (click)="goToPostDetail(post().id)">
     <p class="text-wrap">
       {{ post().text | truncate: 120 }}
