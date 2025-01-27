@@ -6,7 +6,7 @@
        loading="lazy" (click)="goToPostDetail(post().id)" class="img-container">
   <mat-card-content (click)="goToPostDetail(post().id)">
     <p class="text-wrap">
-      {{ post().text | truncate: 120 }}
+      {{ post().text | truncate: 175 }}
     </p>
   </mat-card-content>
   <mat-card-actions>
