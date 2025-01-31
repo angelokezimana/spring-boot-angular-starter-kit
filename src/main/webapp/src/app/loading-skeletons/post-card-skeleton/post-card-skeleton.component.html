@@ -1,26 +1,25 @@
 <ng-container>
   <mat-card class="post-card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>--------------------------</mat-card-title>
+    <mat-card-header class="mc__header_skeleton">
+      <mat-card-title class="skeleton skeleton-text"></mat-card-title>
     </mat-card-header>
-    <img mat-card-image alt="loading ....">
+    <div mat-card-image class="img-container skeleton"></div>
     <mat-card-content>
-      <p class="text-wrap">
-        -------------------------------
-      </p>
+      <p class="text-wrap skeleton skeleton-text"></p>
+      <p class="text-wrap skeleton skeleton-text skeleton-text__body"></p>
     </mat-card-content>
     <mat-card-actions>
     <span class="flex primary">
-       ---------------
-       <span>---</span>
+       <button mat-icon-button type="button" class="skeleton"></button>
     </span>
-      <span>
-      <button mat-icon-button type="button">---</button>
-      <button mat-icon-button type="button">---</button>
+    <span>
+      <button mat-icon-button type="button" class="skeleton"></button>
+      <button mat-icon-button type="button" class="skeleton"></button>
     </span>
     </mat-card-actions>
     <mat-card-footer>
-      ---- <br>---------------------
+      <p class="skeleton skeleton-text skeleton-footer"></p>
+      <p class="skeleton skeleton-text skeleton-footer"></p>
     </mat-card-footer>
   </mat-card>
 </ng-container>

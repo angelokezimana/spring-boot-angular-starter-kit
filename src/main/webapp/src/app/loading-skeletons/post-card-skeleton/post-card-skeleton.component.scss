@@ -1,22 +1,33 @@
-.post-card {
+@import "../../components/post-card/post-card.component.scss";
+
+.mc__header_skeleton{
+  display: block;
+  margin: .4rem 0 .4rem 0;
+}
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.skeleton-text {
   width: 100%;
-  background-color: #f0f0f0;
-  padding: .2rem;
+  height: 0.7rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.25rem;
 }
 
-mat-card-content p {
-  text-align: justify;
+.skeleton-text__body {
+  width: 75%;
 }
 
-mat-card-actions {
-  display: flex;
-  justify-content:space-between;
-}
-
-mat-card-footer {
-  padding: 8px;
-  font-size: small;
-  color: gray;
-  font-weight: normal;
-  border-top: 1px solid #607d8b;
+.skeleton-footer {
+  width: 30%;
 }

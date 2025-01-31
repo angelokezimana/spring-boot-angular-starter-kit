@@ -22,9 +22,13 @@
           <app-no-posts-found/>
         }
       } @loading {
-        <app-post-card-skeleton/>
+        @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+          <app-post-card-skeleton/>
+        }
       } @placeholder {
-        <app-post-card-skeleton/>
+        @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+          <app-post-card-skeleton/>
+        }
       }
     </ng-container>
 
