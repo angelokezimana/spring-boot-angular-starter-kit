@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- Define the log file location -->
-    <property name="LOG_DIR" value="C:/data" />
+    <property name="LOG_DIR" value="C:/POSTA/logs" />
     <property name="LOG_FILE" value="posta" />
 
     <!-- Console appender for logging to the console -->
