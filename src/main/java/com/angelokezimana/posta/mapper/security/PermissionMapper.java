@@ -3,7 +3,6 @@ package com.angelokezimana.posta.mapper.security;
 import com.angelokezimana.posta.dto.security.PermissionDTO;
 import com.angelokezimana.posta.entity.security.Permission;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

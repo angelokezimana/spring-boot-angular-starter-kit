@@ -3,7 +3,6 @@ package com.angelokezimana.posta.controller.auth;
 import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.security.ResetPasswordRequestDTO;
 import com.angelokezimana.posta.service.security.PasswordResetService;
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

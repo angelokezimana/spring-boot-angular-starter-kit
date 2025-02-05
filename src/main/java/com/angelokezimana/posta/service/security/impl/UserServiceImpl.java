@@ -5,7 +5,6 @@ import com.angelokezimana.posta.dto.profile.ChangeProfileInfoRequestDTO;
 import com.angelokezimana.posta.dto.security.UserDTO;
 import com.angelokezimana.posta.entity.security.User;
 import com.angelokezimana.posta.exception.security.UserNotFoundException;
-import com.angelokezimana.posta.mapper.blog.PostMapper;
 import com.angelokezimana.posta.mapper.security.UserMapper;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.security.UserService;
