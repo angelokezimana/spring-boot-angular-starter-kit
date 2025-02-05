@@ -2,8 +2,6 @@ package com.angelokezimana.posta.validation.password;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
 
@@ -11,8 +9,6 @@ public class PasswordsMatchValidator implements ConstraintValidator<PasswordsMat
 
     private String passwordField;
     private String confirmPasswordField;
-
-    private static final Logger log = LogManager.getLogger(PasswordsMatchValidator.class);
 
     @Override
     public void initialize(PasswordsMatch constraintAnnotation) {
@@ -48,7 +44,6 @@ public class PasswordsMatchValidator implements ConstraintValidator<PasswordsMat
             return false;
 
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            log.info(e.getMessage());
             return false;
         }
     }

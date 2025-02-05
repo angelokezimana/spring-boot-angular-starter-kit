@@ -2,6 +2,7 @@ package com.angelokezimana.posta.entity.security;
 
 import com.angelokezimana.posta.entity.blog.Comment;
 import com.angelokezimana.posta.entity.blog.Post;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,18 +44,23 @@ public class User implements UserDetails {
             name = "role_user",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "author")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
 
     @OneToMany(mappedBy = "author")
+    @JsonIgnore
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<ActivationToken> activationTokens;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<BlacklistedToken> blacklistedTokens;
 
     @NotEmpty

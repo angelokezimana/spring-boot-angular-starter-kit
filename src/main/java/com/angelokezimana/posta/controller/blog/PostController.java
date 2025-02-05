@@ -7,8 +7,6 @@ import com.angelokezimana.posta.dto.blog.PostRequestDTO;
 import com.angelokezimana.posta.dto.blog.PostRequestUpdateDTO;
 import com.angelokezimana.posta.service.blog.PostService;
 import jakarta.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,8 +24,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/posts")
 public class PostController {
-
-    private static final Logger log = LogManager.getLogger(PostController.class);
 
     private final PostService postService;
 

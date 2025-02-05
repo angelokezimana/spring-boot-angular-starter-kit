@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!-- Define the log file location -->
+<property name="LOG_DIR" value="C:/data" />
+<property name="LOG_FILE" value="posta" />
+
+<!-- Console appender for logging to the console -->
+<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%throwable</pattern>
+    </encoder>
+</appender>
+
+<!-- Rolling file appender for daily log files -->
+<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIR}/${LOG_FILE}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- Daily rollover -->
+        <fileNamePattern>${LOG_DIR}/${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>
+        <!-- Keep logs for 365 days -->
+        <maxHistory>365</maxHistory>
+    </rollingPolicy>
+    <encoder>
+        <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+    </encoder>
+</appender>
+
+<!-- Root logger level and appenders -->
+<root level="INFO">
+    <appender-ref ref="Console" />
+    <appender-ref ref="FILE" />
+</root>
+</configuration>

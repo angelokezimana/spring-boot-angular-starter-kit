@@ -16,8 +16,6 @@ import com.angelokezimana.posta.service.blog.PhotoPostService;
 import com.angelokezimana.posta.service.blog.PostService;
 import com.angelokezimana.posta.service.image.ImageService;
 import com.angelokezimana.posta.service.security.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,8 +37,6 @@ public class PostServiceImpl implements PostService {
     private final UserService userService;
     private final ImageService imageService;
     private final PhotoPostService photoPostService;
-
-    private static final Logger log = LogManager.getLogger(PostServiceImpl.class);
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository,
