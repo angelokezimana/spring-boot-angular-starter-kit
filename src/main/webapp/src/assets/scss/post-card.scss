@@ -2,6 +2,7 @@ app-post-card, app-post-card-skeleton {
   flex: 1;
   box-sizing: border-box;
   min-width: calc(100% - .2rem);
+  max-width: calc(100% - .2rem);
   border-radius: 8px;
 
   mat-card-header, img, mat-card-content {
@@ -12,11 +13,13 @@ app-post-card, app-post-card-skeleton {
 @media (min-width: 600px) and (max-width: 999px) {
   app-post-card, app-post-card-skeleton {
     min-width: calc(50% - .2rem);
+    max-width: calc(50% - .2rem);
   }
 }
 
 @media (min-width: 1000px) {
   app-post-card, app-post-card-skeleton {
     min-width: calc(33.33% - .2rem);
+    max-width: calc(33.33% - .2rem);
   }
 }
