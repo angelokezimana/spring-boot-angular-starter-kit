@@ -18,6 +18,8 @@ public @interface Unique {
 
     String fieldName();     // Field name, e.g., email, username, etc.
 
+    String idFieldName() default "id";
+
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

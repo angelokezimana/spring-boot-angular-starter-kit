@@ -10,7 +10,7 @@ import {FormValidationService} from "../../services/form-validation/form-validat
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
 import Comment from "../../models/blog/comment.model";
-import {CommentService} from "../../services/comment-service/comment.service";
+import {CommentService} from "../../services/blog/comments/comment.service";
 import {DatePipe} from "@angular/common";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import PostDetail from "../../models/blog/post-detail.model";

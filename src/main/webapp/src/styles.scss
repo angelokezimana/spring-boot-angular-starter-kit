@@ -171,3 +171,25 @@ mat-sidenav {
   overflow-wrap: break-word;
   word-break: break-all;
 }
+
+// badge
+.custom-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  margin-right: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+.custom-badge.badge-success {
+  color: white;
+  background-color: #198754;
+}
+
+// form field
+
+.form-field {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+}

@@ -1,5 +1,6 @@
 package com.angelokezimana.posta.job;
 
+import com.angelokezimana.posta.repository.security.ActivationTokenRepository;
 import com.angelokezimana.posta.repository.security.PasswordResetTokenRepository;
 import com.angelokezimana.posta.repository.security.BlacklistedTokenRepository;
 import jakarta.transaction.Transactional;
@@ -18,13 +19,16 @@ import java.util.Date;
 public class TokenCleanupJob {
     private final BlacklistedTokenRepository blacklistedTokenRepository;
     private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final ActivationTokenRepository activationTokenRepository;
 
     private static final Logger log = LoggerFactory.getLogger(TokenCleanupJob.class);
 
     public TokenCleanupJob(BlacklistedTokenRepository blacklistedTokenRepository,
-                           PasswordResetTokenRepository passwordResetTokenRepository) {
+                           PasswordResetTokenRepository passwordResetTokenRepository,
+                           ActivationTokenRepository activationTokenRepository) {
         this.blacklistedTokenRepository = blacklistedTokenRepository;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.activationTokenRepository = activationTokenRepository;
     }
 
     @Scheduled(cron = "0 0 0 * * *", zone = "UTC")
@@ -47,11 +51,15 @@ public class TokenCleanupJob {
                 blacklistedTokenRepository.countByExpiresAtBefore(now));
         log.info("==============The password reset tokens that have expired and are scheduled for deletion are: {}==============",
                 passwordResetTokenRepository.countByExpiryDateBefore(nowDate));
+        log.info("==============The activation tokens that have expired and are scheduled for deletion are: {}==============",
+                activationTokenRepository.countByExpiresAtBefore(now));
 
         blacklistedTokenRepository.deleteByExpiresAtBefore(now);
         passwordResetTokenRepository.deleteByExpiryDateBefore(nowDate);
+        activationTokenRepository.deleteByExpiresAtBefore(now);
 
         log.info("==============Expired blacklisted tokens deleted at: {}==============", now);
         log.info("==============Expired Password reset tokens deleted at: {}==============", nowDate);
+        log.info("==============Expired activation tokens deleted at: {}==============", now);
     }
 }

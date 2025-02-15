@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {WebApiService} from "../web-api/web-api.service";
+import {WebApiService} from "../../web-api/web-api.service";
 import {Observable} from "rxjs";
-import Comment from "../../models/blog/comment.model";
+import Comment from "../../../models/blog/comment.model";
 import {HttpResponse} from "@angular/common/http";
 
 @Injectable({

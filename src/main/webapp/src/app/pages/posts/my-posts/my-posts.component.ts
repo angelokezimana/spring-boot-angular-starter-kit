@@ -5,7 +5,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {RouterModule} from "@angular/router";
 import Post from "../../../models/blog/post.model";
-import {PostService} from "../../../services/post-service/post.service";
+import {PostService} from "../../../services/blog/posts/post.service";
 
 @Component({
   selector: 'app-my-posts',

@@ -1,13 +1,17 @@
 package com.angelokezimana.posta.service.security.impl;
 
-import com.angelokezimana.posta.dto.profile.ChangePasswordRequestDTO;
-import com.angelokezimana.posta.dto.profile.ChangeProfileInfoRequestDTO;
 import com.angelokezimana.posta.dto.security.UserDTO;
+import com.angelokezimana.posta.dto.security.UserRequestDTO;
+import com.angelokezimana.posta.entity.security.Role;
 import com.angelokezimana.posta.entity.security.User;
 import com.angelokezimana.posta.exception.security.UserNotFoundException;
+import com.angelokezimana.posta.mapper.security.RoleMapper;
 import com.angelokezimana.posta.mapper.security.UserMapper;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.security.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -39,38 +45,65 @@ public class UserServiceImpl implements UserService {
         return Optional.empty();
     }
 
-    public void changePassword(ChangePasswordRequestDTO request) {
-
-        User user = getCurrentUser()
-                .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
-
-        if (!passwordEncoder.matches(request.currentPassword(), user.getPassword())) {
-            throw new IllegalStateException("Wrong current password");
-        }
-
-        user.setPassword(passwordEncoder.encode(request.newPassword()));
-
-        userRepository.save(user);
-    }
-
-    public void changeProfile(ChangeProfileInfoRequestDTO request) {
-
-        User user = getCurrentUser()
-                .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
-
-        updateFieldIfPresent(request.firstName(), user::setFirstName);
-        updateFieldIfPresent(request.lastName(), user::setLastName);
-
-        userRepository.save(user);
-    }
-
     public UserDTO getCurrentUserDTO() {
         return UserMapper.toUserDTO(getCurrentUser().orElseThrow(() -> new IllegalStateException("User not found")));
     }
 
-    private void updateFieldIfPresent(String newValue, Consumer<String> updateMethod) {
-        if (newValue != null && !newValue.trim().isEmpty()) {
-            updateMethod.accept(newValue);
-        }
+    @PreAuthorize("hasPermission('USER', 'READ')")
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
+        Page<User> users = userRepository.findAll(pageable);
+        return users.map(UserMapper::toUserDTO);
+    }
+
+    @PreAuthorize("hasPermission('USER', 'CREATE')")
+    public UserDTO createUser(UserRequestDTO userRequestDTO) {
+
+        User user = new User();
+        Set<Role> roles = userRequestDTO.roles().stream().map(RoleMapper::toRole).collect(Collectors.toSet());
+
+        user.setFirstName(userRequestDTO.firstName());
+        user.setLastName(userRequestDTO.lastName());
+        user.setEmail(userRequestDTO.email());
+        user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString().replace("-", "").substring(0, 8)));
+        user.setAccountLocked(false);
+        user.setEnabled(true);
+        user.setRoles(roles);
+
+        User savedUser = userRepository.save(user);
+
+        return UserMapper.toUserDTO(savedUser);
+    }
+
+    @PreAuthorize("hasPermission('USER', 'READ')")
+    public UserDTO getUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> UserNotFoundException.forId(userId));
+
+        return UserMapper.toUserDTO(user);
+    }
+
+    @PreAuthorize("hasPermission('USER', 'UPDATE')")
+    public UserDTO updateUser(Long userId, UserRequestDTO userRequestDTO) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> UserNotFoundException.forId(userId));
+
+        Set<Role> roles = userRequestDTO.roles().stream().map(RoleMapper::toRole).collect(Collectors.toSet());
+
+        existingUser.setFirstName(userRequestDTO.firstName());
+        existingUser.setLastName(userRequestDTO.lastName());
+        existingUser.setEmail(userRequestDTO.email());
+        existingUser.setRoles(roles);
+
+        User user = userRepository.save(existingUser);
+
+        return UserMapper.toUserDTO(user);
+    }
+
+    @PreAuthorize("hasPermission('USER', 'DELETE')")
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> UserNotFoundException.forId(userId));
+
+        userRepository.delete(user);
     }
 }

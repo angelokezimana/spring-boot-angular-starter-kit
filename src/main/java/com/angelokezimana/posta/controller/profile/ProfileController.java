@@ -4,6 +4,7 @@ import com.angelokezimana.posta.dto.ResponseDTO;
 import com.angelokezimana.posta.dto.profile.ChangePasswordRequestDTO;
 import com.angelokezimana.posta.dto.profile.ChangeProfileInfoRequestDTO;
 import com.angelokezimana.posta.dto.security.UserDTO;
+import com.angelokezimana.posta.service.profile.ProfileService;
 import com.angelokezimana.posta.service.security.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +17,25 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     private final UserService userService;
+    private final ProfileService profileService;
 
     @Autowired
-    public ProfileController(UserService userService) {
+    public ProfileController(UserService userService, ProfileService profileService) {
         this.userService = userService;
+        this.profileService = profileService;
     }
 
     @PatchMapping("/change-password")
     public ResponseEntity<ResponseDTO> changePassword(@RequestBody @Valid ChangePasswordRequestDTO request) {
 
-        userService.changePassword(request);
+        profileService.changePassword(request);
         return ResponseEntity.ok(new ResponseDTO("message", "Password changed successfully"));
     }
 
     @PatchMapping("/change-profile")
     public ResponseEntity<ResponseDTO> changeProfileInfo(@RequestBody ChangeProfileInfoRequestDTO request) {
 
-        userService.changeProfile(request);
+        profileService.changeProfile(request);
         return ResponseEntity.ok(new ResponseDTO("message", "Info changed successfully"));
     }
 

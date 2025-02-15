@@ -15,11 +15,13 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     private Class<?> entityClass;
     private String fieldName;
+    private String idFieldName;
 
     @Override
     public void initialize(Unique constraintAnnotation) {
         this.entityClass = constraintAnnotation.entityClass();
         this.fieldName = constraintAnnotation.fieldName();
+        this.idFieldName = constraintAnnotation.idFieldName();
     }
 
     @Override

@@ -16,6 +16,10 @@ public class RoleMapper {
         );
     }
 
+    public static Role toRole(RoleDTO roleDTO) {
+        return new Role(roleDTO.name());
+    }
+
     public static Set<RoleDTO> toRoleDTOList(Set<Role> roles) {
         return roles.stream()
                 .map(RoleMapper::toRoleDTO)

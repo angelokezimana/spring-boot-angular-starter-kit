@@ -5,7 +5,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import Post from "../../models/blog/post.model";
-import {PostService} from "../../services/post-service/post.service";
+import {PostService} from "../../services/blog/posts/post.service";
 import {PostCardSkeletonComponent} from "../../loading-skeletons/post-card-skeleton/post-card-skeleton.component";
 import {CommonModule} from "@angular/common";
 import {toSignal} from "@angular/core/rxjs-interop";

@@ -5,7 +5,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {PostService} from "../../../services/post-service/post.service";
+import {PostService} from "../../../services/blog/posts/post.service";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import PostDetail from "../../../models/blog/post-detail.model";
 import {DatePipe} from "@angular/common";

@@ -5,7 +5,7 @@ import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
 import {PostCardComponent} from "../../../components/post-card/post-card.component";
 import {RouterLink} from "@angular/router";
 import Post from "../../../models/blog/post.model";
-import {PostService} from "../../../services/post-service/post.service";
+import {PostService} from "../../../services/blog/posts/post.service";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {map} from "rxjs/operators";
 

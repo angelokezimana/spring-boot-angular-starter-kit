@@ -7,7 +7,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {FileService} from "../../../services/file/file.service";
 import {FormValidationService} from "../../../services/form-validation/form-validation.service";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {PostService} from "../../../services/post-service/post.service";
+import {PostService} from "../../../services/blog/posts/post.service";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {SnackBarService} from "../../../services/snack-bar/snack-bar.service";
 import {ActivatedRoute, Router} from "@angular/router";
