@@ -41,7 +41,10 @@
             This field is required
           }
           @if (userFormGroup.get('email')?.errors?.['maxlength']) {
-            This field must not exceed 50 characters
+            This field must not exceed 100 characters
+          }
+          @if (userFormGroup.get('email')?.errors?.['email']) {
+            Invalid Email address
           }
         </mat-error>
       }
