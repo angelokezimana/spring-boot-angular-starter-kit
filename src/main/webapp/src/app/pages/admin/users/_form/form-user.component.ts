@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -14,7 +14,7 @@ import User from "../../../../models/security/user.model";
   templateUrl: './form-user.component.html',
   styleUrl: './form-user.component.scss'
 })
-export class FormUserComponent {
+export class FormUserComponent implements OnInit {
   userFormGroup = this.formBuilder.group({
     firstName: ['', [Validators.required, Validators.maxLength(50)]],
     lastName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -26,6 +26,12 @@ export class FormUserComponent {
     @Inject(MAT_DIALOG_DATA) public data: { title: string, user: undefined | User },
     private formBuilder: FormBuilder,
     private formValidationService: FormValidationService) {
+  }
+
+  ngOnInit(): void {
+    if (this.data.user) {
+      this.userFormGroup.patchValue(this.data.user);
+    }
   }
 
   save() {

@@ -15,6 +15,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDialog} from "@angular/material/dialog";
 import {FormUserComponent} from "./_form/form-user.component";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-users',
@@ -34,13 +35,14 @@ import {FormUserComponent} from "./_form/form-user.component";
     FormsModule,
     MatCardContent,
     ReactiveFormsModule,
+    MatCheckboxModule
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
 export class UsersComponent implements AfterViewInit {
   search = '';
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'roles', 'actions'];
+  displayedColumns: string[] = ['selected', 'id', 'firstName', 'lastName', 'email', 'roles', 'actions'];
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -65,6 +67,7 @@ export class UsersComponent implements AfterViewInit {
 
   addUser() {
     this.dialog.open(FormUserComponent, {
+      width: '800px',
       data: {title: 'Add an user', user: undefined},
     });
   }
@@ -74,9 +77,28 @@ export class UsersComponent implements AfterViewInit {
   }
 
   editUser(user: User) {
-    this.dialog.open(FormUserComponent, {
-      data: {title: `Edit ${user.firstName} ${user.lastName}`, user: user},
+    const dialogRef = this.dialog.open(FormUserComponent, {
+      width: '800px',
+      data: {title: `Edit ${user.firstName} ${user.lastName}`, user: {...user}},
     });
+
+    dialogRef.afterClosed().subscribe((updatedUser) => {
+      if (updatedUser) {
+        // Update the user in the list
+        this.dataSource.data = this.dataSource.data.map((user: User) =>
+          user.id === updatedUser.id ? updatedUser : user
+        );
+
+        this.liveAnnouncer.announce(`User ${updatedUser.firstName} ${updatedUser.lastName} updated successfully.`);
+      }
+    });
+  }
+
+  getRowNumber(index: number): number {
+    if (this.paginator) {
+      return this.paginator.pageIndex * this.paginator.pageSize + index + 1;
+    }
+    return index + 1; // Fallback if paginator is not available
   }
 
   private updateDataSource() {

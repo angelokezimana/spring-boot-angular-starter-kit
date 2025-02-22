@@ -2,35 +2,37 @@
   <h2 mat-dialog-title>{{ data.title }}</h2>
   <mat-dialog-content>
 
-    <mat-form-field appearance="outline" class="form-field mt-2">
-      <mat-label>First name</mat-label>
-      <input matInput formControlName="firstName" type="text" autocomplete="off">
-      @if (isFieldInvalid('firstName')) {
-        <mat-error>
-          @if (userFormGroup.get('firstName')?.errors?.['required']) {
-            This field is required
-          }
-          @if (userFormGroup.get('firstName')?.errors?.['maxlength']) {
-            This field must not exceed 50 characters
-          }
-        </mat-error>
-      }
-    </mat-form-field>
+    <div class="form-group">
+      <mat-form-field appearance="outline" class="form-field mt-2">
+        <mat-label>First name</mat-label>
+        <input matInput formControlName="firstName" type="text" autocomplete="off">
+        @if (isFieldInvalid('firstName')) {
+          <mat-error>
+            @if (userFormGroup.get('firstName')?.errors?.['required']) {
+              This field is required
+            }
+            @if (userFormGroup.get('firstName')?.errors?.['maxlength']) {
+              This field must not exceed 50 characters
+            }
+          </mat-error>
+        }
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-field mt-2">
-      <mat-label>Last name</mat-label>
-      <input matInput formControlName="lastName" type="text" autocomplete="off">
-      @if (isFieldInvalid('lastName')) {
-        <mat-error>
-          @if (userFormGroup.get('lastName')?.errors?.['required']) {
-            This field is required
-          }
-          @if (userFormGroup.get('lastName')?.errors?.['maxlength']) {
-            This field must not exceed 50 characters
-          }
-        </mat-error>
-      }
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field mt-2">
+        <mat-label>Last name</mat-label>
+        <input matInput formControlName="lastName" type="text" autocomplete="off">
+        @if (isFieldInvalid('lastName')) {
+          <mat-error>
+            @if (userFormGroup.get('lastName')?.errors?.['required']) {
+              This field is required
+            }
+            @if (userFormGroup.get('lastName')?.errors?.['maxlength']) {
+              This field must not exceed 50 characters
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+    </div>
 
     <mat-form-field appearance="outline" class="form-field mt-2">
       <mat-label>Email</mat-label>
