@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FooterComponent} from "../../../components/footer/footer.component";
+import {FooterComponent} from "../../../components/shared/footer/footer.component";
 import {MatAnchor, MatButton} from "@angular/material/button";
 import {
     MatCardActions,

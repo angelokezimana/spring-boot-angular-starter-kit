@@ -14,6 +14,8 @@ public class UserMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getUsername(),
+                user.isAccountLocked(),
+                user.isEnabled(),
                 RoleMapper.toRoleDTOList(user.getRoles())
         );
     }

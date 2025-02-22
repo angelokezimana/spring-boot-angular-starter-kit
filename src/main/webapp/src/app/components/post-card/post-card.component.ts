@@ -5,7 +5,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {TruncatePipe} from "../../pipes/truncate/truncate.pipe";
 import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
-import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
+import {DeleteConfirmationDialogComponent} from "../shared/delete-confirmation-dialog/delete-confirmation-dialog.component";
 import Post from "../../models/blog/post.model";
 import {DatePipe} from "@angular/common";
 

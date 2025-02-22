@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatIcon} from "@angular/material/icon";
+import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
@@ -12,12 +12,16 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatDialog} from "@angular/material/dialog";
+import {FormUserComponent} from "./_form/form-user.component";
 
 @Component({
   selector: 'app-users',
   standalone: true,
   imports: [
-    MatIcon,
+    MatIconModule,
+    MatMenuModule,
     MatToolbar,
     MatToolbarRow,
     MatButtonModule,
@@ -42,7 +46,9 @@ export class UsersComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private userService: UserService, private liveAnnouncer: LiveAnnouncer) {
+  constructor(private userService: UserService,
+              private liveAnnouncer: LiveAnnouncer,
+              private dialog: MatDialog) {
   }
 
   ngAfterViewInit() {
@@ -57,8 +63,20 @@ export class UsersComponent implements AfterViewInit {
     }
   }
 
-  deleteUser(id: number) {
+  addUser() {
+    this.dialog.open(FormUserComponent, {
+      data: {title: 'Add an user', user: undefined},
+    });
+  }
 
+  deleteUser(user: User) {
+
+  }
+
+  editUser(user: User) {
+    this.dialog.open(FormUserComponent, {
+      data: {title: `Edit ${user.firstName} ${user.lastName}`, user: user},
+    });
   }
 
   private updateDataSource() {

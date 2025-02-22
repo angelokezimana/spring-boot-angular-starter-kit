@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RouterOutlet} from "@angular/router";
-import {HeaderComponent} from "../../components/header/header.component";
+import {HeaderComponent} from "../../components/shared/header/header.component";
 import {MatSidenav, MatSidenavModule} from "@angular/material/sidenav";
-import {SidebarComponent} from "../../components/sidebar/sidebar.component";
+import {SidebarComponent} from "../../components/shared/sidebar/sidebar.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {NgClass, NgIf} from "@angular/common";
-import {DefaultFooterComponent} from "../../components/default-footer/default-footer.component";
+import {DefaultFooterComponent} from "../../components/shared/default-footer/default-footer.component";
 
 @Component({
   selector: 'app-default',

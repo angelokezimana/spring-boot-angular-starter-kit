@@ -31,7 +31,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
         }
 
         // Build a dynamic query
-        String queryStr = "SELECT COUNT(e) FROM " + entityClass.getSimpleName() + " e WHERE e." + fieldName + " = :value";
+        String queryStr = String.format("SELECT COUNT(e) FROM %s e WHERE e.%s  = :value", entityClass.getSimpleName(), fieldName);
         TypedQuery<Long> query = entityManager.createQuery(queryStr, Long.class);
         query.setParameter("value", value);
 

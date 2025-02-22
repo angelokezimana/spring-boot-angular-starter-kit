@@ -6,7 +6,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
-import {FooterComponent} from "../../../components/footer/footer.component";
+import {FooterComponent} from "../../../components/shared/footer/footer.component";
 
 @Component({
   selector: 'app-register',

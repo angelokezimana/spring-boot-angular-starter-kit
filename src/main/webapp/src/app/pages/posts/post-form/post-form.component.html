@@ -6,7 +6,7 @@
   <form (submit)="post ? update() : save()" [formGroup]="postFormGroup">
     <mat-card-content>
       <div>
-        <mat-form-field appearance="outline" class="auth-form-field">
+        <mat-form-field appearance="outline" class="form-field">
           <mat-label>Title</mat-label>
           <input matInput formControlName="title" type="text" autocomplete="off">
           @if (isFieldInvalid('title')) {

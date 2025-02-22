@@ -10,11 +10,11 @@ import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import PostDetail from "../../../models/blog/post-detail.model";
 import {DatePipe} from "@angular/common";
 import {PreviousRouteService} from "../../../services/previous-route/previous-route.service";
-import {CommentComponent} from "../../../components/comment/comment.component";
+import {CommentComponent} from "./_comment/comment.component";
 import {MatDialog} from "@angular/material/dialog";
 import {
   DeleteConfirmationDialogComponent
-} from "../../../components/delete-confirmation-dialog/delete-confirmation-dialog.component";
+} from "../../../components/shared/delete-confirmation-dialog/delete-confirmation-dialog.component";
 import {SnackBarService} from "../../../services/snack-bar/snack-bar.service";
 
 @Component({

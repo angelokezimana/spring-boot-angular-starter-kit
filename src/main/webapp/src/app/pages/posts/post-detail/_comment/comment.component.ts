@@ -5,15 +5,15 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
-import {SnackBarService} from "../../services/snack-bar/snack-bar.service";
-import {FormValidationService} from "../../services/form-validation/form-validation.service";
+import {SnackBarService} from "../../../../services/snack-bar/snack-bar.service";
+import {FormValidationService} from "../../../../services/form-validation/form-validation.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteConfirmationDialogComponent} from "../delete-confirmation-dialog/delete-confirmation-dialog.component";
-import Comment from "../../models/blog/comment.model";
-import {CommentService} from "../../services/blog/comments/comment.service";
+import {DeleteConfirmationDialogComponent} from "../../../../components/shared/delete-confirmation-dialog/delete-confirmation-dialog.component";
+import Comment from "../../../../models/blog/comment.model";
+import {CommentService} from "../../../../services/blog/comments/comment.service";
 import {DatePipe} from "@angular/common";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
-import PostDetail from "../../models/blog/post-detail.model";
+import PostDetail from "../../../../models/blog/post-detail.model";
 
 @Component({
   selector: 'app-comment',

@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
-import { FooterComponent } from '../../../components/footer/footer.component';
+import { FooterComponent } from '../../../components/shared/footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { FormValidationService } from '../../../services/form-validation/form-validation.service';
 import {

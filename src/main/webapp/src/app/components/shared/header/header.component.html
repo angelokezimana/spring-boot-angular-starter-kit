@@ -19,7 +19,7 @@
     <span class="content-username">{{ email }}</span>
   </button>
   <mat-menu #userMenu="matMenu">
-    <button mat-menu-item routerLink="/profile">Profile</button>
+    <a mat-menu-item routerLink="/profile">Profile</a>
     <button mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>
 </mat-toolbar>

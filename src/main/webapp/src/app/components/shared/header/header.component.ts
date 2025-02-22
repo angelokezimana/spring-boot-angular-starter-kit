@@ -4,7 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from "@angular/material/menu";
 import {RouterLink} from "@angular/router";
-import {AuthService} from "../../services/auth/auth.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-header',

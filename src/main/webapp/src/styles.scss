@@ -4,9 +4,12 @@
 
 @import "material-icons/iconfont/material-icons.css";
 
-@import "@fontsource/roboto/300.css"; /* Light weight */
-@import "@fontsource/roboto/400.css"; /* Regular weight */
-@import "@fontsource/roboto/500.css"; /* Medium weight */
+@import "@fontsource/roboto/300.css";
+/* Light weight */
+@import "@fontsource/roboto/400.css";
+/* Regular weight */
+@import "@fontsource/roboto/500.css";
+/* Medium weight */
 
 @import "assets/scss/post-card.scss";
 
@@ -14,18 +17,22 @@
 
 @import "assets/scss/posts-list.scss";
 
+@import "assets/scss/custom-colors.scss";
+
+@import "assets/scss/custom-table.scss";
+
 $custom-primary: mat.m2-define-palette(mat.$m2-blue-gray-palette);
 $custom-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
 $custom-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 $custom-theme: mat.m2-define-light-theme(
-  (
-    color: (
-      primary: $custom-primary,
-      accent: $custom-accent,
-      warn: $custom-warn,
-    ),
-  )
+    (
+      color: (
+        primary: $custom-primary,
+        accent: $custom-accent,
+        warn: $custom-warn,
+      ),
+    )
 );
 
 @include mat.all-component-themes($custom-theme);
@@ -90,6 +97,7 @@ mat-sidenav {
 .has-error {
   margin-bottom: 10px;
 }
+
 /*End:===========Field has error=============*/
 
 /*Start:===========snackbar styling=============*/
@@ -112,8 +120,8 @@ mat-sidenav {
 .mat-mdc-snack-bar-container {
   &.snackbar-info {
     --mdc-snackbar-container-color: #2196f3;
-    --mat-mdc-snack-bar-button-color: white ;
-    --mdc-snackbar-supporting-text-color: white ;
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
   }
 }
 
@@ -132,18 +140,20 @@ mat-sidenav {
     --mdc-snackbar-supporting-text-color: white;
   }
 }
+
 /*End:===========snackbar styling=============*/
 
 
 /*Start:Flex Spinner*/
 .flex-spinner {
-  display:flex;
+  display: flex;
   align-items: center;
 }
 
 .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: var($custom-primary);
 }
+
 /*end:Flex Spinner*/
 
 .mr-1 {
@@ -175,21 +185,68 @@ mat-sidenav {
 // badge
 .custom-badge {
   display: inline-block;
-  padding: 2px 6px;
+  padding: 2px 4px;
   margin-right: 2px;
   font-size: 10px;
   font-weight: 500;
-  border-radius: 10px;
-}
+  border-radius: 3px;
+  border: 1px solid;
 
-.custom-badge.badge-success {
-  color: white;
-  background-color: #198754;
+  &.badge-success {
+    background-color: $success-bg;
+    color: $success-color;
+    border-color: $success-color;
+  }
+
+  &.badge-error {
+    background-color: $error-bg;
+    color: $error-color;
+    border-color: $error-color;
+  }
+
+  &.badge-info {
+    background-color: $info-bg;
+    color: $info-color;
+    border-color: $info-color;
+  }
+
+  &.badge-warning {
+    background-color: $warning-bg;
+    color: $warning-color;
+    border-color: $warning-color;
+  }
 }
 
 // form field
 
 .form-field {
+  width: 100%;
   --mat-form-field-container-height: 40px;
   --mat-form-field-container-vertical-padding: 8px;
+}
+
+// button for item menu
+.mat-mdc-menu-item.btn-menu-warning, .mat-mdc-menu-item.btn-menu-warning .mat-icon-no-color {
+  color: $warning-color;
+}
+
+.mat-mdc-menu-item.btn-menu-danger, .mat-mdc-menu-item.btn-menu-danger .mat-icon-no-color {
+  color: $error-color;
+}
+
+// input search
+.w-input-search {
+  width: 100%;
+}
+
+@media (min-width: 600px) and (max-width: 1020px) {
+  .w-input-search {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1021px) {
+  .w-input-search {
+    width: 20%;
+  }
 }

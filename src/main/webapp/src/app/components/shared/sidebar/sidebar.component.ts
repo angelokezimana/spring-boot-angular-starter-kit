@@ -8,7 +8,7 @@ import {Event, NavigationEnd, Router, RouterModule} from "@angular/router";
 import {filter, map} from "rxjs/operators";
 import {Observable} from "rxjs";
 
-import MenuItem from "../../interface/MenuItem";
+import MenuItem from "../../../interface/MenuItem";
 
 
 @Component({
