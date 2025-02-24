@@ -5,8 +5,8 @@ import com.angelokezimana.posta.dto.security.UserRequestDTO;
 import com.angelokezimana.posta.entity.security.Role;
 import com.angelokezimana.posta.entity.security.User;
 import com.angelokezimana.posta.exception.security.UserNotFoundException;
-import com.angelokezimana.posta.mapper.security.RoleMapper;
 import com.angelokezimana.posta.mapper.security.UserMapper;
+import com.angelokezimana.posta.repository.security.RoleRepository;
 import com.angelokezimana.posta.repository.security.UserRepository;
 import com.angelokezimana.posta.service.security.UserService;
 import org.springframework.data.domain.Page;
@@ -18,10 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,10 +29,12 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public Optional<User> getCurrentUser() {
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserRequestDTO userRequestDTO) {
 
         User user = new User();
-        Set<Role> roles = userRequestDTO.roles().stream().map(RoleMapper::toRole).collect(Collectors.toSet());
+        Set<Role> roles = new HashSet<>(roleRepository.findAllById(userRequestDTO.roleIds()));
 
         user.setFirstName(userRequestDTO.firstName());
         user.setLastName(userRequestDTO.lastName());
@@ -87,7 +89,7 @@ public class UserServiceImpl implements UserService {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.forId(userId));
 
-        Set<Role> roles = userRequestDTO.roles().stream().map(RoleMapper::toRole).collect(Collectors.toSet());
+        Set<Role> roles = new HashSet<>(roleRepository.findAllById(userRequestDTO.roleIds()));
 
         existingUser.setFirstName(userRequestDTO.firstName());
         existingUser.setLastName(userRequestDTO.lastName());

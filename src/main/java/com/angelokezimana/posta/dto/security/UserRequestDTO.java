@@ -22,5 +22,5 @@ public record UserRequestDTO(
         String email,
 
         @NotNull(message = "Select at least one role")
-        Set<RoleDTO> roles) {
+        Set<Long> roleIds) {
 }
