@@ -1,134 +1,187 @@
-# Posta
+# Spring Boot & Angular Starter Kit 🚀
 
-Welcome to **Posta**, a blog application designed to learn and demonstrate the integration of Spring Boot for backend services with Angular for the front-end. This project aims to provide a platform for creating, reading, updating, and deleting (CRUD) blog posts, comments, and user authentication.
+Welcome to the Spring Boot & Angular Starter Kit! This repository provides a full-stack template for building modern web applications using Spring Boot (backend) and Angular (frontend). It’s designed to help developers quickly set up a robust, scalable, and production-ready project with minimal configuration.
+
+Whether you're a beginner learning full-stack development or an experienced developer starting a new project, this starter kit has you covered.
 
 ## Table of Contents
 
-- [About](#about)
-- [Setup](#setup)
-- [Running the Application](#running-the-application)
-- [Project Structure](#project-structure)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
+- [Spring Boot \& Angular Starter Kit 🚀](#spring-boot--angular-starter-kit-)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+    - [Backend:](#backend)
+    - [Frontend:](#frontend)
+    - [Pre-configured:](#pre-configured)
+  - [Technologies Used](#technologies-used)
+  - [Setup](#setup)
+    - [Prerequisites](#prerequisites)
+    - [Backend (Spring Boot)](#backend-spring-boot)
+    - [Frontend (Angular)](#frontend-angular)
+  - [Running the Application](#running-the-application)
+    - [Development Mode](#development-mode)
+    - [Production Mode](#production-mode)
+  - [Project Structure](#project-structure)
+    - [Backend (src/main/java/com/example/starter/)](#backend-srcmainjavacomexamplestarter)
+    - [Frontend (src/main/webapp/src/)](#frontend-srcmainwebappsrc)
+  - [API Documentation](#api-documentation)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-## About
+## Features
 
-**Posta** serves as an educational tool for understanding how to build a full-stack application using:
+### Backend:
 
-- **Backend**: Spring Boot with JPA for database operations, Spring Security for authentication, and JWT for token management.
-- **Frontend**: Angular for creating a responsive and interactive user interface.
+1. RESTful APIs with Spring Boot.
 
-The application features:
-- User registration and authentication
-- Post creation, editing, and deletion
-- Comment system for posts
-- Image handling: Upload images for posts, Display images on posts and user profiles, Delete images from the filesystem
-- Role-based access control
-- etc.
+2. JWT-based authentication with Spring Security.
+
+3. Database integration using Spring Data JPA (supports MySQL).
+
+4. Exception handling and validation.
+
+### Frontend:
+
+1. Modular Angular application with a clean structure.
+
+2. Responsive UI components.
+
+3. Authentication and role-based access control.
+
+### Pre-configured:
+
+1. Ready-to-use project structure.
+
+2. Sample code for CRUD operations.
+
+3. Step-by-step setup guide.
+
+## Technologies Used
+
+- **Backend:** Spring Boot, Spring Security, JWT, Spring Data JPA, MySQL.
+
+- **Frontend:** Angular, TypeScript, Angular Material.
+
+- **Tools:** Maven, npm, Docker (optional).
 
 ## Setup
 
 ### Prerequisites
 
 - Java 21
-- Node.js (v22.12.0)
-- npm (10.9.0)
-- Angular CLI: (19.0.3)
-- Angular (18.2.12)
+
+- Node.js (v22.12.0 or higher)
+
+- npm (10.9.0 or higher)
+
+- Angular CLI (19.0.3 or higher)
+
 - MySQL
-- Apache Tomcat (11.0.2)
+
+- Apache Tomcat (for production deployment)
 
 ### Backend (Spring Boot)
 
-1. **Clone the repository:**
+1. Clone the repository:
 
-   ```sh
-   git clone https://github.com/angelokezimana/posta.git
-   cd posta
-   ```
+```sh
+git clone https://github.com/your-username/spring-boot-angular-starter-kit.git
+cd spring-boot-angular-starter-kit
+```
 
-2. **Set up the database:**
+2. Set up the database:
 
-Create a new database named `posta_db` in MySQL.
+- Create a new database (e.g., `starter_db`) in MySQL.
 
-Update `application.properties` or environment-specific properties files with your database credentials.
+- Update the `application-<dev|prod>.properties` file with your database credentials.
 
-Build and run:
+3. Build and run the backend:
 
 ```sh
 ./mvnw spring-boot:run
 ```
 
+The backend will be accessible at `http://localhost:8085`.
+
 ### Frontend (Angular)
 
-1. **Navigate to the frontend folder:**
+1. Navigate to the frontend folder:
 
 ```sh
 cd src/main/webapp
 ```
 
-2. **Install dependencies:**
+2. Install dependencies:
 
 ```sh
 npm install
 ```
 
-3. **Run the Angular app:**
+3. Run the Angular app:
 
 ```sh
 ng serve
 ```
 
-Your Angular application will be accessible at http://localhost:4200/.
+The frontend will be accessible at `http://localhost:4200`.
 
 ## Running the Application
 
-### Development
+### Development Mode
 
-Use the commands above for running both backend and frontend in development mode.
+- Run the backend and frontend separately using the commands above.
 
-### Production
+- The backend serves REST APIs, while the frontend connects to them.
 
-1. **Backend:** `mvn clean install` to build a WAR file, then deploy on a server like Tomcat.
+### Production Mode
 
-2. **Frontend:** `npm run build` to generate a production build, then deploy to any static file server or use the backend as a reverse proxy.
+- `Backend:` Build a WAR file using `mvn clean install` and deploy it to a server like Tomcat.
+
+- `Frontend:` Generate a production build using `npm run build` and deploy the static files to a web server or use the backend as a reverse proxy.
 
 ## Project Structure
 
-- Backend (src/main/java/com/angelokezimana/posta/):
-  - config/: Configuration classes
-  - controller/: REST controllers
-  - service/: Business logic
-  - entity/: Database models
-  - repository/: JPA repositories
-- Frontend (src/main/webapp/src/):
-  - app/: Angular modules, components, services
-  - assets/: Static files like images, SCSS
-  - environments/: Environment configurations
+### Backend (src/main/java/com/example/starter/)
+
+- **config/:** Configuration classes (e.g., security, CORS).
+
+- **controller/:** REST controllers.
+
+- **service/:** Business logic.
+
+- **entity/:** Database models.
+
+- **repository/:** JPA repositories.
+
+### Frontend (src/main/webapp/src/)
+
+- **app/:** Angular modules, components, and services.
+
+- **assets/:** Static files (e.g., images, styles).
+
+- **environments/:** Environment configurations.
 
 ## API Documentation
 
-Access the OpenAPI specification at:
+The backend API is documented using Swagger. Access the OpenAPI specification at:
 
-Development: http://localhost:8085/swagger-ui/index.html
+- Development: `http://localhost:8085/swagger-ui/index.html`
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome! Here’s how you can help:
 
-1. Fork the repository: `git clone https://github.com/angelokezimana/posta.git`
+1. Fork the repository.
 
-2. Create a new branch (`git checkout -b feature/YourFeature`)
+2. Create a new branch (`git checkout -b feature/YourFeature`).
 
-3. Make your changes
+3. Make your changes.
 
-4. Commit your changes (`git commit -am 'Add some feature'`)
+4. Commit your changes (`git commit -am 'Add some feature'`).
 
-5. Push to the branch (`git push origin feature/YourFeature`)
+5. Push to the branch (`git push origin feature/YourFeature`).
 
-6. Create a new Pull Request
+6. Create a new Pull Request.
 
 ## License
 
-This project is open source and available under the MIT License (LICENSE).
+This project is open source and available under the MIT License. See the [LICENSE](https://github.com/angelokezimana/spring-boot-angular-starter-kit/blob/main/LICENSE) file for details.
