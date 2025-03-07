@@ -2,7 +2,7 @@
 <configuration>
     <!-- Define the log file location -->
     <property name="LOG_DIR" value="C:/POSTA/logs" />
-    <property name="LOG_FILE" value="posta" />
+    <property name="LOG_FILE" value="spring-boot-angular-starter-kit" />
 
     <!-- Console appender for logging to the console -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">

@@ -1,10 +1,10 @@
 {
-  "name": "posta",
+  "name": "spring-boot-angular-starter-kit",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href=/posta/ --configuration production",
+    "build": "ng build --base-href=/spring-boot-angular-starter-kit/ --configuration production",
     "postbuild": "node scripts/postbuild.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

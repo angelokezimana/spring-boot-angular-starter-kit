@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-const source = path.join(__dirname, '..', 'dist', 'posta', 'browser');
+const source = path.join(__dirname, '..', 'dist', 'spring-boot-angular-starter-kit', 'browser');
 const destination = path.join(__dirname, '..', '..', 'resources', 'static');
 
 async function copyBuild() {

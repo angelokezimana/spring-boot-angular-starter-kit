@@ -9,5 +9,5 @@ import {RouterOutlet} from '@angular/router';
   imports: [RouterOutlet],
 })
 export class AppComponent {
-  title = 'posta'
+  title = 'spring-boot-angular-starter-kit'
 }

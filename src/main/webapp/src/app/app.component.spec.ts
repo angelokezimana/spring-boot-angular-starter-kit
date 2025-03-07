@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'posta' title`, () => {
+  it(`should have the 'spring-boot-angular-starter-kit' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('posta');
+    expect(app.title).toEqual('spring-boot-angular-starter-kit');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, posta');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, spring-boot-angular-starter-kit');
   });
 });
