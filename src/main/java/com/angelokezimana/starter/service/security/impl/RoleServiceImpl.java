@@ -16,7 +16,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created By Angelo's on 3/7/2025.
@@ -32,9 +34,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @PreAuthorize("hasPermission('ROLE', 'READ')")
-    public Page<RoleDTO> getAllRoles(Pageable pageable) {
+    public Page<RoleDTO> getRoles(Pageable pageable) {
         Page<Role> roles = roleRepository.findAll(pageable);
         return roles.map(RoleMapper::toRoleDTO);
+    }
+
+    @PreAuthorize("hasPermission('ROLE', 'READ') || hasPermission('USER', 'CREATE')")
+    public List<RoleDTO> getAllRoles(String search) {
+
+        List<Role> roles = roleRepository.findByNameContainingIgnoreCase(search);
+        return roles.stream()
+                .map(RoleMapper::toRoleDTO)
+                .collect(Collectors.toList());
     }
 
     @PreAuthorize("hasPermission('ROLE', 'CREATE')")

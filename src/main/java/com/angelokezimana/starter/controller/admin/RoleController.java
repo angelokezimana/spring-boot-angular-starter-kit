@@ -34,9 +34,17 @@ public class RoleController {
         Sort parseSortParameter = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
 
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
-        Page<RoleDTO> roleDTOs = roleService.getAllRoles(pageable);
+        Page<RoleDTO> roleDTOs = roleService.getRoles(pageable);
 
         return ResponseEntity.ok(roleDTOs.getContent());
+    }
+
+    @GetMapping("/all")
+    private ResponseEntity<List<RoleDTO>> findAll(
+            @RequestParam(defaultValue = "") String search) {
+
+        List<RoleDTO> roleDTOs = roleService.getAllRoles(search);
+        return ResponseEntity.ok(roleDTOs);
     }
 
     @PostMapping()

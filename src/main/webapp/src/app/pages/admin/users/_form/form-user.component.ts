@@ -10,6 +10,7 @@ import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/mate
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {MatIconModule} from "@angular/material/icon";
+import {RoleService} from "../../../../services/admin/roles/role.service";
 
 @Component({
   selector: 'app-form-user',
@@ -27,7 +28,7 @@ export class FormUserComponent implements OnInit {
 
   readonly currentRole = model('');
   readonly roles = signal<string[]>([]);
-  readonly allRoles = signal(['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry', 'Patate douce', 'Pomme de terre', 'Harcicots', "riz"]); // Use a signal for allRoles
+  readonly allRoles = signal<string[]>([]); // Use a signal for allRoles
   readonly filteredRoles = computed(() => {
     const currentRole = this.currentRole().toLowerCase();
     return currentRole
@@ -36,6 +37,7 @@ export class FormUserComponent implements OnInit {
   });
 
   constructor(
+    private roleService: RoleService,
     private dialogRef: MatDialogRef<FormUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { title: string, user: undefined | User },
     private formBuilder: FormBuilder,
@@ -47,6 +49,8 @@ export class FormUserComponent implements OnInit {
     if (this.data.user) {
       this.userFormGroup.patchValue(this.data.user);
     }
+
+    this.loadRoles();
   }
 
   save() {
@@ -95,6 +99,14 @@ export class FormUserComponent implements OnInit {
   }
 
   private removeFromAllRoles(role: string): void {
-    this.allRoles.update(allRoles => allRoles.filter(f => f !== role));
+    this.allRoles.update(allRoles => allRoles);
+  }
+
+  private loadRoles() {
+    this.roleService.getAllRoles().subscribe(response => {
+      if (response.body) {
+        this.allRoles.set(response.body.map(role => role.name));
+      }
+    });
   }
 }
