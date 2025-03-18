@@ -11,6 +11,7 @@ import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {MatIconModule} from "@angular/material/icon";
 import {RoleService} from "../../../../services/admin/roles/role.service";
+import Role from "../../../../models/security/role.model";
 
 @Component({
   selector: 'app-form-user',
@@ -26,13 +27,13 @@ export class FormUserComponent implements OnInit {
     email: ['', [Validators.email, Validators.required, Validators.maxLength(100)]],
   });
 
-  readonly currentRole = model('');
-  readonly roles = signal<string[]>([]);
-  readonly allRoles = signal<string[]>([]); // Use a signal for allRoles
+  readonly currentRole = model<Role>();
+  readonly roles = signal<Role[]>([]);
+  readonly allRoles = signal<Role[]>([]); // Use a signal for allRoles
   readonly filteredRoles = computed(() => {
-    const currentRole = this.currentRole().toLowerCase();
+    const currentRole = this.currentRole()?.name.toLowerCase();
     return currentRole
-      ? this.allRoles().filter(role => role.toLowerCase().includes(currentRole))
+      ? this.allRoles().filter(role => role.name.toLowerCase().includes(currentRole))
       : this.allRoles().slice();
   });
 
@@ -48,6 +49,7 @@ export class FormUserComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.user) {
       this.userFormGroup.patchValue(this.data.user);
+      this.roles.set(this.data.user.roles || []);
     }
 
     this.loadRoles();
@@ -55,7 +57,12 @@ export class FormUserComponent implements OnInit {
 
   save() {
     // saving user
+    const userData = {
+      ...this.userFormGroup.value,
+      roles: this.roles(),
+    };
 
+    console.log(userData);
     this.dialogRef.close();
   }
 
@@ -63,20 +70,20 @@ export class FormUserComponent implements OnInit {
     return this.formValidationService.isFieldInvalid(this.userFormGroup, name);
   }
 
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+  // add(event: MatChipInputEvent): void {
+  //   const value = event.value;
+  //
+  //   // Add our role
+  //   if (value) {
+  //     this.roles.update(roles => [...roles, value]);
+  //     this.removeFromAllRoles(value); // Remove the added role from allRoles
+  //   }
+  //
+  //   // Clear the input value
+  //   this.currentRole.set('');
+  // }
 
-    // Add our role
-    if (value) {
-      this.roles.update(roles => [...roles, value]);
-      this.removeFromAllRoles(value); // Remove the added role from allRoles
-    }
-
-    // Clear the input value
-    this.currentRole.set('');
-  }
-
-  remove(role: string): void {
+  remove(role: Role): void {
     this.roles.update(roles => {
       const index = roles.indexOf(role);
       if (index < 0) {
@@ -91,21 +98,21 @@ export class FormUserComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    const selectedRole = event.option.viewValue;
+    const selectedRole = event.option.value as Role;
     this.roles.update(roles => [...roles, selectedRole]);
     this.removeFromAllRoles(selectedRole); // Remove the selected role from allRoles
-    this.currentRole.set('');
+    this.currentRole.set(undefined);
     event.option.deselect();
   }
 
-  private removeFromAllRoles(role: string): void {
-    this.allRoles.update(allRoles => allRoles);
+  private removeFromAllRoles(role: Role): void {
+    this.allRoles.update(allRoles => allRoles.filter(r => r !== role));
   }
 
   private loadRoles() {
     this.roleService.getAllRoles().subscribe(response => {
       if (response.body) {
-        this.allRoles.set(response.body.map(role => role.name));
+        this.allRoles.set(response.body);
       }
     });
   }

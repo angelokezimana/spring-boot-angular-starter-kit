@@ -71,11 +71,10 @@
         [(ngModel)]="currentRole"
         [matChipInputFor]="chipGrid"
         [matAutocomplete]="auto"
-        (matChipInputTokenEnd)="add($event)"
       />
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event); roleInput.value = ''">
         @for (role of filteredRoles(); track role) {
-          <mat-option [value]="role">{{ role }}</mat-option>
+          <mat-option [value]="role">{{ role.name }}</mat-option>
         }
       </mat-autocomplete>
     </mat-form-field>
