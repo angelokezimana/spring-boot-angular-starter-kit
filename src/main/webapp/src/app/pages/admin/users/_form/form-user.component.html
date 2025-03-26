@@ -52,32 +52,14 @@
       }
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-field">
-      <mat-label>Roles</mat-label>
-      <mat-chip-grid #chipRole aria-label="Role selection">
-        @for (role of roles(); track role.id) {
-          <mat-chip-row (removed)="remove(role)">
-            {{ role.name }}
-            <button matChipRemove [attr.aria-label]="'remove ' + role.name">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip-row>
-        }
-      </mat-chip-grid>
-      <input
-        placeholder="New Role..."
-        #roleInput
-        [formControl]="currentRole"
-        [matChipInputFor]="chipRole"
-        [matAutocomplete]="auto"
-        (input)="currentRole.setValue({ id: 0, name: $any($event.target).value, permissions: [] })"
-      />
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event); roleInput.value = ''">
-        @for (role of filteredRoles(); track role.id) {
-          <mat-option [value]="role">{{ role.name }}</mat-option>
-        }
-      </mat-autocomplete>
-    </mat-form-field>
+    <app-multi-select
+      [allItems]="allRoles"
+      displayProperty="name"
+      label="Roles"
+      placeholder="New Role..."
+      [initialSelectedItems]="roles()"
+      (selectedItemsChange)="onRolesChange($event)">
+    </app-multi-select>
 
   </mat-dialog-content>
   <mat-dialog-actions>

@@ -1,0 +1,26 @@
+<mat-form-field appearance="outline" class="form-field">
+  <mat-label>{{ label() }}</mat-label>
+  <mat-chip-grid #chipGrid aria-label="Item selection">
+    @for (item of selectedItems(); track getId(item)) {
+      <mat-chip-row (removed)="remove(item)">
+        {{ item[displayProperty()] }}
+        <button matChipRemove [attr.aria-label]="'remove ' + item[displayProperty()]">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    }
+  </mat-chip-grid>
+  <input
+    [placeholder]="placeholder()"
+    #itemInput
+    [formControl]="currentItem"
+    [matChipInputFor]="chipGrid"
+    [matAutocomplete]="auto"
+    (input)="onInput($event)"
+  />
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event); itemInput.value = ''">
+    @for (item of filteredItems(); track getId(item)) {
+      <mat-option [value]="item">{{ item[displayProperty()] }}</mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>
