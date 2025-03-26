@@ -54,26 +54,26 @@
 
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Roles</mat-label>
-      <mat-chip-grid #chipGrid aria-label="Role selection">
-        @for (role of roles(); track $index) {
+      <mat-chip-grid #chipRole aria-label="Role selection">
+        @for (role of roles(); track role.id) {
           <mat-chip-row (removed)="remove(role)">
-            {{ role }}
-            <button matChipRemove [attr.aria-label]="'remove ' + role">
+            {{ role.name }}
+            <button matChipRemove [attr.aria-label]="'remove ' + role.name">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip-row>
         }
       </mat-chip-grid>
       <input
-        name="currentRole"
         placeholder="New Role..."
         #roleInput
-        [(ngModel)]="currentRole"
-        [matChipInputFor]="chipGrid"
+        [formControl]="currentRole"
+        [matChipInputFor]="chipRole"
         [matAutocomplete]="auto"
+        (input)="currentRole.setValue({ id: 0, name: $any($event.target).value, permissions: [] })"
       />
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event); roleInput.value = ''">
-        @for (role of filteredRoles(); track role) {
+        @for (role of filteredRoles(); track role.id) {
           <mat-option [value]="role">{{ role.name }}</mat-option>
         }
       </mat-autocomplete>
