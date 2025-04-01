@@ -9,6 +9,8 @@ import com.angelokezimana.starter.mapper.security.UserMapper;
 import com.angelokezimana.starter.repository.security.RoleRepository;
 import com.angelokezimana.starter.repository.security.UserRepository;
 import com.angelokezimana.starter.service.security.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +28,8 @@ import java.util.UUID;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -63,15 +67,25 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         Set<Role> roles = new HashSet<>(roleRepository.findAllById(userRequestDTO.roleIds()));
 
+        String passwordText = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+
         user.setFirstName(userRequestDTO.firstName());
         user.setLastName(userRequestDTO.lastName());
         user.setEmail(userRequestDTO.email());
-        user.setPassword(passwordEncoder.encode(UUID.randomUUID().toString().replace("-", "").substring(0, 8)));
+        user.setPassword(passwordEncoder.encode(passwordText));
         user.setAccountLocked(false);
         user.setEnabled(true);
         user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
+
+        logger.info("=================================Creating user======================");
+        logger.info("Full name: {} {}. Email: {}. Password text: {}",
+                user.getFirstName(),
+                user.getLastName(),
+                user.getUsername(),
+                passwordText);
+        logger.info("=================================Creating user======================");
 
         return UserMapper.toUserDTO(savedUser);
     }

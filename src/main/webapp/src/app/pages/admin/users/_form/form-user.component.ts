@@ -46,7 +46,7 @@ export class FormUserComponent implements OnInit {
   save(): void {
     const userData = {
       ...this.userFormGroup.value,
-      roles: this.roles(),
+      roleIds: this.roles().map(role => role.id),
     };
     console.log(userData);
     this.dialogRef.close(userData);
