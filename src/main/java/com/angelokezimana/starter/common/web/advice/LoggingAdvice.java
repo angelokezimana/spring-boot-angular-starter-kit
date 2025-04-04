@@ -34,8 +34,8 @@ public class LoggingAdvice {
         this.objectMapper = objectMapper;
     }
 
-    @Pointcut(value = "execution(public * com.angelokezimana.starter.controller..*(..)) " +
-            "|| execution(public * com.angelokezimana.starter.service..*(..))")
+    @Pointcut(value = "execution(public * com.angelokezimana.starter..*.web..*(..)) " +
+            "|| execution(public * com.angelokezimana.starter..*.service..*(..))")
     public void myPointCut() {    }
 
     @Around("myPointCut()")
