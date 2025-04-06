@@ -2,6 +2,16 @@
 
 @use "@angular/material" as mat;
 
+@use "assets/scss/post-card" as *;
+
+@use "assets/scss/auth" as *;
+
+@use "assets/scss/posts-list" as *;
+
+@use "assets/scss/custom-colors" as *;
+
+@use "assets/scss/custom-table" as *;
+
 @import "material-icons/iconfont/material-icons.css";
 
 @import "@fontsource/roboto/300.css";
@@ -10,16 +20,6 @@
 /* Regular weight */
 @import "@fontsource/roboto/500.css";
 /* Medium weight */
-
-@import "assets/scss/post-card.scss";
-
-@import "assets/scss/auth.scss";
-
-@import "assets/scss/posts-list.scss";
-
-@import "assets/scss/custom-colors.scss";
-
-@import "assets/scss/custom-table.scss";
 
 $custom-primary: mat.m2-define-palette(mat.$m2-blue-gray-palette);
 $custom-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);

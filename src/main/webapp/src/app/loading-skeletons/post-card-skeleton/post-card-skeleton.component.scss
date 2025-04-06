@@ -1,4 +1,4 @@
-@import "../../components/post-card/post-card.component.scss";
+@use "../../components/post-card/post-card.component" as *;
 
 .mc__header_skeleton{
   display: block;

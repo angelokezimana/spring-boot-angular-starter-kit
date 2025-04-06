@@ -4,7 +4,7 @@ import {HeaderComponent} from "../../components/shared/header/header.component";
 import {MatSidenav, MatSidenavModule} from "@angular/material/sidenav";
 import {SidebarComponent} from "../../components/shared/sidebar/sidebar.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {NgClass, NgIf} from "@angular/common";
+import {NgClass} from "@angular/common";
 import {DefaultFooterComponent} from "../../components/shared/default-footer/default-footer.component";
 
 @Component({
@@ -15,7 +15,6 @@ import {DefaultFooterComponent} from "../../components/shared/default-footer/def
         DefaultFooterComponent,
         SidebarComponent,
         NgClass,
-        NgIf,
         MatSidenavModule
     ],
     templateUrl: './default.component.html',
