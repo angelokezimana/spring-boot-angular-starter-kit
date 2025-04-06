@@ -8,11 +8,10 @@ import Post from "../../../models/blog/post.model";
 import {PostService} from "../../../services/blog/posts/post.service";
 
 @Component({
-  selector: 'app-my-posts',
-  standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, PostCardComponent],
-  templateUrl: './my-posts.component.html',
-  styleUrl: './my-posts.component.scss'
+    selector: 'app-my-posts',
+    imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterModule, PostCardComponent],
+    templateUrl: './my-posts.component.html',
+    styleUrl: './my-posts.component.scss'
 })
 export class MyPostsComponent  implements OnInit {
   posts: Post[] = [];

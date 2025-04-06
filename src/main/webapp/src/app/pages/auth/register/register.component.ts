@@ -9,13 +9,12 @@ import {RouterModule} from "@angular/router";
 import {FooterComponent} from "../../../components/shared/footer/footer.component";
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [MatCardModule, FormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatIconModule, RouterModule, FooterComponent
-  ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+    imports: [MatCardModule, FormsModule, MatFormFieldModule, MatInputModule,
+        MatButtonModule, MatIconModule, RouterModule, FooterComponent
+    ],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
 

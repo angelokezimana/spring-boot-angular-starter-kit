@@ -14,18 +14,17 @@ import {ActivatedRoute, Router} from "@angular/router";
 import PostDetail from "../../../models/blog/post-detail.model";
 
 @Component({
-  selector: 'app-post-form',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatFormFieldModule
-  ],
-  templateUrl: './post-form.component.html',
-  styleUrl: './post-form.component.scss'
+    selector: 'app-post-form',
+    imports: [
+        MatCardModule,
+        MatButtonModule,
+        MatInputModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatFormFieldModule
+    ],
+    templateUrl: './post-form.component.html',
+    styleUrl: './post-form.component.scss'
 })
 export class PostFormComponent implements OnInit {
   postFormGroup = this.formBuilder.group({

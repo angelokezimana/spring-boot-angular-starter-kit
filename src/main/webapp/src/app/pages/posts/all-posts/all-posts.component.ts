@@ -10,18 +10,17 @@ import {toSignal} from "@angular/core/rxjs-interop";
 import {map} from "rxjs/operators";
 
 @Component({
-  selector: 'app-all-posts',
-  standalone: true,
-  imports: [
-    MatIcon,
-    MatMiniFabAnchor,
-    MatToolbar,
-    MatToolbarRow,
-    PostCardComponent,
-    RouterLink
-  ],
-  templateUrl: './all-posts.component.html',
-  styleUrl: './all-posts.component.scss'
+    selector: 'app-all-posts',
+    imports: [
+        MatIcon,
+        MatMiniFabAnchor,
+        MatToolbar,
+        MatToolbarRow,
+        PostCardComponent,
+        RouterLink
+    ],
+    templateUrl: './all-posts.component.html',
+    styleUrl: './all-posts.component.scss'
 })
 export class AllPostsComponent {
   posts: Signal<Post[] | [] | null> = toSignal(this.postService.getPosts().pipe(

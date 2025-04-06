@@ -10,11 +10,10 @@ import Post from "../../models/blog/post.model";
 import {DatePipe} from "@angular/common";
 
 @Component({
-  selector: 'app-post-card',
-  standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule, TruncatePipe, DatePipe],
-  templateUrl: './post-card.component.html',
-  styleUrl: './post-card.component.scss'
+    selector: 'app-post-card',
+    imports: [MatCardModule, MatIconModule, MatButtonModule, TruncatePipe, DatePipe],
+    templateUrl: './post-card.component.html',
+    styleUrl: './post-card.component.scss'
 })
 export class PostCardComponent {
   post = input.required<Post>();

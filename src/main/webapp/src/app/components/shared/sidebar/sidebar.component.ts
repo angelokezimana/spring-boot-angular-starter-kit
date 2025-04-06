@@ -12,11 +12,10 @@ import MenuItem from "../../../interface/MenuItem";
 
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [MatSidenavModule, MatIconModule, MatListModule, NgClass, RouterModule, AsyncPipe],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+    selector: 'app-sidebar',
+    imports: [MatSidenavModule, MatIconModule, MatListModule, NgClass, RouterModule, AsyncPipe],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   isCollapsed = input<boolean>(false);

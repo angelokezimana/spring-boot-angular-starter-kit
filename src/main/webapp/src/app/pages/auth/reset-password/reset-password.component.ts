@@ -14,8 +14,7 @@ import {MatInput} from "@angular/material/input";
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-reset-password',
-  standalone: true,
+    selector: 'app-reset-password',
     imports: [
         FooterComponent,
         MatAnchor,
@@ -31,8 +30,8 @@ import {RouterLink} from "@angular/router";
         MatLabel,
         RouterLink
     ],
-  templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.scss'
+    templateUrl: './reset-password.component.html',
+    styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent {
 

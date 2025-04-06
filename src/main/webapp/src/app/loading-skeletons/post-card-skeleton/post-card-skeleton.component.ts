@@ -10,20 +10,19 @@ import {
 import {MatIconButton} from "@angular/material/button";
 
 @Component({
-  selector: 'app-post-card-skeleton',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardActions,
-    MatCardContent,
-    MatCardFooter,
-    MatCardHeader,
-    MatCardImage,
-    MatCardTitle,
-    MatIconButton
-  ],
-  templateUrl: './post-card-skeleton.component.html',
-  styleUrl: './post-card-skeleton.component.scss'
+    selector: 'app-post-card-skeleton',
+    imports: [
+        MatCard,
+        MatCardActions,
+        MatCardContent,
+        MatCardFooter,
+        MatCardHeader,
+        MatCardImage,
+        MatCardTitle,
+        MatIconButton
+    ],
+    templateUrl: './post-card-skeleton.component.html',
+    styleUrl: './post-card-skeleton.component.scss'
 })
 export class PostCardSkeletonComponent {
 

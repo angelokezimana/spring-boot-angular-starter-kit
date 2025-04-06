@@ -13,11 +13,10 @@ import {map} from "rxjs/operators";
 import {NoPostsFoundComponent} from "../../components/no-posts-found/no-posts-found.component";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [MatToolbarModule, PostCardComponent, MatIcon, MatButtonModule, RouterLink, CommonModule, PostCardSkeletonComponent, NoPostsFoundComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [MatToolbarModule, PostCardComponent, MatIcon, MatButtonModule, RouterLink, CommonModule, PostCardSkeletonComponent, NoPostsFoundComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent {
 

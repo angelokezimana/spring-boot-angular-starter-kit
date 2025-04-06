@@ -9,14 +9,13 @@ import {FormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 
 @Component({
-  selector: 'app-activate-account',
-  standalone: true,
-  imports: [
-    MatCardModule, FormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatIconModule, RouterModule, FooterComponent
-  ],
-  templateUrl: './activate-account.component.html',
-  styleUrl: './activate-account.component.css'
+    selector: 'app-activate-account',
+    imports: [
+        MatCardModule, FormsModule, MatFormFieldModule, MatInputModule,
+        MatButtonModule, MatIconModule, RouterModule, FooterComponent
+    ],
+    templateUrl: './activate-account.component.html',
+    styleUrl: './activate-account.component.css'
 })
 export class ActivateAccountComponent {
 

@@ -18,20 +18,19 @@ import {
 import {SnackBarService} from "../../../services/snack-bar/snack-bar.service";
 
 @Component({
-  selector: 'app-post-detail',
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    DatePipe,
-    RouterLink,
-    CommentComponent
-  ],
-  templateUrl: './post-detail.component.html',
-  styleUrl: './post-detail.component.scss'
+    selector: 'app-post-detail',
+    imports: [
+        MatCardModule,
+        MatIconModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        DatePipe,
+        RouterLink,
+        CommentComponent
+    ],
+    templateUrl: './post-detail.component.html',
+    styleUrl: './post-detail.component.scss'
 })
 export class PostDetailComponent implements OnInit {
   post: PostDetail | null = null;

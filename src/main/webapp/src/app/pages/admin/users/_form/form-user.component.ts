@@ -14,11 +14,10 @@ import Role from "../../../../models/security/role.model";
 import {MultiSelectComponent} from "../../../../components/shared/multi-select/multi-select.component";
 
 @Component({
-  selector: 'app-form-user',
-  standalone: true,
-  imports: [MatDialogModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatIconModule, MatChipsModule, FormsModule, MatAutocompleteModule, MultiSelectComponent],
-  templateUrl: './form-user.component.html',
-  styleUrl: './form-user.component.scss'
+    selector: 'app-form-user',
+    imports: [MatDialogModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatIconModule, MatChipsModule, FormsModule, MatAutocompleteModule, MultiSelectComponent],
+    templateUrl: './form-user.component.html',
+    styleUrl: './form-user.component.scss'
 })
 export class FormUserComponent implements OnInit {
   userFormGroup = this.formBuilder.group({

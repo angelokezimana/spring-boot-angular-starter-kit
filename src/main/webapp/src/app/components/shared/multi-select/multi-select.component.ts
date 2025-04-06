@@ -18,11 +18,10 @@ import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: 'app-multi-select',
-  standalone: true,
-  imports: [ReactiveFormsModule, MatInputModule, MatIconModule, MatChipsModule, MatAutocompleteModule],
-  templateUrl: './multi-select.component.html',
-  styleUrl: './multi-select.component.scss'
+    selector: 'app-multi-select',
+    imports: [ReactiveFormsModule, MatInputModule, MatIconModule, MatChipsModule, MatAutocompleteModule],
+    templateUrl: './multi-select.component.html',
+    styleUrl: './multi-select.component.scss'
 })
 export class MultiSelectComponent<T> implements OnChanges {
 

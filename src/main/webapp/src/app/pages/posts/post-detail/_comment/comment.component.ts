@@ -16,24 +16,23 @@ import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import PostDetail from "../../../../models/blog/post-detail.model";
 
 @Component({
-  selector: 'app-comment',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardActions,
-    MatCardContent,
-    MatIcon,
-    MatIconButton,
-    MatButton,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    ReactiveFormsModule,
-    MatError,
-    DatePipe
-  ],
-  templateUrl: './comment.component.html',
-  styleUrl: './comment.component.scss'
+    selector: 'app-comment',
+    imports: [
+        MatCard,
+        MatCardActions,
+        MatCardContent,
+        MatIcon,
+        MatIconButton,
+        MatButton,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        ReactiveFormsModule,
+        MatError,
+        DatePipe
+    ],
+    templateUrl: './comment.component.html',
+    styleUrl: './comment.component.scss'
 })
 export class CommentComponent {
   commentFormGroup = this.formBuilder.group({

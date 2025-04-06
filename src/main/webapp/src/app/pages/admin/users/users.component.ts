@@ -18,27 +18,26 @@ import {FormUserComponent} from "./_form/form-user.component";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @Component({
-  selector: 'app-users',
-  standalone: true,
-  imports: [
-    MatIconModule,
-    MatMenuModule,
-    MatToolbar,
-    MatToolbarRow,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCard,
-    FormsModule,
-    MatCardContent,
-    ReactiveFormsModule,
-    MatCheckboxModule
-  ],
-  templateUrl: './users.component.html',
-  styleUrl: './users.component.scss'
+    selector: 'app-users',
+    imports: [
+        MatIconModule,
+        MatMenuModule,
+        MatToolbar,
+        MatToolbarRow,
+        MatButtonModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCard,
+        FormsModule,
+        MatCardContent,
+        ReactiveFormsModule,
+        MatCheckboxModule
+    ],
+    templateUrl: './users.component.html',
+    styleUrl: './users.component.scss'
 })
 export class UsersComponent implements AfterViewInit {
   search = '';

@@ -9,14 +9,13 @@ import {FormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 
 @Component({
-  selector: 'app-forgot-password',
-  standalone: true,
-  imports: [
-    MatCardModule, FormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatIconModule, RouterModule, FooterComponent
-  ],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.css'
+    selector: 'app-forgot-password',
+    imports: [
+        MatCardModule, FormsModule, MatFormFieldModule, MatInputModule,
+        MatButtonModule, MatIconModule, RouterModule, FooterComponent
+    ],
+    templateUrl: './forgot-password.component.html',
+    styleUrl: './forgot-password.component.css'
 })
 export class ForgotPasswordComponent {
 

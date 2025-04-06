@@ -8,19 +8,18 @@ import {NgClass, NgIf} from "@angular/common";
 import {DefaultFooterComponent} from "../../components/shared/default-footer/default-footer.component";
 
 @Component({
-  selector: 'app-default',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    DefaultFooterComponent,
-    SidebarComponent,
-    NgClass,
-    NgIf,
-    MatSidenavModule
-  ],
-  templateUrl: './default.component.html',
-  styleUrl: './default.component.scss'
+    selector: 'app-default',
+    imports: [
+        RouterOutlet,
+        HeaderComponent,
+        DefaultFooterComponent,
+        SidebarComponent,
+        NgClass,
+        NgIf,
+        MatSidenavModule
+    ],
+    templateUrl: './default.component.html',
+    styleUrl: './default.component.scss'
 })
 export class DefaultComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
