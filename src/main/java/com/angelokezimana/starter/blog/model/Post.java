@@ -3,8 +3,6 @@ package com.angelokezimana.starter.blog.model;
 import com.angelokezimana.starter.user.model.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,7 +33,6 @@ public class Post {
     private List<PhotoPost> photoPosts;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "author", nullable = false)
     private User author;
 
