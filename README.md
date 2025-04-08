@@ -20,9 +20,6 @@ Whether you're a beginner learning full-stack development or an experienced deve
   - [Running the Application](#running-the-application)
     - [Development Mode](#development-mode)
     - [Production Mode](#production-mode)
-  - [Project Structure](#project-structure)
-    - [Backend (src/main/java/com/example/starter/)](#backend-srcmainjavacomexamplestarter)
-    - [Frontend (src/main/webapp/src/)](#frontend-srcmainwebappsrc)
   - [API Documentation](#api-documentation)
   - [Contributing](#contributing)
   - [License](#license)
@@ -137,28 +134,6 @@ The frontend will be accessible at `http://localhost:4200`.
 - `Backend:` Build a WAR file using `mvn clean install` and deploy it to a server like Tomcat.
 
 - `Frontend:` Generate a production build using `npm run build` and deploy the static files to a web server or use the backend as a reverse proxy.
-
-## Project Structure
-
-### Backend (src/main/java/com/example/starter/)
-
-- **config/:** Configuration classes (e.g., security, CORS).
-
-- **controller/:** REST controllers.
-
-- **service/:** Business logic.
-
-- **entity/:** Database models.
-
-- **repository/:** JPA repositories.
-
-### Frontend (src/main/webapp/src/)
-
-- **app/:** Angular modules, components, and services.
-
-- **assets/:** Static files (e.g., images, styles).
-
-- **environments/:** Environment configurations.
 
 ## API Documentation
 
