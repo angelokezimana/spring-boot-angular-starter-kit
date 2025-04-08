@@ -8,7 +8,7 @@ import {RouterModule} from "@angular/router";
     selector: 'app-page-not-found',
     imports: [MatCardModule, MatButtonModule, MatIconModule, RouterModule],
     templateUrl: './not-found.component.html',
-    styleUrl: './not-found.component.css'
+    styleUrl: './not-found.component.scss'
 })
 export class NotFoundComponent {
 

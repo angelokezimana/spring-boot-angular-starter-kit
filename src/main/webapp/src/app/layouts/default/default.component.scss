@@ -1,6 +1,8 @@
+@use "../../../assets/scss/custom-colors" as *;
+
 mat-sidenav-container {
-  background-image: url("../../../assets/vintage-typewriter-blogging.jpg");
-  background-size: cover;
+  background-color: $main-bg;
+  background-blend-mode: overlay;
   margin: 0;
   padding: 0;
   height: 100%;

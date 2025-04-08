@@ -1,10 +1,12 @@
+@use "../../../assets/scss/custom-colors" as *;
+
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url("../../../assets/vintage-typewriter-blogging.jpg");
-  background-size: cover;
+  background-color: $main-bg;
+  background-blend-mode: overlay;
   margin: 0;
   padding: 0;
 }
