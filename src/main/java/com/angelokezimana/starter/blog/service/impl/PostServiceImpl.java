@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -52,7 +53,7 @@ public class PostServiceImpl implements PostService {
     }
 
     public Page<PostDTO> getAllPosts(Pageable pageable) {
-        Page<Post> posts = postRepository.findAll(pageable);
+        Page<Post> posts = postRepository.findAllPostsWithRelations(pageable);
         return posts.map(PostMapper::toPostDTO);
     }
 
@@ -76,7 +77,7 @@ public class PostServiceImpl implements PostService {
 
         if (images != null && !images.isEmpty()) {
 
-            List<PhotoPost> photoPosts = photoPostService.savePhotoPosts(images, savedPost);
+            Set<PhotoPost> photoPosts = photoPostService.savePhotoPosts(images, savedPost);
             photoPostRepository.saveAll(photoPosts);
             savedPost.setPhotoPosts(photoPosts);
         }

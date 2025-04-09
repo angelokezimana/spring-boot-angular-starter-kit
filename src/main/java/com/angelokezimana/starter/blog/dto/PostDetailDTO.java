@@ -1,7 +1,7 @@
 package com.angelokezimana.starter.blog.dto;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 public record PostDetailDTO(Long id,
                             String title,
@@ -9,6 +9,6 @@ public record PostDetailDTO(Long id,
                             byte[] imageCover,
                             LocalDateTime publishedOn,
                             Integer numberOfComments,
-                            List<PhotoPostDTO> photoPosts,
+                            Set<PhotoPostDTO> photoPosts,
                             AuthorDTO author) {
 }

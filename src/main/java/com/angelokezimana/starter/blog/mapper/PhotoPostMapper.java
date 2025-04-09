@@ -4,7 +4,7 @@ import com.angelokezimana.starter.blog.dto.PhotoPostDTO;
 import com.angelokezimana.starter.blog.model.PhotoPost;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PhotoPostMapper {
@@ -16,13 +16,13 @@ public class PhotoPostMapper {
         );
     }
 
-    public static List<PhotoPostDTO> toPhotoPostDTOList(List<PhotoPost> photoPosts) {
+    public static Set<PhotoPostDTO> toPhotoPostDTOList(Set<PhotoPost> photoPosts) {
         if (photoPosts == null) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
 
         return photoPosts.stream()
                 .map(PhotoPostMapper::toPhotoPostDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }

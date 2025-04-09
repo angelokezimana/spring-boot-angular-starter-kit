@@ -124,7 +124,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         final String extractRefreshToken = jwtService.extractExtraClaim(refreshToken, "token_type");
 
         final String userEmail = jwtService.extractUsername(refreshToken);
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
 
         if (!extractRefreshToken.equals("refresh") ||
                 !jwtService.isTokenValid(refreshToken, userDetails)) {

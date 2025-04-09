@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -26,13 +26,13 @@ public class Post {
     @Column(nullable = false)
     private String imageCover;
 
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "post")
-    private List<PhotoPost> photoPosts;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    private Set<PhotoPost> photoPosts;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author", nullable = false)
     private User author;
 
@@ -74,19 +74,19 @@ public class Post {
         this.imageCover = imageCover;
     }
 
-    public List<Comment> getComments() {
+    public Set<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
 
-    public List<PhotoPost> getPhotoPosts() {
+    public Set<PhotoPost> getPhotoPosts() {
         return photoPosts;
     }
 
-    public void setPhotoPosts(List<PhotoPost> photoPosts) {
+    public void setPhotoPosts(Set<PhotoPost> photoPosts) {
         this.photoPosts = photoPosts;
     }
 

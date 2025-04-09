@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,12 +41,12 @@ public class PhotoPostServiceImpl implements PhotoPostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
-        List<PhotoPost> photoPosts = savePhotoPosts(images, post);
+        Set<PhotoPost> photoPosts = savePhotoPosts(images, post);
 
         photoPostRepository.saveAll(photoPosts);
     }
 
-    public List<PhotoPost> savePhotoPosts(List<MultipartFile> images, Post post) {
+    public Set<PhotoPost> savePhotoPosts(List<MultipartFile> images, Post post) {
         return images.stream()
                 .map(image -> {
                     try {
@@ -58,7 +59,7 @@ public class PhotoPostServiceImpl implements PhotoPostService {
                         throw new RuntimeException("Failed to save image ", e);
                     }
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
     }
 

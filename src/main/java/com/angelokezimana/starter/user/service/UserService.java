@@ -5,8 +5,6 @@ import com.angelokezimana.starter.user.dto.UserRequestDTO;
 import com.angelokezimana.starter.user.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
@@ -18,5 +16,4 @@ public interface UserService {
     UserDTO getUser(Long userId);
     UserDTO updateUser(Long userId, UserRequestDTO userRequestDTO);
     void deleteUser(Long userId);
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

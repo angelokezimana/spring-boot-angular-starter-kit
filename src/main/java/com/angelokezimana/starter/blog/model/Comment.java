@@ -16,11 +16,11 @@ public class Comment {
     @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String text;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author",nullable = false)
     private User author;
 
