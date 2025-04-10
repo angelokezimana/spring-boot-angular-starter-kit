@@ -12,6 +12,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {RoleService} from "../../../../services/admin/roles/role.service";
 import Role from "../../../../models/security/role.model";
 import {MultiSelectComponent} from "../../../../components/shared/multi-select/multi-select.component";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {UserService} from "../../../../services/admin/users/user.service";
+import UserRequest from "../../../../models/security/user.request.model";
+import {SnackBarService} from "../../../../services/snack-bar/snack-bar.service";
 
 @Component({
     selector: 'app-form-user',
@@ -31,9 +35,11 @@ export class FormUserComponent implements OnInit {
 
   constructor(
     private roleService: RoleService,
+    private userService: UserService,
     private dialogRef: MatDialogRef<FormUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { title: string, user?: User },
     private formBuilder: FormBuilder,
+    private snackbarService: SnackBarService,
     private formValidationService: FormValidationService
   ) {
   }
@@ -48,6 +54,27 @@ export class FormUserComponent implements OnInit {
       roleIds: this.roles().map(role => role.id),
     };
     console.log(userData);
+
+
+    this.userService
+      .saveUser(userData as UserRequest)
+      .subscribe({
+        next: (result: HttpResponse<User> | null | undefined) => {
+          this.snackbarService.showMessage("User saved successfully", 'success');
+        },
+        error: (error: HttpErrorResponse) => {
+          const err = error.error;
+
+          this.snackbarService.showMessage(err?.value ??
+            err?.firstName ??
+            err?.lastName ??
+            err?.email ??
+            err?.roleIds, 'error');
+          console.log(error.error);
+        },
+      });
+
+
     this.dialogRef.close(userData);
   }
 

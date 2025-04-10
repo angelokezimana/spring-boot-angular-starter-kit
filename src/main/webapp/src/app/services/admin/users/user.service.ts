@@ -5,6 +5,7 @@ import {HttpResponse} from "@angular/common/http";
 import {tap} from "rxjs/operators";
 import {toObservable} from "@angular/core/rxjs-interop";
 import User from "../../../models/security/user.model";
+import UserRequest from "../../../models/security/user.request.model";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class UserService {
     return this.http.get(`/api/v1/admin/users/${id}`);
   }
 
-  saveUser(user: User): Observable<HttpResponse<User> | null | undefined> {
+  saveUser(user: UserRequest): Observable<HttpResponse<User> | null | undefined> {
     return this.http.post('/api/v1/admin/users', user);
   }
 
