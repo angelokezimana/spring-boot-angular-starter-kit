@@ -106,7 +106,7 @@ export class UsersComponent implements AfterViewInit {
         console.log(data?.body);
 
         if (data.body) {
-          this.dataSource.data = data.body;
+          this.dataSource.data = data.body.content;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }

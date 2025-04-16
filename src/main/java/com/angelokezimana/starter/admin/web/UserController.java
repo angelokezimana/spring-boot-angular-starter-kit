@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping
-    private ResponseEntity<List<UserDTO>> findAll(
+    private ResponseEntity<Page<UserDTO>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort
@@ -38,7 +38,7 @@ public class UserController {
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
         Page<UserDTO> userDTOs = userService.getAllUsers(pageable);
 
-        return ResponseEntity.ok(userDTOs.getContent());
+        return ResponseEntity.ok(userDTOs);
     }
 
     @PostMapping()
