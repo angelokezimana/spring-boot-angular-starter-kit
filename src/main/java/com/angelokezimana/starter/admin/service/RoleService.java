@@ -1,8 +1,8 @@
-package com.angelokezimana.starter.role.service;
+package com.angelokezimana.starter.admin.service;
 
 
-import com.angelokezimana.starter.role.dto.RoleDTO;
-import com.angelokezimana.starter.role.dto.RoleRequestDTO;
+import com.angelokezimana.starter.admin.dto.RoleDTO;
+import com.angelokezimana.starter.admin.dto.RoleRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

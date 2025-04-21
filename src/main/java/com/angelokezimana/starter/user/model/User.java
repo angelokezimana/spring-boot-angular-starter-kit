@@ -4,7 +4,7 @@ import com.angelokezimana.starter.auth.model.ActivationToken;
 import com.angelokezimana.starter.auth.model.BlacklistedToken;
 import com.angelokezimana.starter.blog.model.Comment;
 import com.angelokezimana.starter.blog.model.Post;
-import com.angelokezimana.starter.role.model.Role;
+import com.angelokezimana.starter.admin.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

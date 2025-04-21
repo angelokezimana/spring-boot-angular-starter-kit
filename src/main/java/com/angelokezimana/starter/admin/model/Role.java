@@ -1,4 +1,4 @@
-package com.angelokezimana.starter.role.model;
+package com.angelokezimana.starter.admin.model;
 
 import com.angelokezimana.starter.user.model.User;
 import jakarta.persistence.*;

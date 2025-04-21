@@ -1,15 +1,15 @@
-package com.angelokezimana.starter.role.service.impl;
+package com.angelokezimana.starter.admin.service.impl;
 
 
-import com.angelokezimana.starter.role.dto.RoleDTO;
-import com.angelokezimana.starter.role.dto.RoleRequestDTO;
-import com.angelokezimana.starter.role.model.Permission;
-import com.angelokezimana.starter.role.model.Role;
-import com.angelokezimana.starter.role.exception.RoleNotFoundException;
-import com.angelokezimana.starter.role.mapper.RoleMapper;
-import com.angelokezimana.starter.role.repository.PermissionRepository;
-import com.angelokezimana.starter.role.repository.RoleRepository;
-import com.angelokezimana.starter.role.service.RoleService;
+import com.angelokezimana.starter.admin.dto.RoleDTO;
+import com.angelokezimana.starter.admin.dto.RoleRequestDTO;
+import com.angelokezimana.starter.admin.model.Permission;
+import com.angelokezimana.starter.admin.model.Role;
+import com.angelokezimana.starter.admin.exception.RoleNotFoundException;
+import com.angelokezimana.starter.admin.mapper.RoleMapper;
+import com.angelokezimana.starter.admin.repository.PermissionRepository;
+import com.angelokezimana.starter.admin.repository.RoleRepository;
+import com.angelokezimana.starter.admin.service.RoleService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,7 +1,7 @@
-package com.angelokezimana.starter.role.mapper;
+package com.angelokezimana.starter.admin.mapper;
 
-import com.angelokezimana.starter.role.dto.RoleDTO;
-import com.angelokezimana.starter.role.model.Role;
+import com.angelokezimana.starter.admin.dto.RoleDTO;
+import com.angelokezimana.starter.admin.model.Role;
 
 import java.util.Set;
 import java.util.stream.Collectors;

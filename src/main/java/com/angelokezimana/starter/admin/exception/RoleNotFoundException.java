@@ -1,4 +1,4 @@
-package com.angelokezimana.starter.role.exception;
+package com.angelokezimana.starter.admin.exception;
 
 
 import jakarta.persistence.EntityNotFoundException;

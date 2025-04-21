@@ -1,8 +1,8 @@
 package com.angelokezimana.starter.admin.service.impl;
 
 import com.angelokezimana.starter.admin.service.UserService;
-import com.angelokezimana.starter.role.model.Role;
-import com.angelokezimana.starter.role.repository.RoleRepository;
+import com.angelokezimana.starter.admin.model.Role;
+import com.angelokezimana.starter.admin.repository.RoleRepository;
 import com.angelokezimana.starter.user.dto.UserDTO;
 import com.angelokezimana.starter.user.dto.UserRequestDTO;
 import com.angelokezimana.starter.user.exception.UserNotFoundException;

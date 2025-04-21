@@ -1,4 +1,4 @@
-package com.angelokezimana.starter.role.dto;
+package com.angelokezimana.starter.admin.dto;
 
 import java.util.Set;
 

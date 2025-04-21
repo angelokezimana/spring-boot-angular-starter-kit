@@ -2,7 +2,7 @@ package com.angelokezimana.starter.user.mapper;
 
 import com.angelokezimana.starter.user.dto.UserDTO;
 import com.angelokezimana.starter.user.model.User;
-import com.angelokezimana.starter.role.mapper.RoleMapper;
+import com.angelokezimana.starter.admin.mapper.RoleMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;

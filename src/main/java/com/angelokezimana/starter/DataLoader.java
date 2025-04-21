@@ -1,11 +1,11 @@
 package com.angelokezimana.starter;
 
 
-import com.angelokezimana.starter.role.model.Permission;
-import com.angelokezimana.starter.role.model.Role;
+import com.angelokezimana.starter.admin.model.Permission;
+import com.angelokezimana.starter.admin.model.Role;
 import com.angelokezimana.starter.user.model.User;
-import com.angelokezimana.starter.role.repository.PermissionRepository;
-import com.angelokezimana.starter.role.repository.RoleRepository;
+import com.angelokezimana.starter.admin.repository.PermissionRepository;
+import com.angelokezimana.starter.admin.repository.RoleRepository;
 import com.angelokezimana.starter.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

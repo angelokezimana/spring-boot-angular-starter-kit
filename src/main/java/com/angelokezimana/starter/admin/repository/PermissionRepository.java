@@ -1,6 +1,6 @@
-package com.angelokezimana.starter.role.repository;
+package com.angelokezimana.starter.admin.repository;
 
-import com.angelokezimana.starter.role.model.Permission;
+import com.angelokezimana.starter.admin.model.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.angelokezimana.starter.role.repository;
+package com.angelokezimana.starter.admin.repository;
 
-import com.angelokezimana.starter.role.model.Role;
+import com.angelokezimana.starter.admin.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

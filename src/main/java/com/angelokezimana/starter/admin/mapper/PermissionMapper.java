@@ -1,7 +1,7 @@
-package com.angelokezimana.starter.role.mapper;
+package com.angelokezimana.starter.admin.mapper;
 
-import com.angelokezimana.starter.role.dto.PermissionDTO;
-import com.angelokezimana.starter.role.model.Permission;
+import com.angelokezimana.starter.admin.dto.PermissionDTO;
+import com.angelokezimana.starter.admin.model.Permission;
 
 import java.util.Set;
 import java.util.stream.Collectors;

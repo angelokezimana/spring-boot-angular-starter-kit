@@ -1,6 +1,6 @@
 package com.angelokezimana.starter.user.dto;
 
-import com.angelokezimana.starter.role.dto.RoleDTO;
+import com.angelokezimana.starter.admin.dto.RoleDTO;
 
 import java.util.Set;
 

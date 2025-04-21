@@ -1,9 +1,9 @@
 package com.angelokezimana.starter.admin.web;
 
 import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.role.dto.RoleDTO;
-import com.angelokezimana.starter.role.dto.RoleRequestDTO;
-import com.angelokezimana.starter.role.service.RoleService;
+import com.angelokezimana.starter.admin.dto.RoleDTO;
+import com.angelokezimana.starter.admin.dto.RoleRequestDTO;
+import com.angelokezimana.starter.admin.service.RoleService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
