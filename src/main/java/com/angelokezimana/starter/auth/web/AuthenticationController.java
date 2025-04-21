@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -28,9 +29,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> register(@RequestBody @Valid RegisterRequestDTO request) throws MessagingException {
+    public ResponseEntity<ResponseDTO> register(
+            @RequestHeader(name = "Accept-Language", required = false) Locale locale,
+            @RequestBody @Valid RegisterRequestDTO request
+    ) throws MessagingException {
 
-        authenticationService.register(request);
+        authenticationService.register(request, locale);
         return ResponseEntity.ok(new ResponseDTO("message", "User created successfully"));
     }
 
@@ -45,7 +49,10 @@ public class AuthenticationController {
     }
 
     @GetMapping("/activate-account")
-    public void confirm(@RequestParam String token) throws MessagingException {
-        authenticationService.activateAccount(token);
+    public void confirm(
+            @RequestHeader(name = "Accept-Language", required = false) Locale locale,
+            @RequestParam String token
+    ) throws MessagingException {
+        authenticationService.activateAccount(token, locale);
     }
 }

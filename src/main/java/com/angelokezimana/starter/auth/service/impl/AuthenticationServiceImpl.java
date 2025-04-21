@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Locale;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -77,7 +78,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.blacklistedTokenService = blacklistedTokenService;
     }
 
-    public void register(RegisterRequestDTO request) throws MessagingException {
+    public void register(RegisterRequestDTO request, Locale locale) throws MessagingException {
 
         Role role = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RoleNotFoundException("No role 'ROLE_USER' found"));
@@ -92,7 +93,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setRoles(Collections.singleton(role));
 
         userRepository.save(user);
-        sendValidationEmail(user);
+        sendValidationEmail(user, locale);
     }
 
     public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request) {
@@ -154,12 +155,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Transactional
-    public void activateAccount(String token) throws MessagingException {
+    public void activateAccount(String token, Locale locale) throws MessagingException {
         ActivationToken savedToken = activationTokenRepository.findByTokenAndValidatedAtIsNull(token)
                 .orElseThrow(() -> new TokenNotFoundException("Invalid token"));
 
         if (savedToken.getExpiresAt().isBefore(LocalDateTime.now())) {
-            sendValidationEmail(savedToken.getUser());
+            sendValidationEmail(savedToken.getUser(), locale);
             throw new RuntimeException("Activation token has expired. A new token has been send to the same email address");
         }
 
@@ -173,7 +174,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         activationTokenRepository.save(savedToken);
     }
 
-    private void sendValidationEmail(User user) throws MessagingException {
+    private void sendValidationEmail(User user, Locale locale) throws MessagingException {
         var newToken = generateAndSaveActivationToken(user);
 
         emailService.sendEmail(
@@ -182,7 +183,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 EmailTemplateName.ACTIVATE_ACCOUNT,
                 activationUrl,
                 newToken,
-                "Account activation"
+                "email.account.activation.title",
+                locale
         );
     }
 

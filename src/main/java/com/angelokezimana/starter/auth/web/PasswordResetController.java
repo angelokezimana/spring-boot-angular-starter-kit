@@ -3,9 +3,12 @@ package com.angelokezimana.starter.auth.web;
 import com.angelokezimana.starter.common.dto.ResponseDTO;
 import com.angelokezimana.starter.auth.dto.ResetPasswordRequestDTO;
 import com.angelokezimana.starter.auth.service.PasswordResetService;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -18,8 +21,11 @@ public class PasswordResetController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<ResponseDTO> forgotPassword(@RequestParam String email) {
-        passwordResetService.generatePasswordResetToken(email);
+    public ResponseEntity<ResponseDTO> forgotPassword(
+            @RequestHeader(name = "Accept-Language", required = false) Locale locale,
+            @RequestParam String email
+    ) throws MessagingException {
+        passwordResetService.generatePasswordResetToken(email, locale);
         return ResponseEntity.ok(new ResponseDTO("message", "Password reset link sent to your email."));
     }
 

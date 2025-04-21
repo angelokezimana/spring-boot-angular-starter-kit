@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -39,7 +40,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         this.emailService = emailService;
     }
 
-    public void generatePasswordResetToken(String email) {
+    public void generatePasswordResetToken(String email, Locale locale) throws MessagingException {
 
         userRepository.findByEmail(email).ifPresent(user -> {
 
@@ -64,7 +65,8 @@ public class PasswordResetServiceImpl implements PasswordResetService {
                             EmailTemplateName.RESET_PASSWORD,
                             resetLink,
                             token,
-                            "Password Reset Request");
+                            "email.reset.password.title",
+                            locale);
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
                 }

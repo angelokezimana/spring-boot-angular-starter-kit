@@ -9,10 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public interface AuthenticationService {
-    void register(RegisterRequestDTO request) throws MessagingException;
+    void register(RegisterRequestDTO request, Locale locale) throws MessagingException;
     AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request);
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
-    void activateAccount(String token) throws MessagingException;
+    void activateAccount(String token, Locale locale) throws MessagingException;
 }

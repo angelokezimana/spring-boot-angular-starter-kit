@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Activation</title>
+    <title th:text="#{email.account.activation.title}">Account Activation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,12 +41,12 @@
 </head>
 <body>
 <div class="container">
-    <h1>Account Activation</h1>
-    <p class="greeting" th:text="'Hello ' + ${fullName} + ','"></p>
-    <p>Thank you for signing up! Please use the following activation code to activate your account:</p>
+    <h1 th:text="#{email.account.activation.title}">Account Activation</h1>
+    <p class="greeting" th:text="#{email.greeting(${fullName})}">Dear</p>
+    <p th:text="#{email.account.activation.text}">Thank you for signing up! Please use the following activation code to activate your account:</p>
     <div class="activation-code"><span th:text="${token}"></span></div>
     <div class="activation-link">
-        <a th:href="${url}" target="_blank">Activate your account</a>
+        <a th:href="${url}" target="_blank" th:text="#{email.account.activation.link}">Activate your account</a>
     </div>
 </div>
 </body>
