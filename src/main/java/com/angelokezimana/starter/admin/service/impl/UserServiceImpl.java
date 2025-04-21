@@ -1,27 +1,24 @@
-package com.angelokezimana.starter.user.service.impl;
+package com.angelokezimana.starter.admin.service.impl;
 
+import com.angelokezimana.starter.admin.service.UserService;
+import com.angelokezimana.starter.role.model.Role;
+import com.angelokezimana.starter.role.repository.RoleRepository;
 import com.angelokezimana.starter.user.dto.UserDTO;
 import com.angelokezimana.starter.user.dto.UserRequestDTO;
-import com.angelokezimana.starter.role.model.Role;
-import com.angelokezimana.starter.user.model.User;
 import com.angelokezimana.starter.user.exception.UserNotFoundException;
 import com.angelokezimana.starter.user.mapper.UserMapper;
-import com.angelokezimana.starter.role.repository.RoleRepository;
+import com.angelokezimana.starter.user.model.User;
 import com.angelokezimana.starter.user.repository.UserRepository;
-import com.angelokezimana.starter.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -39,20 +36,6 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-    }
-
-    public Optional<User> getCurrentUser() {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.getPrincipal() instanceof User) {
-            return Optional.of((User) authentication.getPrincipal());
-        }
-        return Optional.empty();
-    }
-
-    public UserDTO getCurrentUserDTO() {
-        return UserMapper.toUserDTO(getCurrentUser().orElseThrow(() -> new IllegalStateException("User not found")));
     }
 
     @PreAuthorize("hasPermission('USER', 'READ')")

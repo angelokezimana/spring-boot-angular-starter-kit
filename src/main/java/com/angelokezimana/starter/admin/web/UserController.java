@@ -1,9 +1,9 @@
 package com.angelokezimana.starter.admin.web;
 
+import com.angelokezimana.starter.admin.service.UserService;
 import com.angelokezimana.starter.common.dto.ResponseDTO;
 import com.angelokezimana.starter.user.dto.UserDTO;
 import com.angelokezimana.starter.user.dto.UserRequestDTO;
-import com.angelokezimana.starter.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin/users")

@@ -15,7 +15,7 @@ import com.angelokezimana.starter.blog.repository.PostRepository;
 import com.angelokezimana.starter.blog.service.PhotoPostService;
 import com.angelokezimana.starter.blog.service.PostService;
 import com.angelokezimana.starter.common.image.ImageService;
-import com.angelokezimana.starter.user.service.UserService;
+import com.angelokezimana.starter.user.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,19 +35,19 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final PhotoPostRepository photoPostRepository;
-    private final UserService userService;
+    private final ProfileService profileService;
     private final ImageService imageService;
     private final PhotoPostService photoPostService;
 
     @Autowired
     public PostServiceImpl(PostRepository postRepository,
                            PhotoPostRepository photoPostRepository,
-                           UserService userService,
+                           ProfileService profileService,
                            ImageService imageService,
                            PhotoPostService photoPostService) {
         this.postRepository = postRepository;
         this.photoPostRepository = photoPostRepository;
-        this.userService = userService;
+        this.profileService = profileService;
         this.imageService = imageService;
         this.photoPostService = photoPostService;
     }
@@ -61,7 +61,7 @@ public class PostServiceImpl implements PostService {
                                     MultipartFile imageCover,
                                     List<MultipartFile> images) throws IOException {
 
-        User author = userService.getCurrentUser()
+        User author = profileService.getCurrentUser()
                 .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
 
         Post post = new Post();

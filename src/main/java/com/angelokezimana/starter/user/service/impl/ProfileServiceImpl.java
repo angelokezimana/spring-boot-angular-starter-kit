@@ -8,32 +8,34 @@ package com.angelokezimana.starter.user.service.impl;
 
 import com.angelokezimana.starter.user.dto.ChangePasswordRequestDTO;
 import com.angelokezimana.starter.user.dto.ChangeProfileInfoRequestDTO;
+import com.angelokezimana.starter.user.dto.UserDTO;
+import com.angelokezimana.starter.user.mapper.UserMapper;
 import com.angelokezimana.starter.user.model.User;
 import com.angelokezimana.starter.user.exception.UserNotFoundException;
 import com.angelokezimana.starter.user.repository.UserRepository;
-import com.angelokezimana.starter.user.service.UserService;
 import com.angelokezimana.starter.user.service.ProfileService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
     private final UserRepository userRepository;
-    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public ProfileServiceImpl(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
+    public ProfileServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public void changePassword(ChangePasswordRequestDTO request) {
 
-        User user = userService.getCurrentUser()
+        User user = getCurrentUser()
                 .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
 
         if (!passwordEncoder.matches(request.currentPassword(), user.getPassword())) {
@@ -47,7 +49,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     public void changeProfile(ChangeProfileInfoRequestDTO request) {
 
-        User user = userService.getCurrentUser()
+        User user = getCurrentUser()
                 .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
 
         updateFieldIfPresent(request.firstName(), user::setFirstName);
@@ -60,5 +62,19 @@ public class ProfileServiceImpl implements ProfileService {
         if (newValue != null && !newValue.trim().isEmpty()) {
             updateMethod.accept(newValue);
         }
+    }
+
+    public Optional<User> getCurrentUser() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            return Optional.of((User) authentication.getPrincipal());
+        }
+        return Optional.empty();
+    }
+
+    public UserDTO getCurrentUserDTO() {
+        return UserMapper.toUserDTO(getCurrentUser().orElseThrow(() -> new IllegalStateException("User not found")));
     }
 }
