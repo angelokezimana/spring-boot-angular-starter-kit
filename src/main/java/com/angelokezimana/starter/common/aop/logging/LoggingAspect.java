@@ -4,8 +4,9 @@
  * Time: 8:30 AM
  */
 
-package com.angelokezimana.starter.common.web.advice;
+package com.angelokezimana.starter.common.aop.logging;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +14,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,12 +29,12 @@ import java.io.IOException;
 
 @Aspect
 @Component
-public class LoggingAdvice {
+public class LoggingAspect {
 
-    Logger logger = LoggerFactory.getLogger(LoggingAdvice.class);
+    Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
     private final ObjectMapper objectMapper;
 
-    public LoggingAdvice(ObjectMapper objectMapper) {
+    public LoggingAspect(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -58,7 +62,16 @@ public class LoggingAdvice {
             ObjectMapper customMapper = objectMapper.copy();
             customMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-            // Custom filter to exclude byte[] fields
+            // Custom filter to exclude sensitive fields like 'password'
+            SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("password");
+            FilterProvider filters = new SimpleFilterProvider()
+                    .addFilter("sensitiveFilter", filter);
+
+            // Apply the filter to all objects
+            customMapper.setFilterProvider(filters);
+            customMapper.addMixIn(Object.class, SensitiveDataFilterMixin.class);
+
+            // Custom serializer for byte[] fields
             SimpleModule module = new SimpleModule();
             module.addSerializer(byte[].class, new JsonSerializer<byte[]>() {
                 @Override
@@ -75,4 +88,8 @@ public class LoggingAdvice {
             return "[Non-serializable object: " + obj.getClass().getSimpleName() + "]";
         }
     }
+
+    // Mix-in to apply the filter to all objects
+    @JsonFilter("sensitiveFilter")
+    private interface SensitiveDataFilterMixin {}
 }
