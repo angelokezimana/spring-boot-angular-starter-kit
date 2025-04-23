@@ -1,9 +1,9 @@
 package com.angelokezimana.starter.admin.web;
 
 import com.angelokezimana.starter.admin.service.UserService;
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.user.dto.UserDTO;
-import com.angelokezimana.starter.user.dto.UserRequestDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.user.dto.UserDto;
+import com.angelokezimana.starter.user.dto.UserRequestDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping
-    private ResponseEntity<Page<UserDTO>> findAll(
+    private ResponseEntity<Page<UserDto>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort
@@ -34,37 +34,37 @@ public class UserController {
         Sort parseSortParameter = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
 
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
-        Page<UserDTO> userDTOs = userService.getAllUsers(pageable);
+        Page<UserDto> userDTOs = userService.getAllUsers(pageable);
 
         return ResponseEntity.ok(userDTOs);
     }
 
     @PostMapping()
-    private ResponseEntity<UserDTO> create(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+    private ResponseEntity<UserDto> create(@RequestBody @Valid UserRequestDto userRequestDTO) {
 
-        UserDTO userDTO = userService.createUser(userRequestDTO);
+        UserDto userDTO = userService.createUser(userRequestDTO);
         return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("/{userId}")
-    private ResponseEntity<UserDTO> findById(@PathVariable Long userId) {
+    private ResponseEntity<UserDto> findById(@PathVariable Long userId) {
 
-        UserDTO postDTO = userService.getUser(userId);
+        UserDto postDTO = userService.getUser(userId);
         return ResponseEntity.ok(postDTO);
     }
 
     @PutMapping(path = "/{userId}")
-    private ResponseEntity<UserDTO> update(@PathVariable Long userId,
-                                           @ModelAttribute UserRequestDTO updatedUser) {
+    private ResponseEntity<UserDto> update(@PathVariable Long userId,
+                                           @ModelAttribute UserRequestDto updatedUser) {
 
-        UserDTO updatedUserResult = userService.updateUser(userId, updatedUser);
+        UserDto updatedUserResult = userService.updateUser(userId, updatedUser);
         return ResponseEntity.ok(updatedUserResult);
     }
 
     @DeleteMapping("/{userId}")
-    private ResponseEntity<ResponseDTO> delete(@PathVariable Long userId) {
+    private ResponseEntity<ResponseDto> delete(@PathVariable Long userId) {
 
         userService.deleteUser(userId);
-        return ResponseEntity.ok(new ResponseDTO("message", "User deleted successfully"));
+        return ResponseEntity.ok(new ResponseDto("message", "User deleted successfully"));
     }
 }

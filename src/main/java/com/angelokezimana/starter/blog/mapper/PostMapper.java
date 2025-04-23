@@ -1,7 +1,7 @@
 package com.angelokezimana.starter.blog.mapper;
 
-import com.angelokezimana.starter.blog.dto.PostDTO;
-import com.angelokezimana.starter.blog.dto.PostDetailDTO;
+import com.angelokezimana.starter.blog.dto.PostDto;
+import com.angelokezimana.starter.blog.dto.PostDetailDto;
 import com.angelokezimana.starter.blog.model.Post;
 
 import java.util.Collections;
@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class PostMapper {
 
-    public static PostDetailDTO toPostDetailDTO(Post post) {
-        return new PostDetailDTO(
+    public static PostDetailDto toPostDetailDTO(Post post) {
+        return new PostDetailDto(
                 post.getId(),
                 post.getTitle(),
                 post.getText(),
@@ -23,8 +23,8 @@ public class PostMapper {
         );
     }
 
-    public static PostDTO toPostDTO(Post post) {
-        return new PostDTO(
+    public static PostDto toPostDTO(Post post) {
+        return new PostDto(
                 post.getId(),
                 post.getTitle(),
                 post.getText(),
@@ -35,7 +35,7 @@ public class PostMapper {
         );
     }
 
-    public static Set<PostDTO> toPostDTOList(Set<Post> posts) {
+    public static Set<PostDto> toPostDTOList(Set<Post> posts) {
         if (posts == null) {
             return Collections.emptySet();
         }

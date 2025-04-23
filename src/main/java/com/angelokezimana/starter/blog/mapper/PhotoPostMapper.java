@@ -1,6 +1,6 @@
 package com.angelokezimana.starter.blog.mapper;
 
-import com.angelokezimana.starter.blog.dto.PhotoPostDTO;
+import com.angelokezimana.starter.blog.dto.PhotoPostDto;
 import com.angelokezimana.starter.blog.model.PhotoPost;
 
 import java.util.Collections;
@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 
 public class PhotoPostMapper {
 
-    public static PhotoPostDTO toPhotoPostDTO(PhotoPost photoPost) {
-        return new PhotoPostDTO(
+    public static PhotoPostDto toPhotoPostDTO(PhotoPost photoPost) {
+        return new PhotoPostDto(
                 photoPost.getId(),
                 photoPost.getImageByte()
         );
     }
 
-    public static Set<PhotoPostDTO> toPhotoPostDTOList(Set<PhotoPost> photoPosts) {
+    public static Set<PhotoPostDto> toPhotoPostDTOList(Set<PhotoPost> photoPosts) {
         if (photoPosts == null) {
             return Collections.emptySet();
         }

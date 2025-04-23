@@ -1,8 +1,8 @@
 package com.angelokezimana.starter.admin.service;
 
 
-import com.angelokezimana.starter.admin.dto.RoleDTO;
-import com.angelokezimana.starter.admin.dto.RoleRequestDTO;
+import com.angelokezimana.starter.admin.dto.RoleDto;
+import com.angelokezimana.starter.admin.dto.RoleRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,10 +12,10 @@ import java.util.List;
  * Created By Angelo's on 3/7/2025.
  */
 public interface RoleService {
-    Page<RoleDTO> getRoles(Pageable pageable);
-    List<RoleDTO> getAllRoles(String search);
-    RoleDTO createRole(RoleRequestDTO roleRequestDTO);
-    RoleDTO getRole(Long roleId);
-    RoleDTO updateRole(Long roleId, RoleRequestDTO roleRequestDTO);
+    Page<RoleDto> getRoles(Pageable pageable);
+    List<RoleDto> getAllRoles(String search);
+    RoleDto createRole(RoleRequestDto roleRequestDTO);
+    RoleDto getRole(Long roleId);
+    RoleDto updateRole(Long roleId, RoleRequestDto roleRequestDTO);
     void deleteRole(Long roleId);
 }

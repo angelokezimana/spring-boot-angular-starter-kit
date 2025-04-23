@@ -1,6 +1,6 @@
 package com.angelokezimana.starter.auth.service;
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
 import com.angelokezimana.starter.user.model.User;
 import com.angelokezimana.starter.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -54,7 +54,7 @@ public class LogoutService implements LogoutHandler {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(),
-                        new ResponseDTO("error", "Access token is missing or invalid."));
+                        new ResponseDto("error", "Access token is missing or invalid."));
                 return;
             }
 
@@ -66,7 +66,7 @@ public class LogoutService implements LogoutHandler {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(),
-                        new ResponseDTO("error", "Refresh token is missing or invalid."));
+                        new ResponseDto("error", "Refresh token is missing or invalid."));
                 return;
             }
 
@@ -81,7 +81,7 @@ public class LogoutService implements LogoutHandler {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(),
-                        new ResponseDTO("error", "Access or Refresh token not valid or expired."));
+                        new ResponseDto("error", "Access or Refresh token not valid or expired."));
                 return;
             }
 
@@ -94,7 +94,7 @@ public class LogoutService implements LogoutHandler {
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(),
-                    new ResponseDTO("success", "Logout successful."));
+                    new ResponseDto("success", "Logout successful."));
         } catch (Exception e) {
             log.error("Error during logout: ", e);
         }

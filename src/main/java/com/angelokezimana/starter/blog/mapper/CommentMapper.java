@@ -1,6 +1,6 @@
 package com.angelokezimana.starter.blog.mapper;
 
-import com.angelokezimana.starter.blog.dto.CommentDTO;
+import com.angelokezimana.starter.blog.dto.CommentDto;
 import com.angelokezimana.starter.blog.model.Comment;
 
 import java.util.Collections;
@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class CommentMapper {
 
-    public static CommentDTO toCommentDTO(Comment comment) {
-        return new CommentDTO(
+    public static CommentDto toCommentDTO(Comment comment) {
+        return new CommentDto(
                 comment.getId(),
                 comment.getText(),
                 comment.getPublishedOn(),
@@ -18,7 +18,7 @@ public class CommentMapper {
         );
     }
 
-    public static List<CommentDTO> toCommentDTOList(List<Comment> comments) {
+    public static List<CommentDto> toCommentDTOList(List<Comment> comments) {
         if (comments == null) {
             return Collections.emptyList();
         }

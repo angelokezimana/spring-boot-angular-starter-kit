@@ -1,6 +1,6 @@
 package com.angelokezimana.starter.auth.service.impl;
 
-import com.angelokezimana.starter.auth.dto.ResetPasswordRequestDTO;
+import com.angelokezimana.starter.auth.dto.ResetPasswordRequestDto;
 import com.angelokezimana.starter.common.email.EmailService;
 import com.angelokezimana.starter.common.email.EmailTemplateName;
 import com.angelokezimana.starter.auth.model.PasswordResetToken;
@@ -74,7 +74,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         });
     }
 
-    public void resetPassword(String token, ResetPasswordRequestDTO request) {
+    public void resetPassword(String token, ResetPasswordRequestDto request) {
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
 

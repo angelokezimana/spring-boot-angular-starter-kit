@@ -1,9 +1,9 @@
 package com.angelokezimana.starter.user.web;
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.user.dto.ChangePasswordRequestDTO;
-import com.angelokezimana.starter.user.dto.ChangeProfileInfoRequestDTO;
-import com.angelokezimana.starter.user.dto.UserDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.user.dto.ChangePasswordRequestDto;
+import com.angelokezimana.starter.user.dto.ChangeProfileInfoRequestDto;
+import com.angelokezimana.starter.user.dto.UserDto;
 import com.angelokezimana.starter.user.service.ProfileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,23 +23,23 @@ public class ProfileController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<ResponseDTO> changePassword(@RequestBody @Valid ChangePasswordRequestDTO request) {
+    public ResponseEntity<ResponseDto> changePassword(@RequestBody @Valid ChangePasswordRequestDto request) {
 
         profileService.changePassword(request);
-        return ResponseEntity.ok(new ResponseDTO("message", "Password changed successfully"));
+        return ResponseEntity.ok(new ResponseDto("message", "Password changed successfully"));
     }
 
-    @PatchMapping("/change-profile")
-    public ResponseEntity<ResponseDTO> changeProfileInfo(@RequestBody ChangeProfileInfoRequestDTO request) {
+    @PostMapping("/change-profile")
+    public ResponseEntity<ResponseDto> changeProfileInfo(@RequestBody ChangeProfileInfoRequestDto request) {
 
         profileService.changeProfile(request);
-        return ResponseEntity.ok(new ResponseDTO("message", "Info changed successfully"));
+        return ResponseEntity.ok(new ResponseDto("message", "Info changed successfully"));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> getUserInfo() {
+    public ResponseEntity<UserDto> getUserInfo() {
 
-        UserDTO user = profileService.getCurrentUserDTO();
+        UserDto user = profileService.getCurrentUserDTO();
         return ResponseEntity.ok(user);
     }
 }

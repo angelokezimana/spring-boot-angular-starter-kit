@@ -2,9 +2,9 @@ package com.angelokezimana.starter.blog.dto;
 
 import java.time.LocalDateTime;
 
-public record CommentWithPostDTO(Long id,
+public record CommentWithPostDto(Long id,
                                  String text,
                                  LocalDateTime publishedOn,
-                                 PostDTO post,
-                                 AuthorDTO author) {
+                                 PostDto post,
+                                 AuthorDto author) {
 }

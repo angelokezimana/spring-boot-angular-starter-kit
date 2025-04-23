@@ -5,7 +5,7 @@ import com.angelokezimana.starter.common.validation.password.ValidPassword;
 import jakarta.validation.constraints.NotBlank;
 
 @PasswordsMatch(passwordField = "newPassword", confirmPasswordField = "confirmationPassword", message = "Passwords must match")
-public record ChangePasswordRequestDTO(
+public record ChangePasswordRequestDto(
         @NotBlank(message = "Current Password is mandatory")
         String currentPassword,
 

@@ -3,8 +3,8 @@ package com.angelokezimana.starter.admin.service.impl;
 import com.angelokezimana.starter.admin.service.UserService;
 import com.angelokezimana.starter.admin.model.Role;
 import com.angelokezimana.starter.admin.repository.RoleRepository;
-import com.angelokezimana.starter.user.dto.UserDTO;
-import com.angelokezimana.starter.user.dto.UserRequestDTO;
+import com.angelokezimana.starter.user.dto.UserDto;
+import com.angelokezimana.starter.user.dto.UserRequestDto;
 import com.angelokezimana.starter.user.exception.UserNotFoundException;
 import com.angelokezimana.starter.user.mapper.UserMapper;
 import com.angelokezimana.starter.user.model.User;
@@ -39,13 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasPermission('USER', 'READ')")
-    public Page<UserDTO> getAllUsers(Pageable pageable) {
+    public Page<UserDto> getAllUsers(Pageable pageable) {
         Page<User> users = userRepository.findAllUsers(pageable);
         return users.map(UserMapper::toUserDTO);
     }
 
     @PreAuthorize("hasPermission('USER', 'CREATE')")
-    public UserDTO createUser(UserRequestDTO userRequestDTO) {
+    public UserDto createUser(UserRequestDto userRequestDTO) {
 
         User user = new User();
         Set<Role> roles = new HashSet<>(roleRepository.findAllById(userRequestDTO.roleIds()));
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasPermission('USER', 'READ')")
-    public UserDTO getUser(Long userId) {
+    public UserDto getUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.forId(userId));
 
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasPermission('USER', 'UPDATE')")
-    public UserDTO updateUser(Long userId, UserRequestDTO userRequestDTO) {
+    public UserDto updateUser(Long userId, UserRequestDto userRequestDTO) {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.forId(userId));
 

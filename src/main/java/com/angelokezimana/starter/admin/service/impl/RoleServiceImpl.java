@@ -1,8 +1,8 @@
 package com.angelokezimana.starter.admin.service.impl;
 
 
-import com.angelokezimana.starter.admin.dto.RoleDTO;
-import com.angelokezimana.starter.admin.dto.RoleRequestDTO;
+import com.angelokezimana.starter.admin.dto.RoleDto;
+import com.angelokezimana.starter.admin.dto.RoleRequestDto;
 import com.angelokezimana.starter.admin.model.Permission;
 import com.angelokezimana.starter.admin.model.Role;
 import com.angelokezimana.starter.admin.exception.RoleNotFoundException;
@@ -34,13 +34,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @PreAuthorize("hasPermission('ROLE', 'READ')")
-    public Page<RoleDTO> getRoles(Pageable pageable) {
+    public Page<RoleDto> getRoles(Pageable pageable) {
         Page<Role> roles = roleRepository.findAll(pageable);
         return roles.map(RoleMapper::toRoleDTO);
     }
 
     @PreAuthorize("hasPermission('ROLE', 'READ') || hasPermission('USER', 'CREATE')")
-    public List<RoleDTO> getAllRoles(String search) {
+    public List<RoleDto> getAllRoles(String search) {
 
         List<Role> roles = roleRepository.findByNameContainingIgnoreCase(search);
         return roles.stream()
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @PreAuthorize("hasPermission('ROLE', 'CREATE')")
-    public RoleDTO createRole(RoleRequestDTO roleRequestDTO) {
+    public RoleDto createRole(RoleRequestDto roleRequestDTO) {
 
         Role role = new Role();
         Set<Permission> permissions = new HashSet<>(permissionRepository.findAllById(roleRequestDTO.permissionIds()));
@@ -63,7 +63,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @PreAuthorize("hasPermission('ROLE', 'READ')")
-    public RoleDTO getRole(Long roleId) {
+    public RoleDto getRole(Long roleId) {
         Role role = roleRepository.findById(roleId)
                 .orElseThrow(() -> RoleNotFoundException.forId(roleId));
 
@@ -71,7 +71,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @PreAuthorize("hasPermission('ROLE', 'UPDATE')")
-    public RoleDTO updateRole(Long roleId, RoleRequestDTO roleRequestDTO) {
+    public RoleDto updateRole(Long roleId, RoleRequestDto roleRequestDTO) {
         Role existingRole = roleRepository.findById(roleId)
                 .orElseThrow(() -> RoleNotFoundException.forId(roleId));
 

@@ -1,8 +1,8 @@
 package com.angelokezimana.starter.blog.service.impl;
 
-import com.angelokezimana.starter.blog.dto.CommentDTO;
-import com.angelokezimana.starter.blog.dto.CommentRequestDTO;
-import com.angelokezimana.starter.blog.dto.CommentWithPostDTO;
+import com.angelokezimana.starter.blog.dto.CommentDto;
+import com.angelokezimana.starter.blog.dto.CommentRequestDto;
+import com.angelokezimana.starter.blog.dto.CommentWithPostDto;
 import com.angelokezimana.starter.blog.model.Comment;
 import com.angelokezimana.starter.blog.model.Post;
 import com.angelokezimana.starter.user.model.User;
@@ -39,12 +39,12 @@ public class CommentServiceImpl implements CommentService {
         this.profileService = profileService;
     }
 
-    public Page<CommentDTO> getCommentsByPost(Long postId, Pageable pageable) {
+    public Page<CommentDto> getCommentsByPost(Long postId, Pageable pageable) {
         Page<Comment> comments = commentRepository.findByPostId(postId, pageable);
         return comments.map(CommentMapper::toCommentDTO);
     }
 
-    public CommentDTO createComment(Long postId, CommentRequestDTO commentRequestDTO) {
+    public CommentDto createComment(Long postId, CommentRequestDto commentRequestDTO) {
 
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
         return CommentMapper.toCommentDTO(savedComment);
     }
 
-    public CommentWithPostDTO getComment(Long commentId) {
+    public CommentWithPostDto getComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> CommentNotFoundException.forId(commentId));
 
@@ -71,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @PreAuthorize("hasPermission(#commentId, 'COMMENT', 'UPDATE') || hasPermission('COMMENT', 'UPDATE')")
-    public CommentDTO updateComment(Long commentId, CommentRequestDTO updatedComment) {
+    public CommentDto updateComment(Long commentId, CommentRequestDto updatedComment) {
         Comment existingComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> CommentNotFoundException.forId(commentId));
 

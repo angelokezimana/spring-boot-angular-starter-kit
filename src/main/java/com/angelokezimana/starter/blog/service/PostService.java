@@ -1,9 +1,9 @@
 package com.angelokezimana.starter.blog.service;
 
-import com.angelokezimana.starter.blog.dto.PostDTO;
-import com.angelokezimana.starter.blog.dto.PostDetailDTO;
-import com.angelokezimana.starter.blog.dto.PostRequestDTO;
-import com.angelokezimana.starter.blog.dto.PostRequestUpdateDTO;
+import com.angelokezimana.starter.blog.dto.PostDto;
+import com.angelokezimana.starter.blog.dto.PostDetailDto;
+import com.angelokezimana.starter.blog.dto.PostRequestDto;
+import com.angelokezimana.starter.blog.dto.PostRequestUpdateDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.util.List;
 
 public interface PostService {
-    Page<PostDTO> getAllPosts(Pageable pageable);
+    Page<PostDto> getAllPosts(Pageable pageable);
 
-    PostDetailDTO createPost(PostRequestDTO postRequestDTO, MultipartFile imageCover, List<MultipartFile> photos) throws IOException;
+    PostDetailDto createPost(PostRequestDto postRequestDTO, MultipartFile imageCover, List<MultipartFile> photos) throws IOException;
 
-    PostDetailDTO getPost(Long postId);
+    PostDetailDto getPost(Long postId);
 
-    PostDetailDTO updatePost(Long postId, PostRequestUpdateDTO postRequestDTO, MultipartFile imageCover) throws IOException;
+    PostDetailDto updatePost(Long postId, PostRequestUpdateDto postRequestDTO, MultipartFile imageCover) throws IOException;
 
     void deletePost(Long postId) throws IOException;
 }

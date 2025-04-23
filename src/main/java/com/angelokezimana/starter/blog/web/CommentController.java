@@ -1,9 +1,9 @@
 package com.angelokezimana.starter.blog.web;
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.blog.dto.CommentDTO;
-import com.angelokezimana.starter.blog.dto.CommentRequestDTO;
-import com.angelokezimana.starter.blog.dto.CommentWithPostDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.blog.dto.CommentDto;
+import com.angelokezimana.starter.blog.dto.CommentRequestDto;
+import com.angelokezimana.starter.blog.dto.CommentWithPostDto;
 import com.angelokezimana.starter.blog.service.CommentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class CommentController {
     }
 
     @GetMapping("/posts/{postId}")
-    private ResponseEntity<List<CommentDTO>> findCommentsByPost(
+    private ResponseEntity<List<CommentDto>> findCommentsByPost(
             @PathVariable Long postId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -40,38 +40,38 @@ public class CommentController {
         Sort parseSortParameter = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
 
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
-        Page<CommentDTO> commentDTOs = commentService.getCommentsByPost(postId, pageable);
+        Page<CommentDto> commentDTOs = commentService.getCommentsByPost(postId, pageable);
 
         return ResponseEntity.ok(commentDTOs.getContent());
     }
 
     @PostMapping("/posts/{postId}")
-    private ResponseEntity<CommentDTO> create(@PathVariable Long postId,
-                                              @RequestBody @Valid CommentRequestDTO newPost) {
+    private ResponseEntity<CommentDto> create(@PathVariable Long postId,
+                                              @RequestBody @Valid CommentRequestDto newPost) {
 
-        CommentDTO commentDTO = commentService.createComment(postId, newPost);
+        CommentDto commentDTO = commentService.createComment(postId, newPost);
         return ResponseEntity.ok(commentDTO);
     }
 
     @GetMapping("/{commentId}")
-    private ResponseEntity<CommentWithPostDTO> findById(@PathVariable Long commentId) {
+    private ResponseEntity<CommentWithPostDto> findById(@PathVariable Long commentId) {
 
-        CommentWithPostDTO commentWithPostDTO = commentService.getComment(commentId);
+        CommentWithPostDto commentWithPostDTO = commentService.getComment(commentId);
         return ResponseEntity.ok(commentWithPostDTO);
     }
 
     @PutMapping("/{commentId}")
-    private ResponseEntity<CommentDTO> update(@PathVariable Long commentId,
-                                              @RequestBody @Valid CommentRequestDTO updatedComment) {
+    private ResponseEntity<CommentDto> update(@PathVariable Long commentId,
+                                              @RequestBody @Valid CommentRequestDto updatedComment) {
 
-        CommentDTO updatedCommentResult = commentService.updateComment(commentId, updatedComment);
+        CommentDto updatedCommentResult = commentService.updateComment(commentId, updatedComment);
         return ResponseEntity.ok(updatedCommentResult);
     }
 
     @DeleteMapping("/{commentId}")
-    private ResponseEntity<ResponseDTO> delete(@PathVariable Long commentId) {
+    private ResponseEntity<ResponseDto> delete(@PathVariable Long commentId) {
 
         commentService.deleteComment(commentId);
-        return ResponseEntity.ok(new ResponseDTO("message", "Comment deleted successfully"));
+        return ResponseEntity.ok(new ResponseDto("message", "Comment deleted successfully"));
     }
 }

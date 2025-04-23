@@ -1,8 +1,8 @@
 package com.angelokezimana.starter.admin.web;
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.admin.dto.RoleDTO;
-import com.angelokezimana.starter.admin.dto.RoleRequestDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.admin.dto.RoleDto;
+import com.angelokezimana.starter.admin.dto.RoleRequestDto;
 import com.angelokezimana.starter.admin.service.RoleService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class RoleController {
     }
 
     @GetMapping
-    private ResponseEntity<List<RoleDTO>> findAll(
+    private ResponseEntity<List<RoleDto>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort
@@ -34,43 +34,43 @@ public class RoleController {
         Sort parseSortParameter = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
 
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
-        Page<RoleDTO> roleDTOs = roleService.getRoles(pageable);
+        Page<RoleDto> roleDTOs = roleService.getRoles(pageable);
 
         return ResponseEntity.ok(roleDTOs.getContent());
     }
 
     @GetMapping("/all")
-    private ResponseEntity<List<RoleDTO>> findAll(
+    private ResponseEntity<List<RoleDto>> findAll(
             @RequestParam(defaultValue = "") String search) {
 
-        List<RoleDTO> roleDTOs = roleService.getAllRoles(search);
+        List<RoleDto> roleDTOs = roleService.getAllRoles(search);
         return ResponseEntity.ok(roleDTOs);
     }
 
     @PostMapping()
-    private ResponseEntity<RoleDTO> create(@ModelAttribute @Valid RoleRequestDTO roleRequestDTO) {
+    private ResponseEntity<RoleDto> create(@ModelAttribute @Valid RoleRequestDto roleRequestDTO) {
         return ResponseEntity.ok(roleService.createRole(roleRequestDTO));
     }
 
     @GetMapping("/{roleId}")
-    private ResponseEntity<RoleDTO> findById(@PathVariable Long roleId) {
+    private ResponseEntity<RoleDto> findById(@PathVariable Long roleId) {
 
-        RoleDTO postDTO = roleService.getRole(roleId);
+        RoleDto postDTO = roleService.getRole(roleId);
         return ResponseEntity.ok(postDTO);
     }
 
     @PutMapping(path = "/{roleId}")
-    private ResponseEntity<RoleDTO> update(@PathVariable Long roleId,
-                                           @ModelAttribute RoleRequestDTO updatedRoleDTO) {
+    private ResponseEntity<RoleDto> update(@PathVariable Long roleId,
+                                           @ModelAttribute RoleRequestDto updatedRoleDTO) {
 
-        RoleDTO updatedRoleResult = roleService.updateRole(roleId, updatedRoleDTO);
+        RoleDto updatedRoleResult = roleService.updateRole(roleId, updatedRoleDTO);
         return ResponseEntity.ok(updatedRoleResult);
     }
 
     @DeleteMapping("/{roleId}")
-    private ResponseEntity<ResponseDTO> delete(@PathVariable Long roleId) {
+    private ResponseEntity<ResponseDto> delete(@PathVariable Long roleId) {
 
         roleService.deleteRole(roleId);
-        return ResponseEntity.ok(new ResponseDTO("message", "Role deleted successfully"));
+        return ResponseEntity.ok(new ResponseDto("message", "Role deleted successfully"));
     }
 }

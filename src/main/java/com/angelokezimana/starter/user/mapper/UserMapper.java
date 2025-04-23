@@ -1,6 +1,6 @@
 package com.angelokezimana.starter.user.mapper;
 
-import com.angelokezimana.starter.user.dto.UserDTO;
+import com.angelokezimana.starter.user.dto.UserDto;
 import com.angelokezimana.starter.user.model.User;
 import com.angelokezimana.starter.admin.mapper.RoleMapper;
 
@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class UserMapper {
 
-    public static UserDTO toUserDTO(User user) {
-        return new UserDTO(
+    public static UserDto toUserDTO(User user) {
+        return new UserDto(
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
@@ -21,7 +21,7 @@ public class UserMapper {
         );
     }
 
-    public static List<UserDTO> toUserDTOList(List<User> users) {
+    public static List<UserDto> toUserDTOList(List<User> users) {
         return users.stream()
                 .map(UserMapper::toUserDTO)
                 .collect(Collectors.toList());

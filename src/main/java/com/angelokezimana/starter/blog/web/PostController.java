@@ -1,10 +1,10 @@
 package com.angelokezimana.starter.blog.web;
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.blog.dto.PostDTO;
-import com.angelokezimana.starter.blog.dto.PostDetailDTO;
-import com.angelokezimana.starter.blog.dto.PostRequestDTO;
-import com.angelokezimana.starter.blog.dto.PostRequestUpdateDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.blog.dto.PostDto;
+import com.angelokezimana.starter.blog.dto.PostDetailDto;
+import com.angelokezimana.starter.blog.dto.PostRequestDto;
+import com.angelokezimana.starter.blog.dto.PostRequestUpdateDto;
 import com.angelokezimana.starter.blog.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class PostController {
     }
 
     @GetMapping
-    private ResponseEntity<List<PostDTO>> findAll(
+    private ResponseEntity<List<PostDto>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort
@@ -43,39 +43,39 @@ public class PostController {
         Sort parseSortParameter = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
 
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
-        Page<PostDTO> postDTOs = postService.getAllPosts(pageable);
+        Page<PostDto> postDTOs = postService.getAllPosts(pageable);
 
         return ResponseEntity.ok(postDTOs.getContent());
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    private ResponseEntity<PostDetailDTO> create(@ModelAttribute @Valid PostRequestDTO postRequestDTO,
+    private ResponseEntity<PostDetailDto> create(@ModelAttribute @Valid PostRequestDto postRequestDTO,
                                                  @RequestParam(value = "imageCover") MultipartFile imageCover,
                                                  @RequestParam(value = "photos", required = false) List<MultipartFile> photos) throws IOException {
-        PostDetailDTO postDTO = postService.createPost(postRequestDTO, imageCover, photos);
+        PostDetailDto postDTO = postService.createPost(postRequestDTO, imageCover, photos);
         return ResponseEntity.ok(postDTO);
     }
 
     @GetMapping("/{postId}")
-    private ResponseEntity<PostDetailDTO> findById(@PathVariable Long postId) {
+    private ResponseEntity<PostDetailDto> findById(@PathVariable Long postId) {
 
-        PostDetailDTO postDTO = postService.getPost(postId);
+        PostDetailDto postDTO = postService.getPost(postId);
         return ResponseEntity.ok(postDTO);
     }
 
     @PutMapping(path = "/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    private ResponseEntity<PostDetailDTO> update(@PathVariable Long postId,
-                                                 @ModelAttribute PostRequestUpdateDTO updatedPost,
+    private ResponseEntity<PostDetailDto> update(@PathVariable Long postId,
+                                                 @ModelAttribute PostRequestUpdateDto updatedPost,
                                                  @RequestParam(value = "imageCover", required = false) MultipartFile imageCover) throws IOException {
 
-        PostDetailDTO updatedPostResult = postService.updatePost(postId, updatedPost, imageCover);
+        PostDetailDto updatedPostResult = postService.updatePost(postId, updatedPost, imageCover);
         return ResponseEntity.ok(updatedPostResult);
     }
 
     @DeleteMapping("/{postId}")
-    private ResponseEntity<ResponseDTO> delete(@PathVariable Long postId) throws IOException {
+    private ResponseEntity<ResponseDto> delete(@PathVariable Long postId) throws IOException {
 
         postService.deletePost(postId);
-        return ResponseEntity.ok(new ResponseDTO("message", "Post deleted successfully"));
+        return ResponseEntity.ok(new ResponseDto("message", "Post deleted successfully"));
     }
 }

@@ -1,7 +1,7 @@
 package com.angelokezimana.starter.auth.web;
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.auth.dto.ResetPasswordRequestDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.auth.dto.ResetPasswordRequestDto;
 import com.angelokezimana.starter.auth.service.PasswordResetService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -21,18 +21,18 @@ public class PasswordResetController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<ResponseDTO> forgotPassword(
+    public ResponseEntity<ResponseDto> forgotPassword(
             @RequestHeader(name = "Accept-Language", required = false) Locale locale,
             @RequestParam String email
     ) throws MessagingException {
         passwordResetService.generatePasswordResetToken(email, locale);
-        return ResponseEntity.ok(new ResponseDTO("message", "Password reset link sent to your email."));
+        return ResponseEntity.ok(new ResponseDto("message", "Password reset link sent to your email."));
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<ResponseDTO> resetPassword(@RequestParam String token,
-                                                     @RequestBody @Valid ResetPasswordRequestDTO request) {
+    public ResponseEntity<ResponseDto> resetPassword(@RequestParam String token,
+                                                     @RequestBody @Valid ResetPasswordRequestDto request) {
         passwordResetService.resetPassword(token, request);
-        return ResponseEntity.ok(new ResponseDTO("message", "Password has been reset successfully."));
+        return ResponseEntity.ok(new ResponseDto("message", "Password has been reset successfully."));
     }
 }

@@ -6,7 +6,7 @@
 
 package com.angelokezimana.starter.common.web.advice;
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,57 +44,57 @@ public class ApplicationExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseDTO handleException(EntityNotFoundException ex) {
+    public ResponseDto handleException(EntityNotFoundException ex) {
         logger.error("EntityNotFoundException handled: ", ex);
-        return new ResponseDTO("errorMessage", ex.getMessage());
+        return new ResponseDto("errorMessage", ex.getMessage());
     }
 
     @ResponseStatus(HttpStatus.LOCKED)
     @ExceptionHandler(LockedException.class)
-    public ResponseDTO handleException(LockedException ex) {
+    public ResponseDto handleException(LockedException ex) {
         logger.error("LockedException handled: ", ex);
-        return new ResponseDTO("errorMessage", "Your account is locked. Please contact your administrator for assistance.");
+        return new ResponseDto("errorMessage", "Your account is locked. Please contact your administrator for assistance.");
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(DisabledException.class)
-    public ResponseDTO handleException(DisabledException ex) {
+    public ResponseDto handleException(DisabledException ex) {
         logger.error("DisabledException handled: ", ex);
-        return new ResponseDTO("errorMessage", "Your account is disabled. Please contact your administrator for assistance.");
+        return new ResponseDto("errorMessage", "Your account is disabled. Please contact your administrator for assistance.");
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseDTO handleException(BadCredentialsException ex) {
+    public ResponseDto handleException(BadCredentialsException ex) {
         logger.error("BadCredentialsException handled: ", ex);
-        return new ResponseDTO("errorMessage", "Invalid username or password.");
+        return new ResponseDto("errorMessage", "Invalid username or password.");
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(MessagingException.class)
-    public ResponseDTO handleException(MessagingException ex) {
+    public ResponseDto handleException(MessagingException ex) {
         logger.error("MessagingException handled: ", ex);
-        return new ResponseDTO("errorMessage", "Error while sending email: " + ex.getMessage());
+        return new ResponseDto("errorMessage", "Error while sending email: " + ex.getMessage());
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseDTO handleException(ExpiredJwtException ex) {
+    public ResponseDto handleException(ExpiredJwtException ex) {
         logger.error("ExpiredJwtException handled: ", ex);
-        return new ResponseDTO("errorMessage", "Your session has expired or the token is not valid. Please log in again.");
+        return new ResponseDto("errorMessage", "Your session has expired or the token is not valid. Please log in again.");
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseDTO handleException(AccessDeniedException ex) {
+    public ResponseDto handleException(AccessDeniedException ex) {
         logger.error("AccessDeniedException handled: ", ex);
-        return new ResponseDTO("errorMessage", "Access Denied");
+        return new ResponseDto("errorMessage", "Access Denied");
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ResponseDTO handleException(Exception ex) {
+    public ResponseDto handleException(Exception ex) {
         logger.error("Exception handled: ", ex);
-        return new ResponseDTO("errorMessage", ex.getMessage());
+        return new ResponseDto("errorMessage", ex.getMessage());
     }
 }

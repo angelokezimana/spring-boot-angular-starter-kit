@@ -1,7 +1,7 @@
 package com.angelokezimana.starter.auth.service.impl;
 
 import com.angelokezimana.starter.auth.service.JwtService;
-import com.angelokezimana.starter.common.dto.ResponseDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
 import com.angelokezimana.starter.auth.model.BlacklistedToken;
 import com.angelokezimana.starter.user.model.User;
 import com.angelokezimana.starter.auth.repository.BlacklistedTokenRepository;
@@ -36,7 +36,7 @@ public class BlacklistedTokenServiceImpl implements BlacklistedTokenService {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(),
-                    new ResponseDTO("error", "Refresh token already blacklisted."));
+                    new ResponseDto("error", "Refresh token already blacklisted."));
             return;
         }
 

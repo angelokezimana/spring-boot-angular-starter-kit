@@ -1,9 +1,9 @@
 package com.angelokezimana.starter.blog.service.impl;
 
-import com.angelokezimana.starter.blog.dto.PostDTO;
-import com.angelokezimana.starter.blog.dto.PostDetailDTO;
-import com.angelokezimana.starter.blog.dto.PostRequestDTO;
-import com.angelokezimana.starter.blog.dto.PostRequestUpdateDTO;
+import com.angelokezimana.starter.blog.dto.PostDto;
+import com.angelokezimana.starter.blog.dto.PostDetailDto;
+import com.angelokezimana.starter.blog.dto.PostRequestDto;
+import com.angelokezimana.starter.blog.dto.PostRequestUpdateDto;
 import com.angelokezimana.starter.blog.model.PhotoPost;
 import com.angelokezimana.starter.blog.model.Post;
 import com.angelokezimana.starter.user.model.User;
@@ -52,12 +52,12 @@ public class PostServiceImpl implements PostService {
         this.photoPostService = photoPostService;
     }
 
-    public Page<PostDTO> getAllPosts(Pageable pageable) {
+    public Page<PostDto> getAllPosts(Pageable pageable) {
         Page<Post> posts = postRepository.findAll(pageable);
         return posts.map(PostMapper::toPostDTO);
     }
 
-    public PostDetailDTO createPost(PostRequestDTO postRequestDTO,
+    public PostDetailDto createPost(PostRequestDto postRequestDTO,
                                     MultipartFile imageCover,
                                     List<MultipartFile> images) throws IOException {
 
@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
         return PostMapper.toPostDetailDTO(savedPost);
     }
 
-    public PostDetailDTO getPost(Long postId) {
+    public PostDetailDto getPost(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 
@@ -93,7 +93,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @PreAuthorize("hasPermission(#postId, 'POST', 'UPDATE') || hasPermission('POST', 'UPDATE')")
-    public PostDetailDTO updatePost(Long postId, PostRequestUpdateDTO postRequestDTO, MultipartFile imageCover) throws IOException {
+    public PostDetailDto updatePost(Long postId, PostRequestUpdateDto postRequestDTO, MultipartFile imageCover) throws IOException {
         Post existingPost = postRepository.findById(postId)
                 .orElseThrow(() -> PostNotFoundException.forId(postId));
 

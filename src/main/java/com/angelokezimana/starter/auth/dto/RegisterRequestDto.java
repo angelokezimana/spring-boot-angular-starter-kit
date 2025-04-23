@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 
 
 @PasswordsMatch(passwordField = "password", confirmPasswordField = "confirmPassword", message = "Passwords must match")
-public record RegisterRequestDTO(
+public record RegisterRequestDto(
         @NotBlank(message = "First name is mandatory")
         String firstName,
 

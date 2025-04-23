@@ -6,9 +6,9 @@
 
 package com.angelokezimana.starter.user.service.impl;
 
-import com.angelokezimana.starter.user.dto.ChangePasswordRequestDTO;
-import com.angelokezimana.starter.user.dto.ChangeProfileInfoRequestDTO;
-import com.angelokezimana.starter.user.dto.UserDTO;
+import com.angelokezimana.starter.user.dto.ChangePasswordRequestDto;
+import com.angelokezimana.starter.user.dto.ChangeProfileInfoRequestDto;
+import com.angelokezimana.starter.user.dto.UserDto;
 import com.angelokezimana.starter.user.mapper.UserMapper;
 import com.angelokezimana.starter.user.model.User;
 import com.angelokezimana.starter.user.exception.UserNotFoundException;
@@ -33,7 +33,7 @@ public class ProfileServiceImpl implements ProfileService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void changePassword(ChangePasswordRequestDTO request) {
+    public void changePassword(ChangePasswordRequestDto request) {
 
         User user = getCurrentUser()
                 .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
@@ -47,7 +47,7 @@ public class ProfileServiceImpl implements ProfileService {
         userRepository.save(user);
     }
 
-    public void changeProfile(ChangeProfileInfoRequestDTO request) {
+    public void changeProfile(ChangeProfileInfoRequestDto request) {
 
         User user = getCurrentUser()
                 .orElseThrow(() -> new UserNotFoundException("No authenticated user found"));
@@ -74,7 +74,7 @@ public class ProfileServiceImpl implements ProfileService {
         return Optional.empty();
     }
 
-    public UserDTO getCurrentUserDTO() {
+    public UserDto getCurrentUserDTO() {
         return UserMapper.toUserDTO(getCurrentUser().orElseThrow(() -> new IllegalStateException("User not found")));
     }
 }

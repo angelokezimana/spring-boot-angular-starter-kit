@@ -2,10 +2,10 @@ package com.angelokezimana.starter.auth.service.impl;
 
 import com.angelokezimana.starter.auth.model.ActivationToken;
 import com.angelokezimana.starter.auth.service.JwtService;
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.auth.dto.AuthenticationRequestDTO;
-import com.angelokezimana.starter.auth.dto.AuthenticationResponseDTO;
-import com.angelokezimana.starter.auth.dto.RegisterRequestDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.auth.dto.AuthenticationRequestDto;
+import com.angelokezimana.starter.auth.dto.AuthenticationResponseDto;
+import com.angelokezimana.starter.auth.dto.RegisterRequestDto;
 import com.angelokezimana.starter.common.email.EmailService;
 import com.angelokezimana.starter.common.email.EmailTemplateName;
 import com.angelokezimana.starter.admin.exception.RoleNotFoundException;
@@ -78,7 +78,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.blacklistedTokenService = blacklistedTokenService;
     }
 
-    public void register(RegisterRequestDTO request, Locale locale) throws MessagingException {
+    public void register(RegisterRequestDto request, Locale locale) throws MessagingException {
 
         Role role = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RoleNotFoundException("No role 'ROLE_USER' found"));
@@ -96,7 +96,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         sendValidationEmail(user, locale);
     }
 
-    public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request) {
+    public AuthenticationResponseDto authenticate(AuthenticationRequestDto request) {
 
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.email(),
@@ -107,7 +107,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
-        return new AuthenticationResponseDTO(jwtToken, refreshToken);
+        return new AuthenticationResponseDto(jwtToken, refreshToken);
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -117,7 +117,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(),
-                    new ResponseDTO("error", "Refresh token is missing or invalid."));
+                    new ResponseDto("error", "Refresh token is missing or invalid."));
             return;
         }
 
@@ -132,7 +132,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(),
-                    new ResponseDTO("error", "Refresh token not valid or expired."));
+                    new ResponseDto("error", "Refresh token not valid or expired."));
             return;
         }
 
@@ -148,7 +148,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String newRefreshToken = jwtService.generateRefreshToken(userDetails);
 
         // Send response with new tokens
-        AuthenticationResponseDTO authResponse = new AuthenticationResponseDTO(accessToken, newRefreshToken);
+        AuthenticationResponseDto authResponse = new AuthenticationResponseDto(accessToken, newRefreshToken);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_OK);
         new ObjectMapper().writeValue(response.getOutputStream(), authResponse);

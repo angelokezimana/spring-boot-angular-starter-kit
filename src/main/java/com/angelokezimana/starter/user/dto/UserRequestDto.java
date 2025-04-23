@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
-public record UserRequestDTO(
+public record UserRequestDto(
         Long id,
         @NotBlank(message = "First name is mandatory")
         String firstName,

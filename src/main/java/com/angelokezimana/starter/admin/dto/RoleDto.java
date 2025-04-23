@@ -2,7 +2,7 @@ package com.angelokezimana.starter.admin.dto;
 
 import java.util.Set;
 
-public record RoleDTO(Long id,
+public record RoleDto(Long id,
                       String name,
-                      Set<PermissionDTO> permissions) {
+                      Set<PermissionDto> permissions) {
 }

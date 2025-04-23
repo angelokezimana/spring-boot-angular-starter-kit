@@ -1,10 +1,10 @@
 package com.angelokezimana.starter.auth.web;
 
 
-import com.angelokezimana.starter.common.dto.ResponseDTO;
-import com.angelokezimana.starter.auth.dto.AuthenticationRequestDTO;
-import com.angelokezimana.starter.auth.dto.AuthenticationResponseDTO;
-import com.angelokezimana.starter.auth.dto.RegisterRequestDTO;
+import com.angelokezimana.starter.common.dto.ResponseDto;
+import com.angelokezimana.starter.auth.dto.AuthenticationRequestDto;
+import com.angelokezimana.starter.auth.dto.AuthenticationResponseDto;
+import com.angelokezimana.starter.auth.dto.RegisterRequestDto;
 import com.angelokezimana.starter.auth.service.AuthenticationService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,17 +29,17 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> register(
+    public ResponseEntity<ResponseDto> register(
             @RequestHeader(name = "Accept-Language", required = false) Locale locale,
-            @RequestBody @Valid RegisterRequestDTO request
+            @RequestBody @Valid RegisterRequestDto request
     ) throws MessagingException {
 
         authenticationService.register(request, locale);
-        return ResponseEntity.ok(new ResponseDTO("message", "User created successfully"));
+        return ResponseEntity.ok(new ResponseDto("message", "User created successfully"));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody @Valid AuthenticationRequestDTO request) {
+    public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody @Valid AuthenticationRequestDto request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
