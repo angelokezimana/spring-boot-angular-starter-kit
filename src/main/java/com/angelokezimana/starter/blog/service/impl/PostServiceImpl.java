@@ -53,7 +53,7 @@ public class PostServiceImpl implements PostService {
     }
 
     public Page<PostDTO> getAllPosts(Pageable pageable) {
-        Page<Post> posts = postRepository.findAllPostsWithRelations(pageable);
+        Page<Post> posts = postRepository.findAll(pageable);
         return posts.map(PostMapper::toPostDTO);
     }
 
