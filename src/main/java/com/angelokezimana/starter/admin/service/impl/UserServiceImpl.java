@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @PreAuthorize("hasPermission('USER', 'READ')")
-    public Page<UserDto> getAllUsers(Pageable pageable) {
-        Page<User> users = userRepository.findAllUsers(pageable);
+    public Page<UserDto> getAllUsers(String search, Pageable pageable) {
+        Page<User> users = userRepository.findAllUsers(search, pageable);
         return users.map(UserMapper::toUserDTO);
     }
 

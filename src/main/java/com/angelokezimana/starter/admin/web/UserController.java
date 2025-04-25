@@ -27,14 +27,15 @@ public class UserController {
     private ResponseEntity<Page<UserDto>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id,desc") String[] sort
+            @RequestParam(defaultValue = "id,desc") String[] sort,
+            @RequestParam(required = false) String search
     ) {
         String sortBy = sort[0];
         String sortOrder = sort.length > 1 ? sort[1] : "asc";
         Sort parseSortParameter = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
 
         Pageable pageable = PageRequest.of(page, size, parseSortParameter);
-        Page<UserDto> userDTOs = userService.getAllUsers(pageable);
+        Page<UserDto> userDTOs = userService.getAllUsers(search, pageable);
 
         return ResponseEntity.ok(userDTOs);
     }

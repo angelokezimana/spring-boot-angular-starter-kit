@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, signal, ViewChild} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
@@ -18,31 +18,37 @@ import {FormUserComponent} from "./_form/form-user.component";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @Component({
-    selector: 'app-users',
-    imports: [
-        MatIconModule,
-        MatMenuModule,
-        MatToolbar,
-        MatToolbarRow,
-        MatButtonModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCard,
-        FormsModule,
-        MatCardContent,
-        ReactiveFormsModule,
-        MatCheckboxModule
-    ],
-    templateUrl: './users.component.html',
-    styleUrl: './users.component.scss'
+  selector: 'app-users',
+  imports: [
+    MatIconModule,
+    MatMenuModule,
+    MatToolbar,
+    MatToolbarRow,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCard,
+    FormsModule,
+    MatCardContent,
+    ReactiveFormsModule,
+    MatCheckboxModule
+  ],
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.scss'
 })
 export class UsersComponent implements AfterViewInit {
-  search = '';
+  search = signal('');
   displayedColumns: string[] = ['selected', 'id', 'firstName', 'lastName', 'email', 'roles', 'actions'];
   dataSource = new MatTableDataSource<User>();
+
+  totalElements = 0; // To store total number of users for pagination
+  pageSize = 10; // Default page size
+  pageIndex = 0; // Default page index
+  sortBy = 'id'; // Default sort field
+  sortOrder = 'desc';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -100,8 +106,18 @@ export class UsersComponent implements AfterViewInit {
     return index + 1; // Fallback if paginator is not available
   }
 
+  onSearchChange(searchText: string) {
+    this.search.set(searchText);
+    this.updateDataSource();
+  }
+
   private updateDataSource() {
-    this.userService.getUsers().subscribe({
+    this.userService.getUsers({
+      page: this.pageIndex,
+      size: this.pageSize,
+      sort: `${this.sortBy},${this.sortOrder}`,
+      search: this.search()
+    }).subscribe({
       next: data => {
         console.log(data?.body);
 
@@ -109,7 +125,12 @@ export class UsersComponent implements AfterViewInit {
           this.dataSource.data = data.body.content;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.totalElements = data.body.totalElements;
+          this.paginator.length = this.totalElements;
         }
+      },
+      error: (error) => {
+        console.error('Error fetching users:', error);
       }
     });
   }

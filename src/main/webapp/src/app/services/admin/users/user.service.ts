@@ -6,7 +6,8 @@ import {tap} from "rxjs/operators";
 import {toObservable} from "@angular/core/rxjs-interop";
 import User from "../../../models/security/user.model";
 import UserRequest from "../../../models/security/user.request.model";
-import {PagedResponse} from "../../../models/common/PagedResponse";
+import {PagedResponse} from "../../../interface/PagedResponse";
+import {QueryParams} from "../../../interface/QueryParams";
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,10 @@ export class UserService {
 
   constructor(private http: WebApiService) { }
 
-  getUsers(): Observable<HttpResponse<PagedResponse<User>>> {
+  getUsers(params: QueryParams): Observable<HttpResponse<PagedResponse<User>>> {
     this.loading.set(true);
 
-    return this.http.get('/api/v1/admin/users').pipe(
+    return this.http.get('/api/v1/admin/users', params).pipe(
       tap(() => this.loading.set(false))
     );
   }

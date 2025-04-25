@@ -18,7 +18,7 @@
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Search</mat-label>
           <mat-icon matPrefix color="primary">search</mat-icon>
-          <input matInput type="text" [ngModel]="search" autocomplete="off">
+          <input matInput type="text" [ngModel]="search()" (ngModelChange)="onSearchChange($event)" autocomplete="off">
         </mat-form-field>
       </div>
     </mat-card-content>
@@ -100,6 +100,9 @@
       </table>
 
       <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                     [pageSize]="pageSize"
+                     [pageIndex]="pageIndex"
+                     [length]="totalElements"
                      showFirstLastButtons
                      aria-label="Select page of users">
       </mat-paginator>

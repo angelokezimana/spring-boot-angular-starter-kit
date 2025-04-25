@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
@@ -16,13 +16,24 @@ export class WebApiService {
   /**
    * GET
    */
-  get(url: string): Observable<any> {
+  get(url: string, params?: { [key: string]: any }): Observable<any> {
+
+    let httpParams = new HttpParams();
+    if (params) {
+      Object.keys(params).forEach(key => {
+        if (params[key] !== undefined && params[key] !== null) {
+          httpParams = httpParams.set(key, params[key].toString());
+        }
+      });
+    }
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
       }),
+      params: httpParams,
       observe: 'response' as 'body',
     };
 
