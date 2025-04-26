@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, signal, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
-import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginator, MatPaginatorModule, PageEvent} from "@angular/material/paginator";
 import User from "../../../models/security/user.model";
 import {UserService} from "../../../services/admin/users/user.service";
 import {MatSort, MatSortModule, Sort} from "@angular/material/sort";
@@ -11,11 +11,12 @@ import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCard, MatCardContent} from "@angular/material/card";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDialog} from "@angular/material/dialog";
 import {FormUserComponent} from "./_form/form-user.component";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {debounceTime, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-users',
@@ -39,8 +40,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent implements AfterViewInit {
-  search = signal('');
+export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
+  searchControl = new FormControl('');
+  private destroy$ = new Subject<void>();
+
   displayedColumns: string[] = ['selected', 'id', 'firstName', 'lastName', 'email', 'roles', 'actions'];
   dataSource = new MatTableDataSource<User>();
 
@@ -58,11 +61,34 @@ export class UsersComponent implements AfterViewInit {
               private dialog: MatDialog) {
   }
 
+  ngOnInit(): void {
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(400),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        this.pageIndex = 0; // Reset to first page on sort
+        this.updateDataSource();
+      });
+  }
+
   ngAfterViewInit() {
     this.updateDataSource();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   announceSortChange(sortState: Sort) {
+    this.sortBy = sortState.active;
+    this.sortOrder = sortState.direction || 'asc';
+    this.pageIndex = 0; // Reset to first page on sort
+
+    this.updateDataSource();
+
     if (sortState.direction) {
       this.liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
@@ -106,8 +132,9 @@ export class UsersComponent implements AfterViewInit {
     return index + 1; // Fallback if paginator is not available
   }
 
-  onSearchChange(searchText: string) {
-    this.search.set(searchText);
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.updateDataSource();
   }
 
@@ -116,21 +143,18 @@ export class UsersComponent implements AfterViewInit {
       page: this.pageIndex,
       size: this.pageSize,
       sort: `${this.sortBy},${this.sortOrder}`,
-      search: this.search()
+      search: this.searchControl.value as string | undefined
     }).subscribe({
-      next: data => {
-        console.log(data?.body);
+      next: ({body}) => {
+        const payload = body!;
 
-        if (data.body) {
-          this.dataSource.data = data.body.content;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.totalElements = data.body.totalElements;
-          this.paginator.length = this.totalElements;
-        }
+        this.dataSource.data = payload.content || [];
+        this.totalElements = payload.totalElements || 0;
       },
       error: (error) => {
         console.error('Error fetching users:', error);
+        this.dataSource.data = [];
+        this.totalElements = 0;
       }
     });
   }
