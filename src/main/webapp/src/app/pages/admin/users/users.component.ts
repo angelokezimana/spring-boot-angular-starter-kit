@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, Signal, ViewChild} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbar, MatToolbarRow} from "@angular/material/toolbar";
@@ -17,6 +17,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {FormUserComponent} from "./_form/form-user.component";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {debounceTime, Subject, takeUntil} from "rxjs";
+import {toSignal} from "@angular/core/rxjs-interop";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-users',
@@ -35,7 +37,8 @@ import {debounceTime, Subject, takeUntil} from "rxjs";
     FormsModule,
     MatCardContent,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinner,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
@@ -46,6 +49,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'roles', 'actions'];
   dataSource = new MatTableDataSource<User>();
+
+  loading:Signal<boolean> = toSignal(this.userService.loadingStatus(), {initialValue:true});
 
   totalElements = 0; // To store total number of users for pagination
   pageSize = 10; // Default page size

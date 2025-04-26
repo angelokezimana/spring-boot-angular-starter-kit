@@ -87,6 +87,22 @@
           (click)="editUser(row)"
           [class.account-locked]="row.accountLocked"
           *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="padding: 16px;">
+            @if (loading()) {
+              <div style="display: flex; justify-content: center;">
+                <mat-progress-spinner
+                  color="primary"
+                  diameter="30"
+                  mode="indeterminate">
+                </mat-progress-spinner>
+              </div>
+            } @else {
+              <span style="display: block; text-align: center;">No users found.</span>
+            }
+          </td>
+        </tr>
       </table>
 
       <mat-paginator [pageSizeOptions]="[5, 10, 20]"
