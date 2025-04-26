@@ -26,16 +26,6 @@
     <div class="table-container">
       <table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange($event)">
 
-        <!-- selected Column -->
-        <ng-container matColumnDef="selected">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox color="primary"></mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let user">
-            <mat-checkbox color="primary" (click)="$event.stopPropagation()"></mat-checkbox>
-          </td>
-        </ng-container>
-
         <!-- id Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>#</th>

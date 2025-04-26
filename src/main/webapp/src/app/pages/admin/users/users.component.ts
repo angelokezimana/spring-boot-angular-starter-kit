@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   searchControl = new FormControl('');
   private destroy$ = new Subject<void>();
 
-  displayedColumns: string[] = ['selected', 'id', 'firstName', 'lastName', 'email', 'roles', 'actions'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'roles', 'actions'];
   dataSource = new MatTableDataSource<User>();
 
   totalElements = 0; // To store total number of users for pagination
